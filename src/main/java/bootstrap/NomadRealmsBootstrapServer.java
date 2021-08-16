@@ -1,11 +1,11 @@
 package bootstrap;
 
-import model.NomadRealmsClient;
+import model.NomadRealmsUser;
 
 public class NomadRealmsBootstrapServer {
 
-	private NomadRealmsClient waitingClient;
-	private NomadRealmsClient connectingClient;
+	private NomadRealmsUser waitingClient;
+	private NomadRealmsUser connectingClient;
 
 	public NomadRealmsBootstrapServer() {
 	}
