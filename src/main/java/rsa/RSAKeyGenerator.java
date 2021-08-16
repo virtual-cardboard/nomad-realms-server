@@ -7,6 +7,14 @@ import static java.math.BigInteger.probablePrime;
 import java.math.BigInteger;
 import java.util.Random;
 
+/**
+ * Generation of d using an iteration variable k is verrryyyyy sketchy and there
+ * is a better implementation here:
+ * https://crypto.stackexchange.com/questions/5889/calculating-rsa-private-exponent-when-given-public-exponent-and-the-modulus-fact
+ * 
+ * @author Lunkle
+ *
+ */
 public class RSAKeyGenerator {
 
 	private static final BigInteger e = new BigInteger("65537"); // e is public key exponent
