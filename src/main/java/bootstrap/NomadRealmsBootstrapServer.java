@@ -57,7 +57,7 @@ public class NomadRealmsBootstrapServer {
 			holePunchBuffer[i] = infoIp[i];
 		}
 		holePunchBuffer[4] = (byte) (infoPort >> 8);
-		holePunchBuffer[5] = (byte) (infoPort % 8);
+		holePunchBuffer[5] = (byte) (infoPort & 0xFF);
 		return holePunchInfo;
 	}
 
