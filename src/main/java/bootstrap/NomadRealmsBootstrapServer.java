@@ -27,13 +27,20 @@ public class NomadRealmsBootstrapServer {
 		readNext();
 		InetSocketAddress socketAddress1 = (InetSocketAddress) message.getSocketAddress();
 		System.out.println("Socket Address 1: " + socketAddress1);
+		byte[] ip1 = socketAddress1.getAddress().getAddress(); // 4 bytes
+		int port1 = socketAddress1.getPort(); // 2 bytes
+		System.out.println("IP 1: " + Arrays.toString(ip1));
+		System.out.println("Port 1: " + port1);
+
 		readNext();
 		InetSocketAddress socketAddress2 = (InetSocketAddress) message.getSocketAddress();
 		System.out.println("Socket Address 2: " + socketAddress2);
-		byte[] ip1 = socketAddress1.getAddress().getAddress(); // 4 bytes
-		int port1 = socketAddress1.getPort(); // 2 bytes
 		byte[] ip2 = socketAddress2.getAddress().getAddress(); // 4 bytes
-		int port2 = socketAddress1.getPort(); // 2 bytes
+		int port2 = socketAddress2.getPort(); // 2 bytes
+		System.out.println("IP 2: " + Arrays.toString(ip2));
+		System.out.println("Port 2: " + port2);
+
+		System.out.println("Sending hole punch info to " + socketAddress1 + " and " + socketAddress2);
 
 		try {
 			socket.send(createHolePunchInfoPacket(ip1, port1, socketAddress2));
