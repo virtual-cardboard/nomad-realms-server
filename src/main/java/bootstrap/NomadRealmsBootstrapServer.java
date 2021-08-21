@@ -19,7 +19,7 @@ public class NomadRealmsBootstrapServer {
 	private final DatagramPacket message = new DatagramPacket(buffers, buffers.length);
 
 	public NomadRealmsBootstrapServer() throws SocketException {
-		socket = new DatagramSocket(45001);
+		socket = new DatagramSocket(45000);
 		socket.setSoTimeout(TEN_SECONDS);
 	}
 
