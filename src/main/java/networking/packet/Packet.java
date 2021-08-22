@@ -10,12 +10,10 @@ import networking.packet.destination.PacketDestination;
 public class Packet {
 
 	private PacketDestination dest;
-	private PacketBlock header;
 	private List<PacketBlock> payload;
 
-	public Packet(PacketDestination dest, PacketBlock header, List<PacketBlock> payload) {
+	public Packet(PacketDestination dest, List<PacketBlock> payload) {
 		this.dest = dest;
-		this.header = header;
 		this.payload = payload;
 	}
 
@@ -26,7 +24,19 @@ public class Packet {
 	 * @return
 	 */
 	public DatagramPacket packet() {
-		DatagramPacket datagramPacket = new DatagramPacket(null, 0, dest.ip(), dest.port());
+		int totalSize = 0;
+		for (int i = 0, numBlocks = payload.size(); i < numBlocks; i++) {
+			PacketBlock block = payload.get(i);
+			totalSize += block.bytes().length;
+		}
+		byte[] bytes = new byte[totalSize];
+		int index = 0;
+		for (int i = 0, numBlocks = payload.size(); i < numBlocks; i++) {
+			PacketBlock block = payload.get(i);
+			byte[] blockBytes = block.bytes();
+			System.arraycopy(blockBytes, 0, bytes, bytes[index], blockBytes.length);
+		}
+		DatagramPacket datagramPacket = new DatagramPacket(bytes, totalSize, dest.ip(), dest.port());
 		return datagramPacket;
 	}
 

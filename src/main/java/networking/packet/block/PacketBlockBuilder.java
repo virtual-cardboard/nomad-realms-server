@@ -5,6 +5,7 @@ import static networking.packet.block.PacketPrimitive.LONG;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
@@ -16,7 +17,7 @@ public class PacketBlockBuilder {
 	private Queue<PacketPrimitive> primitives;
 	@SuppressWarnings("unused")
 	private Queue<EncryptionAlgorithmType> encryptions;
-	private Queue<Byte> bytes;
+	private Queue<Byte> bytes = new LinkedList<>();
 
 	public PacketBlockBuilder(PacketBlockFormat format) {
 		primitives = format.primitives();

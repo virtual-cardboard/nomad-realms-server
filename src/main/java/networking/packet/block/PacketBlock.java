@@ -8,7 +8,7 @@ public class PacketBlock {
 		this.buffer = buffer;
 	}
 
-	public byte[] getBuffer() {
+	public byte[] bytes() {
 		return buffer;
 	}
 
