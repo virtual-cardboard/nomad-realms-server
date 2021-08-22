@@ -1,6 +1,15 @@
 package networking.packet.block;
 
+import static networking.packet.block.PacketPrimitive.BYTE;
+import static networking.packet.block.PacketPrimitive.BYTE_ARRAY;
+import static networking.packet.block.PacketPrimitive.INT;
+import static networking.packet.block.PacketPrimitive.INT_ARRAY;
+import static networking.packet.block.PacketPrimitive.IP_V4;
+import static networking.packet.block.PacketPrimitive.IP_V6;
 import static networking.packet.block.PacketPrimitive.LONG;
+import static networking.packet.block.PacketPrimitive.LONG_ARRAY;
+import static networking.packet.block.PacketPrimitive.SHORT;
+import static networking.packet.block.PacketPrimitive.SHORT_ARRAY;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -44,7 +53,7 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(int val) {
-		typeValidate(PacketPrimitive.INT);
+		typeValidate(INT);
 		bytes.add((byte) ((val >> 24) & 0xFF));
 		bytes.add((byte) ((val >> 16) & 0xFF));
 		bytes.add((byte) ((val >> 8) & 0xFF));
@@ -52,18 +61,18 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(short val) {
-		typeValidate(PacketPrimitive.SHORT);
+		typeValidate(SHORT);
 		bytes.add((byte) ((val >> 8) & 0xFF));
 		bytes.add((byte) (val & 0xFF));
 	}
 
 	public void consume(byte val) {
-		typeValidate(PacketPrimitive.BYTE);
+		typeValidate(BYTE);
 		bytes.add(val);
 	}
 
 	public void consume(long[] val) {
-		typeValidate(PacketPrimitive.LONG_ARRAY);
+		typeValidate(LONG_ARRAY);
 		for (long x : val) {
 			bytes.add((byte) ((x >> 56) & 0xFF));
 			bytes.add((byte) ((x >> 48) & 0xFF));
@@ -77,7 +86,7 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(int[] val) {
-		typeValidate(PacketPrimitive.INT_ARRAY);
+		typeValidate(INT_ARRAY);
 		for (int x : val) {
 			bytes.add((byte) ((x >> 24) & 0xFF));
 			bytes.add((byte) ((x >> 16) & 0xFF));
@@ -87,7 +96,7 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(short[] val) {
-		typeValidate(PacketPrimitive.SHORT_ARRAY);
+		typeValidate(SHORT_ARRAY);
 		for (short x : val) {
 			bytes.add((byte) ((x >> 8) & 0xFF));
 			bytes.add((byte) (x & 0xFF));
@@ -95,7 +104,7 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(byte[] val) {
-		typeValidate(PacketPrimitive.BYTE_ARRAY);
+		typeValidate(BYTE_ARRAY);
 		for (byte x : val) {
 			bytes.add(x);
 		}
@@ -103,7 +112,7 @@ public class PacketBlockBuilder {
 
 	public void consume(InetAddress val) {
 		if (val instanceof Inet6Address) {
-			typeValidate(PacketPrimitive.IP_V6);
+			typeValidate(IP_V6);
 			byte[] address = val.getAddress();
 			bytes.add(address[0]);
 			bytes.add(address[1]);
@@ -112,7 +121,7 @@ public class PacketBlockBuilder {
 			bytes.add(address[4]);
 			bytes.add(address[5]);
 		} else if (val instanceof Inet4Address) {
-			typeValidate(PacketPrimitive.IP_V4);
+			typeValidate(IP_V4);
 			byte[] address = val.getAddress();
 			bytes.add(address[0]);
 			bytes.add(address[1]);
@@ -122,7 +131,7 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(int ipv4_0, int ipv4_1, int ipv4_2, int ipv4_3) {
-		typeValidate(PacketPrimitive.IP_V4);
+		typeValidate(IP_V4);
 		bytes.add((byte) ipv4_0);
 		bytes.add((byte) ipv4_1);
 		bytes.add((byte) ipv4_2);
@@ -130,7 +139,7 @@ public class PacketBlockBuilder {
 	}
 
 	public void consume(int ipv6_0, int ipv6_1, int ipv6_2, int ipv6_3, int ipv6_4, int ipv6_5) {
-		typeValidate(PacketPrimitive.IP_V4);
+		typeValidate(IP_V4);
 		bytes.add((byte) ipv6_0);
 		bytes.add((byte) ipv6_1);
 		bytes.add((byte) ipv6_2);
