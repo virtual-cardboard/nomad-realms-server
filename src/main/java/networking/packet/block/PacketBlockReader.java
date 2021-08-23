@@ -58,7 +58,7 @@ public class PacketBlockReader {
 
 	public short readShort() {
 		typeValidate(SHORT);
-		short val = (short) (((bytes[index] & 0xFF) << 8) | (0xFF & bytes[index + 1] & 0xFF));
+		short val = (short) (((bytes[index] & 0xFF) << 8) | (bytes[index + 1] & 0xFF));
 		index += 2;
 		return val;
 	}
