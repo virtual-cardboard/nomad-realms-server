@@ -1,5 +1,6 @@
 package networking.packet.block;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static networking.packet.block.PacketPrimitive.BYTE;
 import static networking.packet.block.PacketPrimitive.BYTE_ARRAY;
 import static networking.packet.block.PacketPrimitive.INT;
@@ -10,6 +11,7 @@ import static networking.packet.block.PacketPrimitive.LONG;
 import static networking.packet.block.PacketPrimitive.LONG_ARRAY;
 import static networking.packet.block.PacketPrimitive.SHORT;
 import static networking.packet.block.PacketPrimitive.SHORT_ARRAY;
+import static networking.packet.block.PacketPrimitive.STRING;
 
 import java.net.DatagramPacket;
 import java.util.Queue;
@@ -121,6 +123,15 @@ public class PacketBlockReader {
 			index += 1;
 			val[i] = x;
 		}
+		return val;
+	}
+
+	public String readString() {
+		typeValidate(STRING);
+		short numBytes = (short) (((bytes[index] & 0xFF) << 8) | (0xFF & bytes[index + 1] & 0xFF));
+		index += 2;
+		String val = new String(bytes, index, numBytes, UTF_8);
+		index += numBytes;
 		return val;
 	}
 

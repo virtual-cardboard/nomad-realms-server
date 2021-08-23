@@ -1,5 +1,6 @@
 package networking.packet.block;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static networking.packet.block.PacketPrimitive.BYTE;
 import static networking.packet.block.PacketPrimitive.BYTE_ARRAY;
 import static networking.packet.block.PacketPrimitive.INT;
@@ -10,6 +11,7 @@ import static networking.packet.block.PacketPrimitive.LONG;
 import static networking.packet.block.PacketPrimitive.LONG_ARRAY;
 import static networking.packet.block.PacketPrimitive.SHORT;
 import static networking.packet.block.PacketPrimitive.SHORT_ARRAY;
+import static networking.packet.block.PacketPrimitive.STRING;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -106,6 +108,17 @@ public class PacketBlockBuilder {
 	public void consume(byte[] val) {
 		typeValidate(BYTE_ARRAY);
 		for (byte x : val) {
+			bytes.add(x);
+		}
+	}
+
+	public void consume(String val) {
+		typeValidate(STRING);
+		byte[] b = val.getBytes(UTF_8);
+		short numBytes = (short) b.length;
+		bytes.add((byte) ((numBytes >> 8) & 0xFF));
+		bytes.add((byte) (numBytes & 0xFF));
+		for (byte x : b) {
 			bytes.add(x);
 		}
 	}
