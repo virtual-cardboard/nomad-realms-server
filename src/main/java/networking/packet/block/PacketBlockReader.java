@@ -13,7 +13,6 @@ import static networking.packet.block.PacketPrimitive.SHORT;
 import static networking.packet.block.PacketPrimitive.SHORT_ARRAY;
 import static networking.packet.block.PacketPrimitive.STRING;
 
-import java.net.DatagramPacket;
 import java.util.Queue;
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
@@ -24,11 +23,11 @@ public class PacketBlockReader {
 	private Queue<PacketPrimitive> primitives;
 	private int index = 0;
 
-	public PacketBlockReader(PacketBlockFormat format, DatagramPacket packet) {
+	public PacketBlockReader(PacketBlockFormat format, PacketBlock block) {
 		this.primitives = format.primitives();
 		// TODO
 		// apply encryption inverses
-		this.bytes = packet.getData();
+		this.bytes = block.bytes();
 	}
 
 	private void typeValidate(PacketPrimitive actual) {
