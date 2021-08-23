@@ -5,7 +5,9 @@ import java.net.UnknownHostException;
 
 public class ServerDestinationPoint extends PacketDestination {
 
-	private static final InetAddress SERVER_DEST;
+	public static final ServerDestinationPoint SERVER_DEST = new ServerDestinationPoint();
+
+	private static final InetAddress SERVER_IP;
 	private static final int SERVER_PORT = 45000;
 
 	static {
@@ -15,12 +17,12 @@ public class ServerDestinationPoint extends PacketDestination {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		SERVER_DEST = serverDest;
+		SERVER_IP = serverDest;
 	}
 
 	@Override
 	public InetAddress ip() {
-		return SERVER_DEST;
+		return SERVER_IP;
 	}
 
 	@Override
