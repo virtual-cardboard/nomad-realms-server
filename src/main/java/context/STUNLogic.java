@@ -23,8 +23,9 @@ public class STUNLogic extends GameLogic {
 						.consume(System.currentTimeMillis())
 						.consume(stunResponseEvent.getNonce())
 						.consume(address.ip())
-						.consume(address.port())
+						.consume(address.shortPort())
 						.build();
+				System.out.println("Nonce: " + stunResponseEvent.getNonce());
 				PacketModel packet = new PacketModel(address, packetBlock);
 				getContext().sendPacket(packet);
 			} else {
