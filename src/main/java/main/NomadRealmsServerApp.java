@@ -1,20 +1,31 @@
 package main;
 
-import java.net.SocketException;
-
-import bootstrap.STUNServer;
+import context.GameContext;
+import context.STUNInput;
+import context.STUNLogic;
+import context.data.DefaultGameData;
+import context.data.GameData;
+import context.input.GameInput;
+import context.logic.GameLogic;
+import context.visuals.DefaultGameVisuals;
+import context.visuals.GameVisuals;
+import engine.GameEngine;
 
 public class NomadRealmsServerApp {
 
 	public static void main(String[] args) {
-		try {
-//			NomadRealmsBootstrapServer bootstrap = new NomadRealmsBootstrapServer();
-//			bootstrap.start();
-			STUNServer stun = new STUNServer();
-			stun.start();
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
+		GameData data = new DefaultGameData();
+		GameInput input = new STUNInput();
+		GameLogic logic = new STUNLogic();
+		GameVisuals visuals = new DefaultGameVisuals();
+		GameContext context = new GameContext(data, input, logic, visuals);
+		new GameEngine("Nomad Realms Server", context)
+				.disableLoading()
+				.enableNetworking(45000)
+				.disableRendering()
+				.enablePrintProgress()
+				.run();
+		System.out.println("Started STUN Server");
 	}
 
 }
