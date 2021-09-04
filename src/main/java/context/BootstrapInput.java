@@ -10,7 +10,6 @@ import common.source.NetworkSource;
 import context.input.GameInput;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import context.input.networking.packet.address.PeerAddress;
 import event.BootstrapRequestEvent;
 
 public class BootstrapInput extends GameInput {
@@ -28,7 +27,7 @@ public class BootstrapInput extends GameInput {
 				return null;
 			}
 			short port = reader.readShort();
-			PacketAddress address = new PeerAddress(ip, port);
+			PacketAddress address = new PacketAddress(ip, port);
 			return new BootstrapRequestEvent(source, timestamp, address);
 		}));
 	}
