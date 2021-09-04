@@ -7,7 +7,6 @@ import java.util.Random;
 
 import common.event.GameEvent;
 import context.input.networking.packet.PacketModel;
-import context.input.networking.packet.block.PacketBlock;
 import context.logic.GameLogic;
 import event.BootstrapRequestEvent;
 
@@ -29,25 +28,23 @@ public class BootstrapLogic extends GameLogic {
 					data.gotFirstPacket = true;
 				} else {
 					System.out.println("Giving out nonce: " + nonce);
-					PacketBlock b1 = BOOTSTRAP_RESPONSE.builder()
+					PacketModel packet1 = BOOTSTRAP_RESPONSE.builder(data.wan)
 							.consume(currentTimeMillis())
 							.consume(nonce)
 							.consume(bootstrapRequestEvent.getLan().ip())
-							.consume(bootstrapRequestEvent.getLan().port())
+							.consume((short) bootstrapRequestEvent.getLan().port())
 							.consume(bootstrapRequestEvent.getSource().getAddress().ip())
-							.consume(bootstrapRequestEvent.getSource().getAddress().port())
+							.consume((short) bootstrapRequestEvent.getSource().getAddress().port())
 							.build();
-					PacketModel packet1 = new PacketModel(data.wan, b1);
 					getContext().sendPacket(packet1);
-					PacketBlock b2 = BOOTSTRAP_RESPONSE.builder()
+					PacketModel packet2 = BOOTSTRAP_RESPONSE.builder(bootstrapRequestEvent.getSource().getAddress())
 							.consume(currentTimeMillis())
 							.consume(nonce)
 							.consume(data.lan.ip())
-							.consume(data.lan.port())
+							.consume((short) data.lan.port())
 							.consume(data.wan.ip())
-							.consume(data.wan.port())
+							.consume((short) data.wan.port())
 							.build();
-					PacketModel packet2 = new PacketModel(bootstrapRequestEvent.getSource().getAddress(), b2);
 					getContext().sendPacket(packet2);
 					System.out.println("Done sending bootstrap response packet");
 				}

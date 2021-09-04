@@ -25,7 +25,7 @@ public class NomadRealmsServerApp {
 				.disableRendering()
 				.enablePrintProgress()
 				.run();
-		System.out.println("Started STUN Server");
+		System.out.println("Started UDP Holepunch Server");
 	}
 
 }
