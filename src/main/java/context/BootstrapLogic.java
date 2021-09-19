@@ -16,7 +16,7 @@ public class BootstrapLogic extends GameLogic {
 
 	@Override
 	public void update() {
-		BootstrapData data = (BootstrapData) getContext().getData();
+		BootstrapData data = (BootstrapData) context().data();
 		while (!getEventQueue().isEmpty()) {
 			GameEvent event = getEventQueue().poll();
 			if (event instanceof BootstrapRequestEvent) {
@@ -36,7 +36,7 @@ public class BootstrapLogic extends GameLogic {
 							.consume(bootstrapRequestEvent.getSource().getAddress().ip())
 							.consume((short) bootstrapRequestEvent.getSource().getAddress().port())
 							.build();
-					getContext().sendPacket(packet1);
+					context().sendPacket(packet1);
 					PacketModel packet2 = BOOTSTRAP_RESPONSE.builder(bootstrapRequestEvent.getSource().getAddress())
 							.consume(currentTimeMillis())
 							.consume(nonce)
@@ -45,7 +45,7 @@ public class BootstrapLogic extends GameLogic {
 							.consume(data.wan.ip())
 							.consume((short) data.wan.port())
 							.build();
-					getContext().sendPacket(packet2);
+					context().sendPacket(packet2);
 					System.out.println("Done sending bootstrap response packet");
 				}
 			} else {

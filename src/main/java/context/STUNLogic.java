@@ -25,7 +25,7 @@ public class STUNLogic extends GameLogic {
 						.consume(address.shortPort())
 						.build();
 				System.out.println("Nonce: " + stunResponseEvent.getNonce());
-				getContext().sendPacket(packet);
+				context().sendPacket(packet);
 			} else {
 				System.out.println("Unhandled event type: " + event.getClass());
 			}
