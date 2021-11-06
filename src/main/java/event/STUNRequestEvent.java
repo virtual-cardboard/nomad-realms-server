@@ -5,6 +5,8 @@ import common.source.NetworkSource;
 
 public class STUNRequestEvent extends GameEvent {
 
+	private static final long serialVersionUID = 2193277329139319192L;
+
 	private long nonce;
 	private long timestamp;
 
@@ -23,8 +25,8 @@ public class STUNRequestEvent extends GameEvent {
 	}
 
 	@Override
-	public NetworkSource getSource() {
-		return (NetworkSource) super.getSource();
+	public NetworkSource source() {
+		return (NetworkSource) super.source();
 	}
 
 }

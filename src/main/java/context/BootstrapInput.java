@@ -16,8 +16,8 @@ public class BootstrapInput extends GameInput {
 
 	public BootstrapInput() {
 		addPacketReceivedFunction(new GameInputEventHandler<>((event) -> {
-			NetworkSource source = (NetworkSource) event.getSource();
-			PacketReader reader = BOOTSTRAP_REQUEST.reader(event.getModel());
+			NetworkSource source = (NetworkSource) event.source();
+			PacketReader reader = BOOTSTRAP_REQUEST.reader(event.model());
 			long timestamp = reader.readLong();
 			InetAddress ip;
 			try {

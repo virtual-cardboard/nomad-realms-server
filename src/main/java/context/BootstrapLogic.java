@@ -17,14 +17,14 @@ public class BootstrapLogic extends GameLogic {
 	@Override
 	public void update() {
 		BootstrapData data = (BootstrapData) context().data();
-		while (!getEventQueue().isEmpty()) {
-			GameEvent event = getEventQueue().poll();
+		while (!eventQueue().isEmpty()) {
+			GameEvent event = eventQueue().poll();
 			if (event instanceof BootstrapRequestEvent) {
 				BootstrapRequestEvent bootstrapRequestEvent = (BootstrapRequestEvent) event;
 				System.out.println("Received bootstrap request");
 				if (!data.gotFirstPacket) {
 					data.lan = bootstrapRequestEvent.getLan();
-					data.wan = bootstrapRequestEvent.getSource().getAddress();
+					data.wan = bootstrapRequestEvent.source().getAddress();
 					data.gotFirstPacket = true;
 				} else {
 					System.out.println("Giving out nonce: " + nonce);
@@ -33,11 +33,11 @@ public class BootstrapLogic extends GameLogic {
 							.consume(nonce)
 							.consume(bootstrapRequestEvent.getLan().ip())
 							.consume((short) bootstrapRequestEvent.getLan().port())
-							.consume(bootstrapRequestEvent.getSource().getAddress().ip())
-							.consume((short) bootstrapRequestEvent.getSource().getAddress().port())
+							.consume(bootstrapRequestEvent.source().getAddress().ip())
+							.consume((short) bootstrapRequestEvent.source().getAddress().port())
 							.build();
 					context().sendPacket(packet1);
-					PacketModel packet2 = BOOTSTRAP_RESPONSE.builder(bootstrapRequestEvent.getSource().getAddress())
+					PacketModel packet2 = BOOTSTRAP_RESPONSE.builder(bootstrapRequestEvent.source().getAddress())
 							.consume(currentTimeMillis())
 							.consume(nonce)
 							.consume(data.lan.ip())

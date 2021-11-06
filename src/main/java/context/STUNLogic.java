@@ -12,12 +12,12 @@ public class STUNLogic extends GameLogic {
 
 	@Override
 	public void update() {
-		while (!getEventQueue().isEmpty()) {
-			GameEvent event = getEventQueue().poll();
+		while (!eventQueue().isEmpty()) {
+			GameEvent event = eventQueue().poll();
 			if (event instanceof STUNRequestEvent) {
 				STUNRequestEvent stunResponseEvent = (STUNRequestEvent) event;
-				System.out.println("Received STUN request from " + stunResponseEvent.getSource().getDescription());
-				PacketAddress address = stunResponseEvent.getSource().getAddress();
+				System.out.println("Received STUN request from " + stunResponseEvent.source().description());
+				PacketAddress address = stunResponseEvent.source().getAddress();
 				PacketModel packet = STUN_RESPONSE.builder(address)
 						.consume(System.currentTimeMillis())
 						.consume(stunResponseEvent.getNonce())

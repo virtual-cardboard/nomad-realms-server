@@ -12,8 +12,8 @@ public class STUNInput extends GameInput {
 
 	public STUNInput() {
 		addPacketReceivedFunction(new GameInputEventHandler<>((event) -> {
-			NetworkSource source = (NetworkSource) event.getSource();
-			PacketReader reader = STUN_REQUEST.reader(event.getModel());
+			NetworkSource source = (NetworkSource) event.source();
+			PacketReader reader = STUN_REQUEST.reader(event.model());
 			long timestamp = reader.readLong();
 			long nonce = reader.readLong();
 			return new STUNRequestEvent(System.currentTimeMillis(), source, timestamp, nonce);
