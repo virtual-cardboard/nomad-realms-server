@@ -19,17 +19,20 @@ public class SingleBootstrapInput extends GameInput {
 			NetworkSource source = (NetworkSource) event.source();
 			PacketReader reader = BOOTSTRAP_REQUEST.reader(event.model());
 			long timestamp = reader.readLong();
-			InetAddress ip;
-			try {
-				ip = InetAddress.getByAddress(reader.readIPv4());
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-				return null;
-			}
-			short port = reader.readShort();
-			PacketAddress address = new PacketAddress(ip, port);
+			InetAddress lanIP = getIp(reader.readIPv4());
+			short lanPort = reader.readShort();
+			PacketAddress address = new PacketAddress(lanIP, lanPort);
 			return new BootstrapRequestEvent(source, timestamp, address);
 		}));
+	}
+
+	private InetAddress getIp(byte[] addr) {
+		try {
+			return InetAddress.getByAddress(addr);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
