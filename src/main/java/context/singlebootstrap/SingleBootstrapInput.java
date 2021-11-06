@@ -1,4 +1,4 @@
-package context;
+package context.singlebootstrap;
 
 import static protocol.BootstrapProtocol.BOOTSTRAP_REQUEST;
 
@@ -12,9 +12,9 @@ import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
 import event.BootstrapRequestEvent;
 
-public class BootstrapInput extends GameInput {
+public class SingleBootstrapInput extends GameInput {
 
-	public BootstrapInput() {
+	public SingleBootstrapInput() {
 		addPacketReceivedFunction(new GameInputEventHandler<>((event) -> {
 			NetworkSource source = (NetworkSource) event.source();
 			PacketReader reader = BOOTSTRAP_REQUEST.reader(event.model());

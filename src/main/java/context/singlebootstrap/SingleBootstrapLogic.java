@@ -1,4 +1,4 @@
-package context;
+package context.singlebootstrap;
 
 import static java.lang.System.currentTimeMillis;
 import static protocol.BootstrapProtocol.BOOTSTRAP_RESPONSE;
@@ -10,13 +10,13 @@ import context.input.networking.packet.PacketModel;
 import context.logic.GameLogic;
 import event.BootstrapRequestEvent;
 
-public class BootstrapLogic extends GameLogic {
+public class SingleBootstrapLogic extends GameLogic {
 
 	private long nonce = new Random().nextLong();
 
 	@Override
 	public void update() {
-		BootstrapData data = (BootstrapData) context().data();
+		SingleBootstrapData data = (SingleBootstrapData) context().data();
 		while (!eventQueue().isEmpty()) {
 			GameEvent event = eventQueue().poll();
 			if (event instanceof BootstrapRequestEvent) {

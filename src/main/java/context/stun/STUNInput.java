@@ -1,4 +1,4 @@
-package context;
+package context.stun;
 
 import static protocol.STUNProtocol.STUN_REQUEST;
 

@@ -1,9 +1,9 @@
-package context;
+package context.singlebootstrap;
 
 import context.data.GameData;
 import context.input.networking.packet.address.PacketAddress;
 
-public class BootstrapData extends GameData {
+public class SingleBootstrapData extends GameData {
 
 	public boolean gotFirstPacket = false;
 	public PacketAddress lan;
