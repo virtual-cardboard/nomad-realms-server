@@ -44,10 +44,11 @@ public class ServerLoadingVisuals extends GameVisuals {
 		Map<String, Future<Texture>> fTexMap = new HashMap<>();
 		texMap.put("server", "icons/server.png");
 		texMap.put("yard", "images/yard.png");
+		texMap.put("yard_bottom_fence", "images/yard_bottom_fence.png");
+		texMap.put("nomad", "images/nomad.png");
 		texMap.forEach((name, path) -> fTexMap.put(name, loader.submit(new NomadRealmsTextureLoadTask(genTexUnit(), path))));
 
 		try {
-
 			Texture baloo2Tex = fBaloo2Tex.get();
 			Future<GameFont> fBaloo2Font = loader.submit(new NomadRealmsFontLoadTask("fonts/baloo2.vcfont", baloo2Tex));
 			GameFont baloo2Font = fBaloo2Font.get();
