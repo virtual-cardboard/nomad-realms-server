@@ -42,6 +42,7 @@ public class ServerLoadingVisuals extends GameVisuals {
 
 		Map<String, String> texMap = new HashMap<>();
 		Map<String, Future<Texture>> fTexMap = new HashMap<>();
+		texMap.put("server", "icons/server.png");
 		texMap.forEach((name, path) -> fTexMap.put(name, loader.submit(new NomadRealmsTextureLoadTask(genTexUnit(), path))));
 
 		try {
