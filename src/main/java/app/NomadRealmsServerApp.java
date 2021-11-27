@@ -24,6 +24,8 @@ public class NomadRealmsServerApp {
 				.enableNetworking(45000)
 				.enableRendering()
 				.enablePrintProgress()
+				.windowDimensions(512, 1012)
+				.disableResizing()
 				.run();
 		System.out.println("Started UDP Holepunch Server");
 	}
