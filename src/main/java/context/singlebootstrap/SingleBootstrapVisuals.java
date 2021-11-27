@@ -16,6 +16,7 @@ public class SingleBootstrapVisuals extends GameVisuals {
 	private TextRenderer textRenderer;
 	private Texture serverIcon;
 	private TextureRenderer textureRenderer;
+	private Texture yard;
 
 	public SingleBootstrapVisuals() {
 	}
@@ -28,14 +29,21 @@ public class SingleBootstrapVisuals extends GameVisuals {
 		textRenderer = rp.getRenderer("text", TextRenderer.class);
 		textureRenderer = new TextureRenderer((TextureShaderProgram) rp.getShaderProgram("texture"), rp.rectangleVAO());
 		serverIcon = rp.getTexture("server");
+		yard = rp.getTexture("yard");
+		initGui();
 	}
 
 	@Override
 	public void render() {
 		background(Colour.rgb(255, 255, 255));
-		textureRenderer.render(context().glContext(), rootGui(), serverIcon, 900, 300, 500, 300);
+		textureRenderer.render(context().glContext(), rootGui(), serverIcon, 900, 300, 500, 500);
+		textureRenderer.render(context().glContext(), rootGui().dimensions(), yard, 300, 900, 1);
 		textRenderer.render(context().glContext(), rootGui(), 300, 400, "Hello world!!!", 0, baloo2, 80, 255);
 		textRenderer.render(context().glContext(), rootGui(), 200, 100, "Nomad Realms Server", 0, langar, 80, 255);
+	}
+
+	private void initGui() {
+
 	}
 
 }
