@@ -1,7 +1,7 @@
 package context.bootstrap;
 
 import static java.lang.System.currentTimeMillis;
-import static protocol.BootstrapProtocol.BOOTSTRAP_RESPONSE;
+import static networking.protocols.BootstrapProtocol.BOOTSTRAP_RESPONSE;
 
 import java.util.Random;
 
@@ -21,7 +21,7 @@ public class BootstrapServerLogic extends GameLogic {
 			System.out.println("Received bootstrap request");
 			if (!data.gotFirstPacket) {
 				data.lan = bootstrapRequestEvent.getLan();
-				data.wan = bootstrapRequestEvent.source().getAddress();
+				data.wan = bootstrapRequestEvent.source().address();
 				data.gotFirstPacket = true;
 			} else {
 				System.out.println("Giving out nonce: " + nonce);
@@ -30,11 +30,11 @@ public class BootstrapServerLogic extends GameLogic {
 						.consume(nonce)
 						.consume(bootstrapRequestEvent.getLan().ip())
 						.consume((short) bootstrapRequestEvent.getLan().port())
-						.consume(bootstrapRequestEvent.source().getAddress().ip())
-						.consume((short) bootstrapRequestEvent.source().getAddress().port())
+						.consume(bootstrapRequestEvent.source().address().ip())
+						.consume((short) bootstrapRequestEvent.source().address().port())
 						.build();
 				context().sendPacket(packet1);
-				PacketModel packet2 = BOOTSTRAP_RESPONSE.builder(bootstrapRequestEvent.source().getAddress())
+				PacketModel packet2 = BOOTSTRAP_RESPONSE.builder(bootstrapRequestEvent.source().address())
 						.consume(currentTimeMillis())
 						.consume(nonce)
 						.consume(data.lan.ip())

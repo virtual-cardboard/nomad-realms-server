@@ -1,6 +1,6 @@
 package context.stun;
 
-import static protocol.STUNProtocol.STUN_RESPONSE;
+import static networking.protocols.STUNProtocol.STUN_RESPONSE;
 
 import common.event.GameEvent;
 import context.input.networking.packet.PacketModel;
@@ -14,7 +14,7 @@ public class STUNLogic extends GameLogic {
 	protected void init() {
 		addHandler(STUNRequestEvent.class, event -> true, stunResponseEvent -> {
 			System.out.println("Received STUN request from " + stunResponseEvent.source().description());
-			PacketAddress address = stunResponseEvent.source().getAddress();
+			PacketAddress address = stunResponseEvent.source().address();
 			PacketModel packet = STUN_RESPONSE.builder(address)
 					.consume(System.currentTimeMillis())
 					.consume(stunResponseEvent.getNonce())

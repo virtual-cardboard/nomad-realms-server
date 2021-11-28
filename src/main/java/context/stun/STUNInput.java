@@ -1,6 +1,6 @@
 package context.stun;
 
-import static protocol.STUNProtocol.STUN_REQUEST;
+import static networking.protocols.STUNProtocol.STUN_REQUEST;
 
 import common.source.NetworkSource;
 import context.input.GameInput;

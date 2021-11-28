@@ -1,6 +1,6 @@
 package context.bootstrap;
 
-import static protocol.BootstrapProtocol.BOOTSTRAP_REQUEST;
+import static networking.protocols.BootstrapProtocol.BOOTSTRAP_REQUEST;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
