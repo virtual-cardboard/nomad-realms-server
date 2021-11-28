@@ -1,6 +1,10 @@
 package context.bootstrap;
 
+import static java.lang.Float.compare;
 import static java.lang.Math.random;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import context.ResourcePack;
 import context.bootstrap.visuals.model.NomadMini;
@@ -40,19 +44,20 @@ public class BootstrapServerVisuals extends GameVisuals {
 		yardBottomFence = rp.getTexture("yard_bottom_fence");
 		nomad = rp.getTexture("nomad");
 		rectangleRenderer = new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO());
-		for (int i = 0; i < minis.length; i++) {
-			minis[i] = new NomadMini(Colour.rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random())));
+		for (int i = 0; i < 100; i++) {
+			minis.add(new NomadMini(Colour.rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()))));
 		}
 	}
 
-	private NomadMini[] minis = new NomadMini[100];
+	List<NomadMini> minis = new ArrayList<>();
 
 	@Override
 	public void render() {
 		background(Colour.rgb(255, 255, 255));
 		textureRenderer.render(context().glContext(), rootGui().dimensions(), yard, 256, 256 + 200, 1);
-		for (int i = 0; i < minis.length; i++) {
-			NomadMini mini = minis[i];
+		minis.sort((m1, m2) -> compare(m1.y(), m2.y()));
+		for (int i = 0; i < minis.size(); i++) {
+			NomadMini mini = minis.get(i);
 			mini.update();
 			drawNomad(mini);
 		}

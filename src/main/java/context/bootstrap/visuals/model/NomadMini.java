@@ -10,6 +10,7 @@ public class NomadMini {
 
 	private static final int HOPPING = 0;
 	private static final int RESTING = 1;
+	private static final int DRAGGED = 2;
 
 	private static final int HOP_DURATION = 20;
 	private static final int HOP_HEIGHT = 10;
@@ -61,6 +62,7 @@ public class NomadMini {
 				x = Math.max(40, Math.min(410, x));
 				y = Math.max(240, Math.min(600, y));
 			}
+		} else if (state == DRAGGED) {
 		}
 	}
 
@@ -72,12 +74,34 @@ public class NomadMini {
 		return y;
 	}
 
+	public Vector2f pos() {
+		return new Vector2f(x, y);
+	}
+
 	public int h() {
 		return h;
 	}
 
 	public int colour() {
 		return colour;
+	}
+
+	public void drag() {
+		h = 30;
+		state = DRAGGED;
+	}
+
+	public void undrag() {
+		h = 0;
+		state = RESTING;
+		timeForRest = MIN_REST + (int) ((MAX_REST - MIN_REST) * random());
+	}
+
+	public void setPos(Vector2f vec2f) {
+		x = vec2f.x;
+		y = vec2f.y;
+		x = Math.max(40, Math.min(410, x));
+		y = Math.max(240, Math.min(600, y));
 	}
 
 }
