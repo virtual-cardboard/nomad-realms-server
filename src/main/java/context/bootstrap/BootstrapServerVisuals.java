@@ -1,9 +1,9 @@
-package context.singlebootstrap;
+package context.bootstrap;
 
 import static context.visuals.colour.Colour.rgb;
 
 import context.ResourcePack;
-import context.singlebootstrap.visuals.RectangleRenderer;
+import context.bootstrap.visuals.RectangleRenderer;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.colour.Colour;
@@ -12,7 +12,7 @@ import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
 
-public class SingleBootstrapVisuals extends GameVisuals {
+public class BootstrapServerVisuals extends GameVisuals {
 
 	private GameFont baloo2;
 	private GameFont langar;
@@ -24,7 +24,7 @@ public class SingleBootstrapVisuals extends GameVisuals {
 	private Texture nomad;
 	private RectangleRenderer rectangleRenderer;
 
-	public SingleBootstrapVisuals() {
+	public BootstrapServerVisuals() {
 	}
 
 	@Override

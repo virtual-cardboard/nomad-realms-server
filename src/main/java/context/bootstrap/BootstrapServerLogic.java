@@ -1,4 +1,4 @@
-package context.singlebootstrap;
+package context.bootstrap;
 
 import static java.lang.System.currentTimeMillis;
 import static protocol.BootstrapProtocol.BOOTSTRAP_RESPONSE;
@@ -10,14 +10,14 @@ import context.input.networking.packet.PacketModel;
 import context.logic.GameLogic;
 import event.BootstrapRequestEvent;
 
-public class SingleBootstrapLogic extends GameLogic {
+public class BootstrapServerLogic extends GameLogic {
 
 	private long nonce = new Random().nextLong();
 
 	@Override
 	protected void init() {
 		addHandler(BootstrapRequestEvent.class, event -> true, bootstrapRequestEvent -> {
-			SingleBootstrapData data = (SingleBootstrapData) context().data();
+			BootstrapServerData data = (BootstrapServerData) context().data();
 			System.out.println("Received bootstrap request");
 			if (!data.gotFirstPacket) {
 				data.lan = bootstrapRequestEvent.getLan();
