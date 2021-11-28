@@ -1,4 +1,4 @@
-package context.bootstrap.visuals;
+package context.bootstrap.visuals.renderer;
 
 import static context.visuals.colour.Colour.toRangedVector;
 

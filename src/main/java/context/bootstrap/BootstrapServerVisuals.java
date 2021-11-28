@@ -1,9 +1,10 @@
 package context.bootstrap;
 
-import static context.visuals.colour.Colour.rgb;
+import static java.lang.Math.random;
 
 import context.ResourcePack;
-import context.bootstrap.visuals.RectangleRenderer;
+import context.bootstrap.visuals.model.NomadMini;
+import context.bootstrap.visuals.renderer.RectangleRenderer;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.colour.Colour;
@@ -39,21 +40,32 @@ public class BootstrapServerVisuals extends GameVisuals {
 		yardBottomFence = rp.getTexture("yard_bottom_fence");
 		nomad = rp.getTexture("nomad");
 		rectangleRenderer = new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO());
+		for (int i = 0; i < minis.length; i++) {
+			minis[i] = new NomadMini(Colour.rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random())));
+		}
 	}
+
+	private NomadMini[] minis = new NomadMini[100];
 
 	@Override
 	public void render() {
 		background(Colour.rgb(255, 255, 255));
 		textureRenderer.render(context().glContext(), rootGui().dimensions(), yard, 256, 256 + 200, 1);
-		drawNomad(100, 100, rgb(255, 162, 31));
+		for (int i = 0; i < minis.length; i++) {
+			NomadMini mini = minis[i];
+			mini.update();
+			drawNomad(mini);
+		}
 		textureRenderer.render(context().glContext(), rootGui().dimensions(), yardBottomFence, 256, 256 + 200, 1);
 		textureRenderer.render(context().glContext(), rootGui(), serverIcon, 900, 300, 500, 500);
-		textRenderer.render(context().glContext(), rootGui(), 300, 400, "Hello world!!!", 0, baloo2, 80, 255);
-		textRenderer.render(context().glContext(), rootGui(), 200, 100, "Nomad Realms Server", 0, langar, 80, 255);
+//		textRenderer.render(context().glContext(), rootGui(), 300, 400, "Hello world!!!", 0, baloo2, 80, 255);
+//		textRenderer.render(context().glContext(), rootGui(), 200, 100, "Nomad Realms Server", 0, langar, 80, 255);
 	}
 
-	private void drawNomad(int x, int y, int colour) {
-		rectangleRenderer.render(context().glContext(), rootGui(), x + 12, y + 20, 35, 30, 0, colour);
+	private void drawNomad(NomadMini mini) {
+		float x = mini.x();
+		float y = mini.y() - mini.h();
+		rectangleRenderer.render(context().glContext(), rootGui(), x + 12, y + 20, 35, 30, 0, mini.colour());
 		textureRenderer.render(context().glContext(), rootGui(), nomad, x, y, 64, 64);
 	}
 
