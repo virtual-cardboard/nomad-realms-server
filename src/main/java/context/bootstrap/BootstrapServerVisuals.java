@@ -1,17 +1,13 @@
 package context.bootstrap;
 
-import static java.lang.Float.compare;
-import static java.lang.Math.random;
-
-import java.util.ArrayList;
-import java.util.List;
+import static context.visuals.colour.Colour.rgb;
+import static java.util.Comparator.comparing;
 
 import context.ResourcePack;
 import context.bootstrap.visuals.model.NomadMini;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextureShaderProgram;
-import context.visuals.colour.Colour;
 import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
@@ -28,12 +24,14 @@ public class BootstrapServerVisuals extends GameVisuals {
 	private Texture yardBottomFence;
 	private Texture nomad;
 	private RectangleRenderer rectangleRenderer;
+	private BootstrapServerData data;
 
 	public BootstrapServerVisuals() {
 	}
 
 	@Override
 	public void init() {
+		data = (BootstrapServerData) context().data();
 		ResourcePack rp = context().resourcePack();
 		baloo2 = rp.getFont("baloo2");
 		langar = rp.getFont("langar");
@@ -44,20 +42,15 @@ public class BootstrapServerVisuals extends GameVisuals {
 		yardBottomFence = rp.getTexture("yard_bottom_fence");
 		nomad = rp.getTexture("nomad");
 		rectangleRenderer = new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO());
-		for (int i = 0; i < 100; i++) {
-			minis.add(new NomadMini(Colour.rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()))));
-		}
 	}
-
-	List<NomadMini> minis = new ArrayList<>();
 
 	@Override
 	public void render() {
-		background(Colour.rgb(255, 255, 255));
+		background(rgb(255, 255, 255));
 		textureRenderer.render(context().glContext(), rootGui().dimensions(), yard, 256, 256 + 200, 1);
-		minis.sort((m1, m2) -> compare(m1.y(), m2.y()));
-		for (int i = 0; i < minis.size(); i++) {
-			NomadMini mini = minis.get(i);
+		data.minis().sort(comparing(NomadMini::y));
+		for (int i = 0; i < data.minis().size(); i++) {
+			NomadMini mini = data.minis().get(i);
 			mini.update();
 			drawNomad(mini);
 		}

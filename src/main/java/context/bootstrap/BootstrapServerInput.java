@@ -5,15 +5,15 @@ import java.util.List;
 import common.math.Vector2f;
 import context.bootstrap.visuals.model.NomadMini;
 import context.input.GameInput;
+import networking.protocols.NomadRealmsServerProtocolDecoder;
 
 public class BootstrapServerInput extends GameInput {
 
 	@Override
 	protected void init() {
-		BootstrapServerVisuals visuals = (BootstrapServerVisuals) context().visuals();
 		BootstrapServerData data = (BootstrapServerData) context().data();
 		addMousePressedFunction(event -> true, event -> {
-			List<NomadMini> minis = visuals.minis;
+			List<NomadMini> minis = data.minis();
 			for (int i = minis.size() - 1; i >= 0; i--) {
 				NomadMini nomadMini = minis.get(i);
 				if (cursor().pos().toVec2f().add(-32, -32).sub(nomadMini.pos()).lengthSquared() <= 30 * 30) {
@@ -32,7 +32,7 @@ public class BootstrapServerInput extends GameInput {
 		addMouseReleasedFunction(event -> data.selectedMini != null && event.button() == 0, event -> {
 			NomadMini selectedMini = data.selectedMini;
 			selectedMini.undrag();
-			List<NomadMini> minis = visuals.minis;
+			List<NomadMini> minis = data.minis();
 			for (int i = minis.size() - 1; i >= 0; i--) {
 				NomadMini nomadMini = minis.get(i);
 				if (nomadMini != selectedMini && selectedMini.pos().sub(nomadMini.pos()).lengthSquared() <= 30 * 30) {
@@ -45,6 +45,7 @@ public class BootstrapServerInput extends GameInput {
 			data.selectedMini = null;
 			return null;
 		}, false);
+		addPacketReceivedFunction(new NomadRealmsServerProtocolDecoder());
 	}
 
 }

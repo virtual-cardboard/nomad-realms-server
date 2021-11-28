@@ -1,18 +1,24 @@
 package context.bootstrap;
 
-import java.util.Random;
+import static context.visuals.colour.Colour.rgb;
+import static java.lang.Math.random;
 
 import common.event.GameEvent;
+import context.bootstrap.visuals.model.NomadMini;
 import context.logic.GameLogic;
+import event.bootstrap.BootstrapRequestEvent;
 
 public class BootstrapServerLogic extends GameLogic {
 
-	private long nonce = new Random().nextLong();
-
 	@Override
 	protected void init() {
+		BootstrapServerData data = (BootstrapServerData) context().data();
 		addHandler(GameEvent.class, event -> {
 			throw new RuntimeException("Was expecting Bootstrap Request");
+		});
+		addHandler(BootstrapRequestEvent.class, (event) -> {
+			int rgb = rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()));
+			data.minis().add(new NomadMini(rgb, event.username()));
 		});
 	}
 

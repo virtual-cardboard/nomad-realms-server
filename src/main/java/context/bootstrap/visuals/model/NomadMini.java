@@ -32,9 +32,11 @@ public class NomadMini {
 	private int timeForHop = HOP_DURATION;
 
 	private int state = RESTING;
+	private String username;
 
-	public NomadMini(int colour) {
+	public NomadMini(int colour, String username) {
 		this.colour = colour;
+		this.username = username;
 	}
 
 	public void update() {
@@ -64,6 +66,10 @@ public class NomadMini {
 			}
 		} else if (state == DRAGGED) {
 		}
+	}
+
+	public String username() {
+		return username;
 	}
 
 	public float x() {
