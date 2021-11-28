@@ -32,6 +32,16 @@ public class BootstrapServerInput extends GameInput {
 		addMouseReleasedFunction(event -> data.selectedMini != null && event.button() == 0, event -> {
 			NomadMini selectedMini = data.selectedMini;
 			selectedMini.undrag();
+			List<NomadMini> minis = visuals.minis;
+			for (int i = minis.size() - 1; i >= 0; i--) {
+				NomadMini nomadMini = minis.get(i);
+				if (nomadMini != selectedMini && selectedMini.pos().sub(nomadMini.pos()).lengthSquared() <= 30 * 30) {
+					System.out.println("Match!");
+					minis.remove(selectedMini);
+					minis.remove(nomadMini);
+					break;
+				}
+			}
 			data.selectedMini = null;
 			return null;
 		}, false);
