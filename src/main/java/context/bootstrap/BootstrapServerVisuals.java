@@ -4,8 +4,8 @@ import static java.lang.Math.random;
 
 import context.ResourcePack;
 import context.bootstrap.visuals.model.NomadMini;
-import context.bootstrap.visuals.renderer.RectangleRenderer;
 import context.visuals.GameVisuals;
+import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.colour.Colour;
 import context.visuals.lwjgl.Texture;
@@ -65,7 +65,7 @@ public class BootstrapServerVisuals extends GameVisuals {
 	private void drawNomad(NomadMini mini) {
 		float x = mini.x();
 		float y = mini.y() - mini.h();
-		rectangleRenderer.render(context().glContext(), rootGui(), x + 12, y + 20, 35, 30, 0, mini.colour());
+		rectangleRenderer.render(context().glContext(), rootGui().dimensions(), x + 12, y + 20, 35, 30, mini.colour());
 		textureRenderer.render(context().glContext(), rootGui(), nomad, x, y, 64, 64);
 	}
 
