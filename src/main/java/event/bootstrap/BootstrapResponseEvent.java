@@ -4,6 +4,7 @@ import static context.input.networking.packet.PacketPrimitive.IP_V4;
 import static context.input.networking.packet.PacketPrimitive.LONG;
 import static context.input.networking.packet.PacketPrimitive.SHORT;
 import static context.input.networking.packet.PacketPrimitive.STRING;
+import static networking.NetworkUtils.LOCAL_HOST;
 import static networking.NetworkUtils.toIP;
 import static networking.protocols.ProtocolID.BOOTSTRAP_RESPONSE;
 
@@ -31,6 +32,14 @@ public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
 
 	public BootstrapResponseEvent(NetworkSource source, long timestamp, long nonce, PacketAddress lanAddress, PacketAddress wanAddress, String username) {
 		super(timestamp, source);
+		this.nonce = nonce;
+		this.lanAddress = lanAddress;
+		this.wanAddress = wanAddress;
+		this.username = username;
+	}
+
+	public BootstrapResponseEvent(long nonce, PacketAddress lanAddress, PacketAddress wanAddress, String username) {
+		super(LOCAL_HOST);
 		this.nonce = nonce;
 		this.lanAddress = lanAddress;
 		this.wanAddress = wanAddress;
@@ -70,9 +79,9 @@ public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
 				.consume(time())
 				.consume(nonce)
 				.consume(lanAddress.ip())
-				.consume(lanAddress.port())
+				.consume(lanAddress.shortPort())
 				.consume(wanAddress.ip())
-				.consume(wanAddress.port())
+				.consume(wanAddress.shortPort())
 				.consume(username)
 				.build();
 	}

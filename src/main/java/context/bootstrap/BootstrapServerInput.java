@@ -1,10 +1,12 @@
 package context.bootstrap;
 
 import java.util.List;
+import java.util.Random;
 
 import common.math.Vector2f;
 import context.bootstrap.visuals.model.NomadMini;
 import context.input.GameInput;
+import event.bootstrap.BootstrapResponseEvent;
 import networking.protocols.NomadRealmsServerProtocolDecoder;
 
 public class BootstrapServerInput extends GameInput {
@@ -20,6 +22,7 @@ public class BootstrapServerInput extends GameInput {
 					nomadMini.drag();
 					data.selectedMini = nomadMini;
 					data.selectedMini.setPos(cursor().pos().toVec2f().sub(new Vector2f(32, 32)));
+					System.out.println(data.selectedMini.username());
 					break;
 				}
 			}
@@ -30,15 +33,18 @@ public class BootstrapServerInput extends GameInput {
 			return null;
 		}, false);
 		addMouseReleasedFunction(event -> data.selectedMini != null && event.button() == 0, event -> {
-			NomadMini selectedMini = data.selectedMini;
-			selectedMini.undrag();
+			NomadMini n1 = data.selectedMini;
+			n1.undrag();
 			List<NomadMini> minis = data.minis();
 			for (int i = minis.size() - 1; i >= 0; i--) {
-				NomadMini nomadMini = minis.get(i);
-				if (nomadMini != selectedMini && selectedMini.pos().sub(nomadMini.pos()).lengthSquared() <= 30 * 30) {
+				NomadMini n2 = minis.get(i);
+				if (n2 != n1 && n1.pos().sub(n2.pos()).lengthSquared() <= 30 * 30) {
 					System.out.println("Match!");
-					minis.remove(selectedMini);
-					minis.remove(nomadMini);
+					minis.remove(n1);
+					minis.remove(n2);
+					long nonce = new Random().nextLong();
+					context().sendPacket(new BootstrapResponseEvent(nonce, n1.lanAddress(), n1.wanAddress(), n1.username()).toPacket(n2.wanAddress()));
+					context().sendPacket(new BootstrapResponseEvent(nonce, n2.lanAddress(), n2.wanAddress(), n2.username()).toPacket(n1.wanAddress()));
 					break;
 				}
 			}

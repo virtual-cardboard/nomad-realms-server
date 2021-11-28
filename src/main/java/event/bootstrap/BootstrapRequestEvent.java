@@ -61,7 +61,7 @@ public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 		return BOOTSTRAP_REQUEST_FORMAT.builder(builder)
 				.consume(time())
 				.consume(lanAddress.ip())
-				.consume(lanAddress.port())
+				.consume(lanAddress.shortPort())
 				.consume(username)
 				.build();
 	}

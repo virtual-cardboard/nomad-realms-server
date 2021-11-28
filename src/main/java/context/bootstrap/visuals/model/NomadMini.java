@@ -5,6 +5,7 @@ import static java.lang.Math.PI;
 import static java.lang.Math.random;
 
 import common.math.Vector2f;
+import context.input.networking.packet.address.PacketAddress;
 
 public class NomadMini {
 
@@ -33,10 +34,14 @@ public class NomadMini {
 
 	private int state = RESTING;
 	private String username;
+	private PacketAddress lanAddress;
+	private PacketAddress wanAddress;
 
-	public NomadMini(int colour, String username) {
+	public NomadMini(int colour, String username, PacketAddress lanAddress, PacketAddress wanAddress) {
 		this.colour = colour;
 		this.username = username;
+		this.lanAddress = lanAddress;
+		this.wanAddress = wanAddress;
 	}
 
 	public void update() {
@@ -66,6 +71,14 @@ public class NomadMini {
 			}
 		} else if (state == DRAGGED) {
 		}
+	}
+
+	public PacketAddress lanAddress() {
+		return lanAddress;
+	}
+
+	public PacketAddress wanAddress() {
+		return wanAddress;
 	}
 
 	public String username() {

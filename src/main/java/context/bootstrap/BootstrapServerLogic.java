@@ -18,7 +18,8 @@ public class BootstrapServerLogic extends GameLogic {
 		});
 		addHandler(BootstrapRequestEvent.class, (event) -> {
 			int rgb = rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()));
-			data.minis().add(new NomadMini(rgb, event.username()));
+			data.minis().add(new NomadMini(rgb, event.username(), event.lanAddress(), event.source().address()));
+			System.out.println(event.lanAddress());
 		});
 	}
 
