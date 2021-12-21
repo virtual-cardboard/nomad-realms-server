@@ -1,6 +1,9 @@
 package context.loading;
 
 import static context.visuals.lwjgl.ShaderType.FRAGMENT;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
+import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +11,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import common.loader.GameLoader;
+import common.loader.loadtask.EmptyTextureLoadTask;
+import common.loader.loadtask.FrameBufferObjectLoadTask;
 import common.loader.loadtask.ShaderLoadTask;
 import common.loader.loadtask.ShaderProgramLoadTask;
 import context.ResourcePack;
@@ -15,9 +20,11 @@ import context.visuals.GameVisuals;
 import context.visuals.builtin.TextShaderProgram;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.builtin.TexturedTransformationVertexShader;
+import context.visuals.lwjgl.FrameBufferObject;
 import context.visuals.lwjgl.Shader;
 import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.TextRenderer;
+import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
 
 public class ServerLoadingVisuals extends GameVisuals {
@@ -33,8 +40,8 @@ public class ServerLoadingVisuals extends GameVisuals {
 		TexturedTransformationVertexShader texturedTransformationVS = rp.texturedTransformationVertexShader();
 
 		// Font textures
-		Future<Texture> fBaloo2Tex = loader.submit(new NomadRealmsTextureLoadTask(genTexUnit(), "fonts/baloo2.png"));
-		Future<Texture> fLangarTex = loader.submit(new NomadRealmsTextureLoadTask(genTexUnit(), "fonts/langar.png"));
+		Future<Texture> fBaloo2Tex = loader.submit(new NomadRealmsTextureLoadTask("fonts/baloo2.png"));
+		Future<Texture> fLangarTex = loader.submit(new NomadRealmsTextureLoadTask("fonts/langar.png"));
 
 		// Shaders
 		Future<Shader> fTextFS = loader.submit(new ShaderLoadTask(FRAGMENT, "shaders/textFragmentShader.glsl"));
@@ -46,9 +53,21 @@ public class ServerLoadingVisuals extends GameVisuals {
 		texMap.put("yard", "images/yard.png");
 		texMap.put("yard_bottom_fence", "images/yard_bottom_fence.png");
 		texMap.put("nomad", "images/nomad.png");
-		texMap.forEach((name, path) -> fTexMap.put(name, loader.submit(new NomadRealmsTextureLoadTask(genTexUnit(), path))));
+		texMap.forEach((name, path) -> fTexMap.put(name, loader.submit(new NomadRealmsTextureLoadTask(path))));
 
 		try {
+			int w = 600;
+			int h = 600;
+			FrameBufferObject textFBO = loader().submit(new FrameBufferObjectLoadTask()).get();
+			Texture textTexture = loader().submit(new EmptyTextureLoadTask(w, h)).get();
+			textFBO.bind(glContext());
+			textFBO.attachTexture(textTexture);
+			FrameBufferObject.unbind(glContext());
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+				System.err.println("FBO failed to initialize properly.");
+			}
+			rp.putFBO("text", textFBO);
+
 			Texture baloo2Tex = fBaloo2Tex.get();
 			Future<GameFont> fBaloo2Font = loader.submit(new NomadRealmsFontLoadTask("fonts/baloo2.vcfont", baloo2Tex));
 			GameFont baloo2Font = fBaloo2Font.get();
@@ -59,15 +78,17 @@ public class ServerLoadingVisuals extends GameVisuals {
 			GameFont langarFont = fLangarFont.get();
 			rp.putFont("langar", langarFont);
 
-			Shader textFS = fTextFS.get();
-			TextShaderProgram textSP = new TextShaderProgram(texturedTransformationVS, textFS);
-			loader.submit(new ShaderProgramLoadTask(textSP)).get();
-			rp.putRenderer("text", new TextRenderer(textSP, rp.rectangleVAO()));
-
 			Shader textureFS = fTextureFS.get();
 			TextureShaderProgram textureSP = new TextureShaderProgram(texturedTransformationVS, textureFS);
 			loader.submit(new ShaderProgramLoadTask(textureSP)).get();
 			rp.putShaderProgram("texture", textureSP);
+			TextureRenderer textureRenderer = new TextureRenderer(textureSP, rp.rectangleVAO());
+			rp.putRenderer("texture", textureRenderer);
+
+			Shader textFS = fTextFS.get();
+			TextShaderProgram textSP = new TextShaderProgram(texturedTransformationVS, textFS);
+			loader.submit(new ShaderProgramLoadTask(textSP)).get();
+			rp.putRenderer("text", new TextRenderer(textureRenderer, textSP, rp.rectangleVAO(), textFBO));
 
 			fTexMap.forEach((name, fTexture) -> {
 				try {
@@ -83,12 +104,6 @@ public class ServerLoadingVisuals extends GameVisuals {
 
 	@Override
 	public void render() {
-	}
-
-	private int n;
-
-	private int genTexUnit() {
-		return (n++) % 48;
 	}
 
 }
