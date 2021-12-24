@@ -1,13 +1,13 @@
 package context.loading;
 
 import context.GameContext;
-import context.bootstrap.BootstrapServerData;
-import context.bootstrap.BootstrapServerInput;
-import context.bootstrap.BootstrapServerLogic;
-import context.bootstrap.BootstrapServerVisuals;
 import context.data.GameData;
 import context.input.GameInput;
 import context.logic.GameLogic;
+import context.server.ServerData;
+import context.server.ServerInput;
+import context.server.ServerLogic;
+import context.server.ServerVisuals;
 import context.visuals.GameVisuals;
 
 public class ServerLoadingLogic extends GameLogic {
@@ -16,12 +16,17 @@ public class ServerLoadingLogic extends GameLogic {
 	}
 
 	@Override
+	protected void init() {
+
+	}
+
+	@Override
 	public void update() {
 		if (((ServerLoadingVisuals) context().visuals()).initialized()) {
-			GameData data = new BootstrapServerData();
-			GameInput input = new BootstrapServerInput();
-			GameLogic logic = new BootstrapServerLogic();
-			GameVisuals visuals = new BootstrapServerVisuals();
+			GameData data = new ServerData();
+			GameInput input = new ServerInput();
+			GameLogic logic = new ServerLogic();
+			GameVisuals visuals = new ServerVisuals();
 			GameContext context = new GameContext(data, input, logic, visuals);
 			context().transition(context);
 		}

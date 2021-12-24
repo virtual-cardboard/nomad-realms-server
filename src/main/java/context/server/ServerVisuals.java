@@ -1,10 +1,10 @@
-package context.bootstrap;
+package context.server;
 
 import static context.visuals.colour.Colour.rgb;
 import static java.util.Comparator.comparing;
 
 import context.ResourcePack;
-import context.bootstrap.visuals.model.NomadMini;
+import context.server.visuals.model.NomadMini;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextureShaderProgram;
@@ -13,7 +13,7 @@ import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
 
-public class BootstrapServerVisuals extends GameVisuals {
+public class ServerVisuals extends GameVisuals {
 
 	private GameFont baloo2;
 	private GameFont langar;
@@ -24,14 +24,14 @@ public class BootstrapServerVisuals extends GameVisuals {
 	private Texture yardBottomFence;
 	private Texture nomad;
 	private RectangleRenderer rectangleRenderer;
-	private BootstrapServerData data;
+	private ServerData data;
 
-	public BootstrapServerVisuals() {
+	public ServerVisuals() {
 	}
 
 	@Override
 	public void init() {
-		data = (BootstrapServerData) context().data();
+		data = (ServerData) context().data();
 		ResourcePack rp = context().resourcePack();
 		baloo2 = rp.getFont("baloo2");
 		langar = rp.getFont("langar");
