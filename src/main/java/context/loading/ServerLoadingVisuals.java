@@ -1,9 +1,6 @@
 package context.loading;
 
 import static context.visuals.lwjgl.ShaderType.FRAGMENT;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER_COMPLETE;
-import static org.lwjgl.opengl.GL30.glCheckFramebufferStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,14 +55,8 @@ public class ServerLoadingVisuals extends GameVisuals {
 		try {
 			int w = 600;
 			int h = 600;
-			FrameBufferObject textFBO = loader().submit(new FrameBufferObjectLoadTask()).get();
 			Texture textTexture = loader().submit(new EmptyTextureLoadTask(w, h)).get();
-			textFBO.bind(glContext());
-			textFBO.attachTexture(textTexture);
-			FrameBufferObject.unbind(glContext());
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-				System.err.println("FBO failed to initialize properly.");
-			}
+			FrameBufferObject textFBO = loader().submit(new FrameBufferObjectLoadTask(textTexture, null)).get();
 			rp.putFBO("text", textFBO);
 
 			Texture baloo2Tex = fBaloo2Tex.get();
