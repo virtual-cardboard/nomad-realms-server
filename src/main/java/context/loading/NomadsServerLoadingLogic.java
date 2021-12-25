@@ -10,19 +10,18 @@ import context.server.ServerLogic;
 import context.server.ServerVisuals;
 import context.visuals.GameVisuals;
 
-public class ServerLoadingLogic extends GameLogic {
+public class NomadsServerLoadingLogic extends GameLogic {
 
-	public ServerLoadingLogic() {
-	}
+	private ServerLoadingVisuals serverLoadingVisuals;
 
 	@Override
 	protected void init() {
-
+		serverLoadingVisuals = (ServerLoadingVisuals) context().visuals();
 	}
 
 	@Override
 	public void update() {
-		if (((ServerLoadingVisuals) context().visuals()).initialized()) {
+		if (serverLoadingVisuals.initialized()) {
 			GameData data = new ServerData();
 			GameInput input = new ServerInput();
 			GameLogic logic = new ServerLogic();

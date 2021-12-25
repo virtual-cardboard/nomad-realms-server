@@ -5,7 +5,7 @@ import context.data.DefaultGameData;
 import context.data.GameData;
 import context.input.DefaultGameInput;
 import context.input.GameInput;
-import context.loading.ServerLoadingLogic;
+import context.loading.NomadsServerLoadingLogic;
 import context.loading.ServerLoadingVisuals;
 import context.logic.GameLogic;
 import context.visuals.GameVisuals;
@@ -16,7 +16,7 @@ public class NomadRealmsServerApp {
 	public static void main(String[] args) {
 		GameData data = new DefaultGameData();
 		GameInput input = new DefaultGameInput();
-		GameLogic logic = new ServerLoadingLogic();
+		GameLogic logic = new NomadsServerLoadingLogic();
 		GameVisuals visuals = new ServerLoadingVisuals();
 		GameContext context = new GameContext(data, input, logic, visuals);
 		new GameEngine("Nomad Realms Server", context)
@@ -27,7 +27,7 @@ public class NomadRealmsServerApp {
 				.windowDimensions(512, 1012)
 				.disableResizing()
 				.run();
-		System.out.println("Started UDP Holepunch Server");
+		System.out.println("Started Nomad Realms Server");
 	}
 
 }
