@@ -56,8 +56,10 @@ public class BootstrapServerVisuals extends GameVisuals {
 		}
 		textureRenderer.render(context().glContext(), rootGui().dimensions(), yardBottomFence, 256, 256 + 200, 1);
 		textureRenderer.render(context().glContext(), rootGui(), serverIcon, 900, 300, 500, 500);
-		textRenderer.render(context().glContext(), rootGui(), 300, 400, "Hello world!!!", 0, baloo2, 80, 255);
-		textRenderer.render(context().glContext(), rootGui(), 200, 100, "Nomad Realms Server", 0, langar, 80, 255);
+		if (data.selectedMini != null) {
+			textRenderer.render(context().glContext(), rootGui(), 12, 800, data.selectedMini.username(), 0, baloo2, 28, 255);
+		}
+		textRenderer.render(context().glContext(), rootGui(), 50, 10, "Nomad Realms Server", 0, langar, 44, 255);
 	}
 
 	private void drawNomad(NomadMini mini) {
