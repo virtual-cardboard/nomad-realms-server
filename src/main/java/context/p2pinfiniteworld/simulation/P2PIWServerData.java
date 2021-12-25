@@ -1,10 +1,10 @@
-package context.p2pinfiniteworld;
+package context.p2pinfiniteworld.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import context.data.GameData;
-import context.server.visuals.model.NomadMini;
+import context.nomadrealms.server.visuals.model.NomadMini;
 import model.WorldInfo;
 
 public class P2PIWServerData extends GameData {

@@ -1,4 +1,4 @@
-package context.server;
+package context.nomadrealms.server;
 
 import static context.visuals.colour.Colour.rgb;
 import static java.lang.Math.random;
@@ -7,7 +7,7 @@ import java.util.Random;
 
 import common.event.GameEvent;
 import context.logic.GameLogic;
-import context.server.visuals.model.NomadMini;
+import context.nomadrealms.server.visuals.model.NomadMini;
 import event.bootstrap.BootstrapRequestEvent;
 import event.world.CreateWorldRequestEvent;
 import event.world.CreateWorldResponseEvent;

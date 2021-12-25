@@ -1,4 +1,4 @@
-package context.loading;
+package context.nomadrealms.loading;
 
 import common.loader.loadtask.TextureLoadTask;
 import context.visuals.lwjgl.Texture;

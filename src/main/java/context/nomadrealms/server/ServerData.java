@@ -1,10 +1,10 @@
-package context.server;
+package context.nomadrealms.server;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import context.data.GameData;
-import context.server.visuals.model.NomadMini;
+import context.nomadrealms.server.visuals.model.NomadMini;
 import model.WorldInfo;
 
 public class ServerData extends GameData {

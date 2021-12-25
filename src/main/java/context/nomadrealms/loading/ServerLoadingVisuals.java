@@ -1,4 +1,4 @@
-package context.loading;
+package context.nomadrealms.loading;
 
 import static context.visuals.lwjgl.ShaderType.FRAGMENT;
 

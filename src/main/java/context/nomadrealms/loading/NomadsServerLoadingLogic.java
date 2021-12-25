@@ -1,16 +1,16 @@
-package context.loading;
+package context.nomadrealms.loading;
 
 import context.GameContext;
 import context.data.GameData;
 import context.input.GameInput;
 import context.logic.GameLogic;
-import context.server.ServerData;
-import context.server.ServerInput;
-import context.server.ServerLogic;
-import context.server.ServerVisuals;
+import context.nomadrealms.server.ServerData;
+import context.nomadrealms.server.ServerInput;
+import context.nomadrealms.server.ServerLogic;
+import context.nomadrealms.server.ServerVisuals;
 import context.visuals.GameVisuals;
 
-public class P2PIWServerLoadingLogic extends GameLogic {
+public class NomadsServerLoadingLogic extends GameLogic {
 
 	private ServerLoadingVisuals serverLoadingVisuals;
 

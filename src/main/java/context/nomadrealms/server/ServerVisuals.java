@@ -1,10 +1,10 @@
-package context.server;
+package context.nomadrealms.server;
 
 import static context.visuals.colour.Colour.rgb;
 import static java.util.Comparator.comparing;
 
 import context.ResourcePack;
-import context.server.visuals.model.NomadMini;
+import context.nomadrealms.server.visuals.model.NomadMini;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextureShaderProgram;

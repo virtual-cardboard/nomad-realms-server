@@ -1,6 +1,6 @@
-package context.loading;
+package context.nomadrealms.loading;
 
-import static context.loading.NomadRealmsTextureLoadTask.SOURCE_PATH;
+import static context.nomadrealms.loading.NomadRealmsTextureLoadTask.SOURCE_PATH;
 
 import common.loader.loadtask.ShaderLoadTask;
 import context.visuals.lwjgl.Shader;

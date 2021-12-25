@@ -1,11 +1,11 @@
-package context.p2pinfiniteworld;
+package context.p2pinfiniteworld.simulation;
 
 import java.util.List;
 import java.util.Random;
 
 import common.math.Vector2f;
 import context.input.GameInput;
-import context.server.visuals.model.NomadMini;
+import context.nomadrealms.server.visuals.model.NomadMini;
 import event.bootstrap.BootstrapResponseEvent;
 import networking.protocols.NomadRealmsServerProtocolDecoder;
 

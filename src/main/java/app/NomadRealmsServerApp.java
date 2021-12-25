@@ -5,9 +5,9 @@ import context.data.DefaultGameData;
 import context.data.GameData;
 import context.input.DefaultGameInput;
 import context.input.GameInput;
-import context.loading.NomadsServerLoadingLogic;
-import context.loading.ServerLoadingVisuals;
 import context.logic.GameLogic;
+import context.nomadrealms.loading.NomadsServerLoadingLogic;
+import context.nomadrealms.loading.ServerLoadingVisuals;
 import context.visuals.GameVisuals;
 import engine.GameEngine;
 
