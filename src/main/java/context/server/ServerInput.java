@@ -1,19 +1,19 @@
-package context.bootstrap;
+package context.server;
 
 import java.util.List;
 import java.util.Random;
 
 import common.math.Vector2f;
-import context.bootstrap.visuals.model.NomadMini;
 import context.input.GameInput;
+import context.server.visuals.model.NomadMini;
 import event.bootstrap.BootstrapResponseEvent;
 import networking.protocols.NomadRealmsServerProtocolDecoder;
 
-public class BootstrapServerInput extends GameInput {
+public class ServerInput extends GameInput {
 
 	@Override
 	protected void init() {
-		BootstrapServerData data = (BootstrapServerData) context().data();
+		ServerData data = (ServerData) context().data();
 		addMousePressedFunction(event -> true, event -> {
 			List<NomadMini> minis = data.minis();
 			for (int i = minis.size() - 1; i >= 0; i--) {

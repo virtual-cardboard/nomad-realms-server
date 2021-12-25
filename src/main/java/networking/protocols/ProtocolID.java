@@ -3,11 +3,15 @@ package networking.protocols;
 import event.NomadRealmsServerGameEvent;
 import event.bootstrap.BootstrapRequestEvent;
 import event.bootstrap.BootstrapResponseEvent;
+import event.world.CreateWorldRequestEvent;
+import event.world.CreateWorldResponseEvent;
 
 public enum ProtocolID {
 
 	BOOTSTRAP_REQUEST(BootstrapRequestEvent.class, 100),
-	BOOTSTRAP_RESPONSE(BootstrapResponseEvent.class, 101);
+	BOOTSTRAP_RESPONSE(BootstrapResponseEvent.class, 101),
+	CREATE_WORLD_REQUEST(CreateWorldRequestEvent.class, 110),
+	CREATE_WORLD_RESPONSE(CreateWorldResponseEvent.class, 111);
 
 	private static final ProtocolID[] IDS = new ProtocolID[Short.MAX_VALUE];
 

@@ -1,4 +1,4 @@
-package context.bootstrap.visuals.model;
+package context.server.visuals.model;
 
 import static common.math.Vector2f.fromAngleLength;
 import static java.lang.Math.PI;
