@@ -1,72 +1,89 @@
 package context.p2pinfiniteworld.simulation;
 
 import static context.visuals.colour.Colour.rgb;
-import static java.util.Comparator.comparing;
 
-import context.ResourcePack;
-import context.nomadrealms.server.visuals.model.NomadMini;
+import context.p2pinfiniteworld.simulation.visuals.DiffuseTextureRenderer;
+import context.p2pinfiniteworld.simulation.visuals.NomadTiny;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.lwjgl.Texture;
+import context.visuals.renderer.LineRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
 
 public class P2PIWServerVisuals extends GameVisuals {
 
+	private static final int GRID_SQUARE_SIZE = 32;
+	private static final int REGION_SQUARE_SIZE = GRID_SQUARE_SIZE * 4;
+	private static final int GRID_START_X = 96;
+
 	private GameFont baloo2;
 	private GameFont langar;
 	private TextRenderer textRenderer;
-	private Texture serverIcon;
 	private TextureRenderer textureRenderer;
-	private Texture yard;
-	private Texture yardBottomFence;
-	private Texture nomad;
+	private DiffuseTextureRenderer diffuseTextureRenderer;
 	private RectangleRenderer rectangleRenderer;
 	private P2PIWServerData data;
+	private LineRenderer lineRenderer;
+	private Texture tinyNomad;
 
-	public P2PIWServerVisuals() {
-	}
+	private int chunkColour = rgb(111, 115, 122);
+	private int regionColour = rgb(255, 255, 255);
 
 	@Override
 	public void init() {
 		data = (P2PIWServerData) context().data();
-		ResourcePack rp = context().resourcePack();
-		baloo2 = rp.getFont("baloo2");
-		langar = rp.getFont("langar");
-		textRenderer = rp.getRenderer("text", TextRenderer.class);
-		textureRenderer = new TextureRenderer((TextureShaderProgram) rp.getShaderProgram("texture"), rp.rectangleVAO());
-		serverIcon = rp.getTexture("server");
-		yard = rp.getTexture("yard");
-		yardBottomFence = rp.getTexture("yard_bottom_fence");
-		nomad = rp.getTexture("nomad");
-		rectangleRenderer = new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO());
+		baloo2 = resourcePack().getFont("baloo2");
+		langar = resourcePack().getFont("langar");
+		textRenderer = resourcePack().getRenderer("text", TextRenderer.class);
+		textureRenderer = new TextureRenderer((TextureShaderProgram) resourcePack().getShaderProgram("texture"), resourcePack().rectangleVAO());
+		diffuseTextureRenderer = resourcePack.getRenderer("diffuse_texture", DiffuseTextureRenderer.class);
+		rectangleRenderer = new RectangleRenderer(resourcePack().defaultShaderProgram(), resourcePack().rectangleVAO());
+		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
+		tinyNomad = resourcePack.getTexture("tiny_nomad");
+		data.nomads().add(new NomadTiny(10, 10));
 	}
 
 	@Override
 	public void render() {
-		background(rgb(255, 255, 255));
-		textureRenderer.render(context().glContext(), rootGui().dimensions(), yard, 256, 256 + 200, 1);
-		data.minis().sort(comparing(NomadMini::y));
-		for (int i = 0; i < data.minis().size(); i++) {
-			NomadMini mini = data.minis().get(i);
-			mini.update();
-			drawNomad(mini);
-		}
-		textureRenderer.render(context().glContext(), rootGui().dimensions(), yardBottomFence, 256, 256 + 200, 1);
-		textureRenderer.render(context().glContext(), rootGui(), serverIcon, 900, 300, 500, 500);
-		if (data.selectedMini != null) {
-			textRenderer.render(context().glContext(), rootGui(), 12, 800, data.selectedMini.username(), 0, baloo2, 28, 255);
-		}
-		textRenderer.render(context().glContext(), rootGui(), 50, 10, "Nomad Realms Server", 0, langar, 44, 255);
+		background(rgb(47, 49, 54));
+		drawGrid();
+		drawNomads();
 	}
 
-	private void drawNomad(NomadMini mini) {
-		float x = mini.x();
-		float y = mini.y() - mini.h();
-		rectangleRenderer.render(context().glContext(), rootGui().dimensions(), x + 12, y + 20, 35, 30, mini.colour());
-		textureRenderer.render(context().glContext(), rootGui(), nomad, x, y, 64, 64);
+	private void drawNomads() {
+		for (NomadTiny nomad : data.nomads()) {
+			renderNomad(nomad);
+		}
+	}
+
+	private void drawGrid() {
+		drawChunks();
+		drawRegions();
+	}
+
+	private void drawChunks() {
+		for (int i = 0; i < 60; i++) {
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X + i * GRID_SQUARE_SIZE, 0, GRID_START_X + i * GRID_SQUARE_SIZE, rootGui.dimensions().y, 5, chunkColour);
+		}
+		for (int i = 0; i < 40; i++) {
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X, i * GRID_SQUARE_SIZE, rootGui.dimensions().x, i * GRID_SQUARE_SIZE, 5, chunkColour);
+		}
+	}
+
+	private void drawRegions() {
+		for (int i = 0; i < 60; i++) {
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X + i * REGION_SQUARE_SIZE, 0, GRID_START_X + i * REGION_SQUARE_SIZE, rootGui.dimensions().y, 5, regionColour);
+		}
+		for (int i = 0; i < 40; i++) {
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X, i * REGION_SQUARE_SIZE, rootGui.dimensions().x, i * REGION_SQUARE_SIZE, 5, regionColour);
+		}
+	}
+
+	private void renderNomad(NomadTiny nomad) {
+		diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, nomad.x * GRID_SQUARE_SIZE + 2, nomad.y * GRID_SQUARE_SIZE + 2, 28, 28, chunkColour);
 	}
 
 }

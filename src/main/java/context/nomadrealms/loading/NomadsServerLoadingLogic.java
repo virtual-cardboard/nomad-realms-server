@@ -12,11 +12,11 @@ import context.visuals.GameVisuals;
 
 public class NomadsServerLoadingLogic extends GameLogic {
 
-	private ServerLoadingVisuals serverLoadingVisuals;
+	private NomadsServerLoadingVisuals serverLoadingVisuals;
 
 	@Override
 	protected void init() {
-		serverLoadingVisuals = (ServerLoadingVisuals) context().visuals();
+		serverLoadingVisuals = (NomadsServerLoadingVisuals) context().visuals();
 	}
 
 	@Override

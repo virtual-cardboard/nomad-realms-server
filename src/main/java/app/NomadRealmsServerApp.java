@@ -7,7 +7,7 @@ import context.input.DefaultGameInput;
 import context.input.GameInput;
 import context.logic.GameLogic;
 import context.nomadrealms.loading.NomadsServerLoadingLogic;
-import context.nomadrealms.loading.ServerLoadingVisuals;
+import context.nomadrealms.loading.NomadsServerLoadingVisuals;
 import context.visuals.GameVisuals;
 import engine.GameEngine;
 
@@ -17,7 +17,7 @@ public class NomadRealmsServerApp {
 		GameData data = new DefaultGameData();
 		GameInput input = new DefaultGameInput();
 		GameLogic logic = new NomadsServerLoadingLogic();
-		GameVisuals visuals = new ServerLoadingVisuals();
+		GameVisuals visuals = new NomadsServerLoadingVisuals();
 		GameContext context = new GameContext(data, input, logic, visuals);
 		new GameEngine("Nomad Realms Server", context)
 				.enableLoading()

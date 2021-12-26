@@ -23,10 +23,12 @@ import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
+import loading.NomadRealmsServerFontLoadTask;
+import loading.NomadRealmsServerTextureLoadTask;
 
-public class ServerLoadingVisuals extends GameVisuals {
+public class NomadsServerLoadingVisuals extends GameVisuals {
 
-	public ServerLoadingVisuals() {
+	public NomadsServerLoadingVisuals() {
 	}
 
 	@Override
@@ -37,8 +39,8 @@ public class ServerLoadingVisuals extends GameVisuals {
 		TexturedTransformationVertexShader texturedTransformationVS = rp.texturedTransformationVertexShader();
 
 		// Font textures
-		Future<Texture> fBaloo2Tex = loader.submit(new NomadRealmsTextureLoadTask("fonts/baloo2.png"));
-		Future<Texture> fLangarTex = loader.submit(new NomadRealmsTextureLoadTask("fonts/langar.png"));
+		Future<Texture> fBaloo2Tex = loader.submit(new NomadRealmsServerTextureLoadTask("fonts/baloo2.png"));
+		Future<Texture> fLangarTex = loader.submit(new NomadRealmsServerTextureLoadTask("fonts/langar.png"));
 
 		// Shaders
 		Future<Shader> fTextFS = loader.submit(new ShaderLoadTask(FRAGMENT, "shaders/textFragmentShader.glsl"));
@@ -50,7 +52,7 @@ public class ServerLoadingVisuals extends GameVisuals {
 		texMap.put("yard", "images/yard.png");
 		texMap.put("yard_bottom_fence", "images/yard_bottom_fence.png");
 		texMap.put("nomad", "images/nomad.png");
-		texMap.forEach((name, path) -> fTexMap.put(name, loader.submit(new NomadRealmsTextureLoadTask(path))));
+		texMap.forEach((name, path) -> fTexMap.put(name, loader.submit(new NomadRealmsServerTextureLoadTask(path))));
 
 		try {
 			int w = 600;
@@ -60,12 +62,12 @@ public class ServerLoadingVisuals extends GameVisuals {
 			rp.putFBO("text", textFBO);
 
 			Texture baloo2Tex = fBaloo2Tex.get();
-			Future<GameFont> fBaloo2Font = loader.submit(new NomadRealmsFontLoadTask("fonts/baloo2.vcfont", baloo2Tex));
+			Future<GameFont> fBaloo2Font = loader.submit(new NomadRealmsServerFontLoadTask("fonts/baloo2.vcfont", baloo2Tex));
 			GameFont baloo2Font = fBaloo2Font.get();
 			rp.putFont("baloo2", baloo2Font);
 
 			Texture langarTex = fLangarTex.get();
-			Future<GameFont> fLangarFont = loader.submit(new NomadRealmsFontLoadTask("fonts/langar.vcfont", langarTex));
+			Future<GameFont> fLangarFont = loader.submit(new NomadRealmsServerFontLoadTask("fonts/langar.vcfont", langarTex));
 			GameFont langarFont = fLangarFont.get();
 			rp.putFont("langar", langarFont);
 

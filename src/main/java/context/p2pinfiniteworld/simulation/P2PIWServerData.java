@@ -4,22 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import context.data.GameData;
-import context.nomadrealms.server.visuals.model.NomadMini;
-import model.WorldInfo;
+import context.p2pinfiniteworld.simulation.visuals.NomadTiny;
 
 public class P2PIWServerData extends GameData {
 
-	private List<WorldInfo> worldInfos = new ArrayList<>();
-	private List<NomadMini> minis = new ArrayList<>();
+	private List<NomadTiny> tinies = new ArrayList<>();
 
-	public NomadMini selectedMini;
+	public NomadTiny selectedMini;
 
-	public List<NomadMini> minis() {
-		return minis;
-	}
-
-	public List<WorldInfo> worldInfos() {
-		return worldInfos;
+	public List<NomadTiny> nomads() {
+		return tinies;
 	}
 
 }
