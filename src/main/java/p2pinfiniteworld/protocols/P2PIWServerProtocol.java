@@ -8,6 +8,7 @@ import p2pinfiniteworld.event.P2PIWServerGameEvent;
 
 public enum P2PIWServerProtocol {
 
+	/** username */
 	JOIN_WORLD_REQUEST(P2PIWJoinWorldRequestEvent.class, 111, new PacketFormat().with(STRING));
 
 	private short id;

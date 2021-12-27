@@ -14,25 +14,16 @@ import nomadrealms.event.world.CreateWorldResponseEvent;
 
 public enum NomadRealmsServerProtocol {
 
-	/**
-	 * protocol_id(100): timestamp, lan_ip, lan_port, username
-	 */
+	/** timestamp, lan_ip, lan_port, username */
 	BOOTSTRAP_REQUEST(BootstrapRequestEvent.class, 100, new PacketFormat().with(LONG, IP_V4, SHORT, STRING)),
 
-	/**
-	 * protocol_id(101): timestamp, nonce, lan_ip, lan_port, wan_ip, wan_port,
-	 * username
-	 */
+	/** timestamp, nonce, lan_ip, lan_port, wan_ip, wan_port, username */
 	BOOTSTRAP_RESPONSE(BootstrapResponseEvent.class, 101, new PacketFormat().with(LONG, LONG, IP_V4, SHORT, IP_V4, SHORT, STRING)),
 
-	/**
-	 * protocol_id(110): timestamp, world_name
-	 */
+	/** timestamp, world_name */
 	CREATE_WORLD_REQUEST(CreateWorldRequestEvent.class, 110, new PacketFormat().with(LONG, STRING)),
 
-	/**
-	 * protocol_id(111): timestamp, seed
-	 */
+	/** timestamp, seed */
 	CREATE_WORLD_RESPONSE(CreateWorldResponseEvent.class, 111, new PacketFormat().with(LONG, LONG));
 
 	private short id;
