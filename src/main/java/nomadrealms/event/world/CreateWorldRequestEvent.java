@@ -2,15 +2,15 @@ package nomadrealms.event.world;
 
 import static context.input.networking.packet.PacketPrimitive.LONG;
 import static context.input.networking.packet.PacketPrimitive.STRING;
-import static networking.ProtocolID.CREATE_WORLD_REQUEST;
+import static nomadrealms.protocols.NomadRealmsServerProtocols.CREATE_WORLD_REQUEST;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import networking.ProtocolID;
 import nomadrealms.event.NomadRealmsServerGameEvent;
+import nomadrealms.protocols.NomadRealmsServerProtocols;
 
 public class CreateWorldRequestEvent extends NomadRealmsServerGameEvent {
 
@@ -45,7 +45,7 @@ public class CreateWorldRequestEvent extends NomadRealmsServerGameEvent {
 	}
 
 	@Override
-	protected ProtocolID protocolID() {
+	protected NomadRealmsServerProtocols protocolID() {
 		return CREATE_WORLD_REQUEST;
 	}
 

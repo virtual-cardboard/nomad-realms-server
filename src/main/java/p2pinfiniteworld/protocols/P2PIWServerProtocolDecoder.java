@@ -1,4 +1,4 @@
-package nomadrealms.protocols;
+package p2pinfiniteworld.protocols;
 
 import static networking.NetworkUtils.PROTOCOL_ID;
 
@@ -11,15 +11,15 @@ import context.input.event.PacketReceivedInputEvent;
 import context.input.networking.packet.PacketReader;
 import nomadrealms.event.NomadRealmsServerGameEvent;
 
-public class NomadRealmsServerProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {
+public class P2PIWServerProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {
 
 	@SuppressWarnings("unchecked")
 	private static final Class<? extends NomadRealmsServerGameEvent>[] PROTOCOL_EVENTS = new Class[Short.MAX_VALUE];
 
 	static {
-		NomadRealmsServerProtocols[] values = NomadRealmsServerProtocols.values();
+		P2PIWServerProtocols[] values = P2PIWServerProtocols.values();
 		for (short i = 0; i < values.length; i++) {
-			NomadRealmsServerProtocols value = values[i];
+			P2PIWServerProtocols value = values[i];
 			PROTOCOL_EVENTS[value.id()] = value.clazz();
 		}
 	}

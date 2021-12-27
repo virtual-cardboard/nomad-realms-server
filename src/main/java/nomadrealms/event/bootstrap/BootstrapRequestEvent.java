@@ -6,7 +6,7 @@ import static context.input.networking.packet.PacketPrimitive.SHORT;
 import static context.input.networking.packet.PacketPrimitive.STRING;
 import static networking.NetworkUtils.LOCAL_HOST;
 import static networking.NetworkUtils.toIP;
-import static networking.ProtocolID.BOOTSTRAP_REQUEST;
+import static nomadrealms.protocols.NomadRealmsServerProtocols.BOOTSTRAP_REQUEST;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
@@ -14,8 +14,8 @@ import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import networking.ProtocolID;
 import nomadrealms.event.NomadRealmsServerGameEvent;
+import nomadrealms.protocols.NomadRealmsServerProtocols;
 
 public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 
@@ -67,7 +67,7 @@ public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 	}
 
 	@Override
-	protected ProtocolID protocolID() {
+	protected NomadRealmsServerProtocols protocolID() {
 		return BOOTSTRAP_REQUEST;
 	}
 
