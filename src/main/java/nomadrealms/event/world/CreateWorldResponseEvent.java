@@ -1,23 +1,16 @@
 package nomadrealms.event.world;
 
-import static context.input.networking.packet.PacketPrimitive.LONG;
 import static networking.NetworkUtils.LOCAL_HOST;
-import static nomadrealms.protocols.NomadRealmsServerProtocols.CREATE_WORLD_RESPONSE;
+import static nomadrealms.protocols.NomadRealmsServerProtocol.CREATE_WORLD_RESPONSE;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import networking.NomadRealmsServerGameEvent;
-import nomadrealms.protocols.NomadRealmsServerProtocols;
+import nomadrealms.event.NomadRealmsServerGameEvent;
+import nomadrealms.protocols.NomadRealmsServerProtocol;
 
 public class CreateWorldResponseEvent extends NomadRealmsServerGameEvent {
-
-	/**
-	 * protocol_id(111): timestamp, seed
-	 */
-	public static final PacketFormat CREATE_WORLD_RESPONSE_FORMAT = new PacketFormat().with(LONG, LONG);
 
 	private long seed;
 
@@ -31,9 +24,8 @@ public class CreateWorldResponseEvent extends NomadRealmsServerGameEvent {
 		this.seed = seed;
 	}
 
-	public CreateWorldResponseEvent(NetworkSource source, PacketReader protocolReader) {
+	public CreateWorldResponseEvent(NetworkSource source, PacketReader reader) {
 		super(source);
-		PacketReader reader = CREATE_WORLD_RESPONSE_FORMAT.reader(protocolReader);
 		setTime(reader.readLong());
 		this.seed = reader.readLong();
 		reader.close();
@@ -45,14 +37,14 @@ public class CreateWorldResponseEvent extends NomadRealmsServerGameEvent {
 
 	@Override
 	protected PacketModel toPacketModel(PacketBuilder builder) {
-		return CREATE_WORLD_RESPONSE_FORMAT.builder(builder)
+		return builder
 				.consume(time())
 				.consume(seed)
 				.build();
 	}
 
 	@Override
-	protected NomadRealmsServerProtocols protocolID() {
+	protected NomadRealmsServerProtocol protocol() {
 		return CREATE_WORLD_RESPONSE;
 	}
 

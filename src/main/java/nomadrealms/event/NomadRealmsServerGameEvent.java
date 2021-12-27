@@ -1,4 +1,4 @@
-package networking;
+package nomadrealms.event;
 
 import static networking.NetworkUtils.PROTOCOL_ID;
 
@@ -7,7 +7,7 @@ import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.address.PacketAddress;
-import nomadrealms.protocols.NomadRealmsServerProtocols;
+import nomadrealms.protocols.NomadRealmsServerProtocol;
 
 public abstract class NomadRealmsServerGameEvent extends GameEvent {
 
@@ -25,12 +25,13 @@ public abstract class NomadRealmsServerGameEvent extends GameEvent {
 	}
 
 	public PacketModel toPacket(PacketAddress address) {
-		PacketBuilder builder = PROTOCOL_ID.builder(address).consume(protocolID().id());
+		PacketBuilder idBuilder = PROTOCOL_ID.builder(address).consume(protocol().id());
+		PacketBuilder builder = protocol().format().builder(idBuilder);
 		return toPacketModel(builder);
 	}
 
 	protected abstract PacketModel toPacketModel(PacketBuilder builder);
 
-	protected abstract NomadRealmsServerProtocols protocolID();
+	protected abstract NomadRealmsServerProtocol protocol();
 
 }

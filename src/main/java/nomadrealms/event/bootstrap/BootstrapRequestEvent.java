@@ -1,28 +1,18 @@
 package nomadrealms.event.bootstrap;
 
-import static context.input.networking.packet.PacketPrimitive.IP_V4;
-import static context.input.networking.packet.PacketPrimitive.LONG;
-import static context.input.networking.packet.PacketPrimitive.SHORT;
-import static context.input.networking.packet.PacketPrimitive.STRING;
 import static networking.NetworkUtils.LOCAL_HOST;
 import static networking.NetworkUtils.toIP;
-import static nomadrealms.protocols.NomadRealmsServerProtocols.BOOTSTRAP_REQUEST;
+import static nomadrealms.protocols.NomadRealmsServerProtocol.BOOTSTRAP_REQUEST;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import networking.NomadRealmsServerGameEvent;
-import nomadrealms.protocols.NomadRealmsServerProtocols;
+import nomadrealms.event.NomadRealmsServerGameEvent;
+import nomadrealms.protocols.NomadRealmsServerProtocol;
 
 public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
-
-	/**
-	 * protocol_id(100): timestamp, lan_ip, lan_port, username
-	 */
-	public static final PacketFormat BOOTSTRAP_REQUEST_FORMAT = new PacketFormat().with(LONG, IP_V4, SHORT, STRING);
 
 	private PacketAddress lanAddress;
 	private String username;
@@ -39,9 +29,8 @@ public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 		this.username = username;
 	}
 
-	public BootstrapRequestEvent(NetworkSource source, PacketReader protocolReader) {
+	public BootstrapRequestEvent(NetworkSource source, PacketReader reader) {
 		super(source);
-		PacketReader reader = BOOTSTRAP_REQUEST_FORMAT.reader(protocolReader);
 		setTime(reader.readLong());
 		this.lanAddress = toIP(reader.readIPv4(), reader.readShort());
 		this.username = reader.readString();
@@ -58,7 +47,7 @@ public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 
 	@Override
 	protected PacketModel toPacketModel(PacketBuilder builder) {
-		return BOOTSTRAP_REQUEST_FORMAT.builder(builder)
+		return builder
 				.consume(time())
 				.consume(lanAddress.ip())
 				.consume(lanAddress.shortPort())
@@ -67,7 +56,7 @@ public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 	}
 
 	@Override
-	protected NomadRealmsServerProtocols protocolID() {
+	protected NomadRealmsServerProtocol protocol() {
 		return BOOTSTRAP_REQUEST;
 	}
 

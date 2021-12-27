@@ -1,29 +1,18 @@
 package nomadrealms.event.bootstrap;
 
-import static context.input.networking.packet.PacketPrimitive.IP_V4;
-import static context.input.networking.packet.PacketPrimitive.LONG;
-import static context.input.networking.packet.PacketPrimitive.SHORT;
-import static context.input.networking.packet.PacketPrimitive.STRING;
 import static networking.NetworkUtils.LOCAL_HOST;
 import static networking.NetworkUtils.toIP;
-import static nomadrealms.protocols.NomadRealmsServerProtocols.BOOTSTRAP_RESPONSE;
+import static nomadrealms.protocols.NomadRealmsServerProtocol.BOOTSTRAP_RESPONSE;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import networking.NomadRealmsServerGameEvent;
-import nomadrealms.protocols.NomadRealmsServerProtocols;
+import nomadrealms.event.NomadRealmsServerGameEvent;
+import nomadrealms.protocols.NomadRealmsServerProtocol;
 
 public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
-
-	/**
-	 * protocol_id(101): timestamp, nonce, lan_ip, lan_port, wan_ip, wan_port,
-	 * username
-	 */
-	public static final PacketFormat BOOTSTRAP_RESPONSE_FORMAT = new PacketFormat().with(LONG, LONG, IP_V4, SHORT, IP_V4, SHORT, STRING);
 
 	private long nonce;
 	private PacketAddress lanAddress;
@@ -46,9 +35,8 @@ public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
 		this.username = username;
 	}
 
-	public BootstrapResponseEvent(NetworkSource source, PacketReader protocolReader) {
+	public BootstrapResponseEvent(NetworkSource source, PacketReader reader) {
 		super(source);
-		PacketReader reader = BOOTSTRAP_RESPONSE_FORMAT.reader(protocolReader);
 		setTime(reader.readLong());
 		this.nonce = reader.readLong();
 		this.lanAddress = toIP(reader.readIPv4(), reader.readShort());
@@ -75,7 +63,7 @@ public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
 
 	@Override
 	protected PacketModel toPacketModel(PacketBuilder builder) {
-		return BOOTSTRAP_RESPONSE_FORMAT.builder(builder)
+		return builder
 				.consume(time())
 				.consume(nonce)
 				.consume(lanAddress.ip())
@@ -87,7 +75,7 @@ public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
 	}
 
 	@Override
-	protected NomadRealmsServerProtocols protocolID() {
+	protected NomadRealmsServerProtocol protocol() {
 		return BOOTSTRAP_RESPONSE;
 	}
 

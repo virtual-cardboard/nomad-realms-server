@@ -7,7 +7,7 @@ import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.address.PacketAddress;
-import p2pinfiniteworld.protocols.P2PIWServerProtocols;
+import p2pinfiniteworld.protocols.P2PIWServerProtocol;
 
 public abstract class P2PIWServerGameEvent extends GameEvent {
 
@@ -25,12 +25,13 @@ public abstract class P2PIWServerGameEvent extends GameEvent {
 	}
 
 	public PacketModel toPacket(PacketAddress address) {
-		PacketBuilder builder = PROTOCOL_ID.builder(address).consume(protocolID().id());
+		PacketBuilder idBuilder = PROTOCOL_ID.builder(address).consume(protocol().id());
+		PacketBuilder builder = protocol().format().builder(idBuilder);
 		return toPacketModel(builder);
 	}
 
 	protected abstract PacketModel toPacketModel(PacketBuilder builder);
 
-	protected abstract P2PIWServerProtocols protocolID();
+	protected abstract P2PIWServerProtocol protocol();
 
 }
