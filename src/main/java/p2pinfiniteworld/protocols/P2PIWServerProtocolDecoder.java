@@ -9,19 +9,19 @@ import common.event.GameEvent;
 import common.source.NetworkSource;
 import context.input.event.PacketReceivedInputEvent;
 import context.input.networking.packet.PacketReader;
-import networking.NomadRealmsServerGameEvent;
+import p2pinfiniteworld.event.P2PIWServerGameEvent;
 
 public class P2PIWServerProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {
 
 	@SuppressWarnings("unchecked")
-	private static final Constructor<? extends NomadRealmsServerGameEvent>[] PROTOCOL_EVENTS = new Constructor[Short.MAX_VALUE];
+	private static final Constructor<? extends P2PIWServerGameEvent>[] PROTOCOL_EVENTS = new Constructor[Short.MAX_VALUE];
 
 	static {
 		P2PIWServerProtocols[] values = P2PIWServerProtocols.values();
 		for (short i = 0; i < values.length; i++) {
 			P2PIWServerProtocols value = values[i];
-			Class<? extends NomadRealmsServerGameEvent> clazz = value.clazz();
-			Constructor<? extends NomadRealmsServerGameEvent> constructor = null;
+			Class<? extends P2PIWServerGameEvent> clazz = value.clazz();
+			Constructor<? extends P2PIWServerGameEvent> constructor = null;
 			try {
 				constructor = clazz.getConstructor(NetworkSource.class, PacketReader.class);
 			} catch (NoSuchMethodException e) {

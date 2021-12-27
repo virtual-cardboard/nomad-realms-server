@@ -7,15 +7,15 @@ import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.address.PacketAddress;
-import nomadrealms.protocols.NomadRealmsServerProtocols;
+import p2pinfiniteworld.protocols.P2PIWServerProtocols;
 
-public abstract class NomadRealmsServerGameEvent extends GameEvent {
+public abstract class P2PIWServerGameEvent extends GameEvent {
 
-	public NomadRealmsServerGameEvent(NetworkSource source) {
+	public P2PIWServerGameEvent(NetworkSource source) {
 		super(source);
 	}
 
-	public NomadRealmsServerGameEvent(long time, NetworkSource source) {
+	public P2PIWServerGameEvent(long time, NetworkSource source) {
 		super(time, source);
 	}
 
@@ -31,6 +31,6 @@ public abstract class NomadRealmsServerGameEvent extends GameEvent {
 
 	protected abstract PacketModel toPacketModel(PacketBuilder builder);
 
-	protected abstract NomadRealmsServerProtocols protocolID();
+	protected abstract P2PIWServerProtocols protocolID();
 
 }

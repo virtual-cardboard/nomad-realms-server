@@ -45,6 +45,8 @@ public class P2PIWServerVisuals extends GameVisuals {
 		rectangleRenderer = new RectangleRenderer(resourcePack().defaultShaderProgram(), resourcePack().rectangleVAO());
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
 		tinyNomad = resourcePack.getTexture("tiny_nomad");
+
+		data.nomads().add(new NomadTiny(10, 10));
 	}
 
 	@Override
