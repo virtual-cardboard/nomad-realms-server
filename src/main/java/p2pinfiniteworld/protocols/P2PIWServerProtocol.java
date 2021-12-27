@@ -1,15 +1,23 @@
 package p2pinfiniteworld.protocols;
 
+import static context.input.networking.packet.PacketPrimitive.INT;
 import static context.input.networking.packet.PacketPrimitive.STRING;
 
 import context.input.networking.packet.PacketFormat;
 import p2pinfiniteworld.event.P2PIWJoinWorldRequestEvent;
+import p2pinfiniteworld.event.P2PIWNomadMoveNotificationEvent;
 import p2pinfiniteworld.event.P2PIWServerGameEvent;
 
 public enum P2PIWServerProtocol {
 
+	/** id, chunk_x, chunk_y */
+	MOVE_NOTIFICATION(P2PIWNomadMoveNotificationEvent.class, 100, new PacketFormat().with(INT, INT, INT)),
+
 	/** username */
-	JOIN_WORLD_REQUEST(P2PIWJoinWorldRequestEvent.class, 111, new PacketFormat().with(STRING));
+	JOIN_WORLD_REQUEST(P2PIWJoinWorldRequestEvent.class, 111, new PacketFormat().with(STRING)),
+
+	/** username */
+	JOIN_WORLD_RESPONSE(P2PIWJoinWorldRequestEvent.class, 112, new PacketFormat().with(STRING));
 
 	private short id;
 	private Class<? extends P2PIWServerGameEvent> clazz;

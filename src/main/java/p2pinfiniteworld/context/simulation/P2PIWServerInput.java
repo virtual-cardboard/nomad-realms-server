@@ -1,13 +1,13 @@
 package p2pinfiniteworld.context.simulation;
 
 import context.input.GameInput;
-import nomadrealms.protocols.NomadRealmsServerProtocolDecoder;
+import p2pinfiniteworld.protocols.P2PIWServerProtocolDecoder;
 
 public class P2PIWServerInput extends GameInput {
 
 	@Override
 	protected void init() {
-		addPacketReceivedFunction(new NomadRealmsServerProtocolDecoder());
+		addPacketReceivedFunction(new P2PIWServerProtocolDecoder());
 	}
 
 }
