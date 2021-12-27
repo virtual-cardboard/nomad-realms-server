@@ -1,6 +1,6 @@
 package nomadrealms.protocols;
 
-import nomadrealms.event.NomadRealmsServerGameEvent;
+import networking.NomadRealmsServerGameEvent;
 import nomadrealms.event.bootstrap.BootstrapRequestEvent;
 import nomadrealms.event.bootstrap.BootstrapResponseEvent;
 import nomadrealms.event.world.CreateWorldRequestEvent;
@@ -12,16 +12,6 @@ public enum NomadRealmsServerProtocols {
 	BOOTSTRAP_RESPONSE(BootstrapResponseEvent.class, 101),
 	CREATE_WORLD_REQUEST(CreateWorldRequestEvent.class, 110),
 	CREATE_WORLD_RESPONSE(CreateWorldResponseEvent.class, 111);
-
-	private static final NomadRealmsServerProtocols[] IDS = new NomadRealmsServerProtocols[Short.MAX_VALUE];
-
-	static {
-		NomadRealmsServerProtocols[] values = NomadRealmsServerProtocols.values();
-		for (short i = 0; i < values.length; i++) {
-			NomadRealmsServerProtocols value = values[i];
-			IDS[value.id] = value;
-		}
-	}
 
 	private short id;
 	private Class<? extends NomadRealmsServerGameEvent> clazz;

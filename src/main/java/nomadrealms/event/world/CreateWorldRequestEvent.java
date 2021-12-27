@@ -9,7 +9,7 @@ import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import nomadrealms.event.NomadRealmsServerGameEvent;
+import networking.NomadRealmsServerGameEvent;
 import nomadrealms.protocols.NomadRealmsServerProtocols;
 
 public class CreateWorldRequestEvent extends NomadRealmsServerGameEvent {

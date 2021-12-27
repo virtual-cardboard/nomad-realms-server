@@ -14,7 +14,7 @@ import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import nomadrealms.event.NomadRealmsServerGameEvent;
+import networking.NomadRealmsServerGameEvent;
 import nomadrealms.protocols.NomadRealmsServerProtocols;
 
 public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {

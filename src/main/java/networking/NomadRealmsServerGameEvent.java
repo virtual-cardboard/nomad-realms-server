@@ -1,4 +1,4 @@
-package nomadrealms.event;
+package networking;
 
 import static networking.NetworkUtils.PROTOCOL_ID;
 

@@ -5,7 +5,6 @@ import java.util.Queue;
 import common.event.GameEvent;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.address.PacketAddress;
-import nomadrealms.event.NomadRealmsServerGameEvent;
 
 public class NetworkEventDispatcher {
 

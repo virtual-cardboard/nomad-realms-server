@@ -9,18 +9,27 @@ import common.event.GameEvent;
 import common.source.NetworkSource;
 import context.input.event.PacketReceivedInputEvent;
 import context.input.networking.packet.PacketReader;
-import nomadrealms.event.NomadRealmsServerGameEvent;
+import networking.NomadRealmsServerGameEvent;
 
 public class P2PIWServerProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {
 
 	@SuppressWarnings("unchecked")
-	private static final Class<? extends NomadRealmsServerGameEvent>[] PROTOCOL_EVENTS = new Class[Short.MAX_VALUE];
+	private static final Constructor<? extends NomadRealmsServerGameEvent>[] PROTOCOL_EVENTS = new Constructor[Short.MAX_VALUE];
 
 	static {
 		P2PIWServerProtocols[] values = P2PIWServerProtocols.values();
 		for (short i = 0; i < values.length; i++) {
 			P2PIWServerProtocols value = values[i];
-			PROTOCOL_EVENTS[value.id()] = value.clazz();
+			Class<? extends NomadRealmsServerGameEvent> clazz = value.clazz();
+			Constructor<? extends NomadRealmsServerGameEvent> constructor = null;
+			try {
+				constructor = clazz.getConstructor(NetworkSource.class, PacketReader.class);
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			}
+			PROTOCOL_EVENTS[value.id()] = constructor;
 		}
 	}
 
@@ -30,8 +39,7 @@ public class P2PIWServerProtocolDecoder implements Function<PacketReceivedInputE
 		PacketReader protocolReader = PROTOCOL_ID.reader(event.model());
 		int id = protocolReader.readShort() & 0xFFFF;
 		try {
-			Constructor<? extends NomadRealmsServerGameEvent> constructor = PROTOCOL_EVENTS[id].getConstructor(NetworkSource.class, PacketReader.class);
-			return constructor.newInstance(event.source(), protocolReader);
+			return PROTOCOL_EVENTS[id].newInstance(event.source(), protocolReader);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
