@@ -26,7 +26,7 @@ import context.visuals.text.GameFont;
 import loading.NomadRealmsServerFontLoadTask;
 import loading.NomadRealmsServerShaderLoadTask;
 import loading.NomadRealmsServerTextureLoadTask;
-import p2pinfiniteworld.context.simulation.visuals.DiffuseTextureRenderer;
+import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
 
 public class P2PIWServerLoadingVisuals extends GameVisuals {
 

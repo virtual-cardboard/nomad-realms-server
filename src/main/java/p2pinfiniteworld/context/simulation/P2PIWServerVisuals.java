@@ -1,6 +1,7 @@
 package p2pinfiniteworld.context.simulation;
 
 import static context.visuals.colour.Colour.rgb;
+import static java.lang.Math.random;
 
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
@@ -10,8 +11,8 @@ import context.visuals.renderer.LineRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
-import p2pinfiniteworld.context.simulation.visuals.DiffuseTextureRenderer;
-import p2pinfiniteworld.context.simulation.visuals.NomadTiny;
+import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
+import p2pinfiniteworld.model.NomadTiny;
 
 public class P2PIWServerVisuals extends GameVisuals {
 
@@ -46,7 +47,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
 		tinyNomad = resourcePack.getTexture("tiny_nomad");
 
-		data.nomads().add(new NomadTiny(10, 10));
+		data.nomads().add(new NomadTiny(10, 10, "Bob", randomColour()));
 	}
 
 	@Override
@@ -54,6 +55,17 @@ public class P2PIWServerVisuals extends GameVisuals {
 		background(rgb(54, 57, 63));
 		drawGrid();
 		drawNomads();
+		drawQueued();
+	}
+
+	private int randomColour() {
+		return rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()));
+	}
+
+	private void drawQueued() {
+		for (NomadTiny nomad : data.queuedUsers()) {
+			diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, GRID_START_X + nomad.x * GRID_SQUARE_SIZE + 2, nomad.y * GRID_SQUARE_SIZE + 2, 28, 28, NOMAD_COLOUR);
+		}
 	}
 
 	private void drawNomads() {
@@ -86,8 +98,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	}
 
 	private void renderNomad(NomadTiny nomad) {
-//		diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, GRID_START_X + nomad.x * GRID_SQUARE_SIZE + 2, nomad.y * GRID_SQUARE_SIZE + 2, 28, 28, );
-		diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, GRID_START_X + nomad.x * GRID_SQUARE_SIZE + 2, nomad.y * GRID_SQUARE_SIZE + 2, 28, 28, NOMAD_COLOUR);
+		diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, GRID_START_X + nomad.x * GRID_SQUARE_SIZE + 2, nomad.y * GRID_SQUARE_SIZE + 2, 28, 28, nomad.colour());
 	}
 
 }

@@ -1,4 +1,4 @@
-package nomadrealms.context.server.visuals.model;
+package nomadrealms.model;
 
 import static common.math.Vector2f.fromAngleLength;
 import static java.lang.Math.PI;

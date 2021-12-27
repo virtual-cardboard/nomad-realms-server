@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import context.data.GameData;
-import nomadrealms.context.server.visuals.model.NomadMini;
+import nomadrealms.model.NomadMini;
 import nomadrealms.model.WorldInfo;
 
 public class ServerData extends GameData {

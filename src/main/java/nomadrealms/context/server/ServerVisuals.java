@@ -11,7 +11,7 @@ import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
-import nomadrealms.context.server.visuals.model.NomadMini;
+import nomadrealms.model.NomadMini;
 
 public class ServerVisuals extends GameVisuals {
 

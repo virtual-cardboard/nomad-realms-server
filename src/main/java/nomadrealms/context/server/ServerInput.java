@@ -5,8 +5,8 @@ import java.util.Random;
 
 import common.math.Vector2f;
 import context.input.GameInput;
-import nomadrealms.context.server.visuals.model.NomadMini;
 import nomadrealms.event.bootstrap.BootstrapResponseEvent;
+import nomadrealms.model.NomadMini;
 import nomadrealms.protocols.NomadRealmsServerProtocolDecoder;
 
 public class ServerInput extends GameInput {

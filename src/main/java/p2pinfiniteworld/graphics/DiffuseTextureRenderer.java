@@ -1,4 +1,4 @@
-package p2pinfiniteworld.context.simulation.visuals;
+package p2pinfiniteworld.graphics;
 
 import common.math.Matrix4f;
 import common.math.Vector2f;

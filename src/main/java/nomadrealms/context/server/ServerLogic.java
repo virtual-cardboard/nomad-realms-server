@@ -7,10 +7,10 @@ import java.util.Random;
 
 import common.event.GameEvent;
 import context.logic.GameLogic;
-import nomadrealms.context.server.visuals.model.NomadMini;
 import nomadrealms.event.bootstrap.BootstrapRequestEvent;
 import nomadrealms.event.world.CreateWorldRequestEvent;
 import nomadrealms.event.world.CreateWorldResponseEvent;
+import nomadrealms.model.NomadMini;
 import nomadrealms.model.WorldInfo;
 
 public class ServerLogic extends GameLogic {

@@ -1,5 +1,7 @@
 package p2pinfiniteworld.event;
 
+import static p2pinfiniteworld.protocols.P2PIWServerProtocol.JOIN_WORLD_RESPONSE;
+
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
@@ -25,11 +27,7 @@ public class P2PIWJoinWorldResponseEvent extends P2PIWServerGameEvent {
 
 	@Override
 	protected P2PIWServerProtocol protocol() {
-		return P2PIWServerProtocol.JOIN_WORLD_REQUEST;
-	}
-
-	public String username() {
-		return username;
+		return JOIN_WORLD_RESPONSE;
 	}
 
 }
