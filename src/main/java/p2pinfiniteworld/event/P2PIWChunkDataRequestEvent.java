@@ -15,18 +15,18 @@ public class P2PIWChunkDataRequestEvent extends P2PIWServerGameEvent {
 
 	public P2PIWChunkDataRequestEvent(NetworkSource source, PacketReader reader) {
 		super(source);
+		this.timestamp = reader.readLong();
 		this.chunkX = reader.readInt();
 		this.chunkY = reader.readInt();
-		this.timestamp = reader.readLong();
 		reader.close();
 	}
 
 	@Override
 	protected PacketModel toPacketModel(PacketBuilder builder) {
 		return builder
+				.consume(timestamp)
 				.consume(chunkX)
 				.consume(chunkY)
-				.consume(timestamp)
 				.build();
 	}
 
@@ -42,7 +42,7 @@ public class P2PIWChunkDataRequestEvent extends P2PIWServerGameEvent {
 	public int chunkY() {
 		return chunkY;
 	}
-	
+
 	public long timestamp() {
 		return timestamp;
 	}

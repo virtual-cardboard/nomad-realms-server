@@ -1,6 +1,6 @@
 package p2pinfiniteworld.event;
 
-import static p2pinfiniteworld.protocols.P2PIWServerProtocol.MOVE_NOTIFICATION;
+import static p2pinfiniteworld.protocols.P2PIWServerProtocol.ENTER_REGION_NOTIFICATION;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
@@ -8,16 +8,16 @@ import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import p2pinfiniteworld.protocols.P2PIWServerProtocol;
 
-public class P2PIWNomadMoveNotificationEvent extends P2PIWServerGameEvent {
+public class P2PIWEnterRegionNotificationEvent extends P2PIWServerGameEvent {
 
 	private int id;
-	private int chunkX, chunkY;
+	private int regionX, regionY;
 
-	public P2PIWNomadMoveNotificationEvent(NetworkSource source, PacketReader reader) {
+	public P2PIWEnterRegionNotificationEvent(NetworkSource source, PacketReader reader) {
 		super(source);
 		this.id = reader.readInt();
-		this.chunkX = reader.readInt();
-		this.chunkY = reader.readInt();
+		this.regionX = reader.readInt();
+		this.regionY = reader.readInt();
 		reader.close();
 	}
 
@@ -25,26 +25,26 @@ public class P2PIWNomadMoveNotificationEvent extends P2PIWServerGameEvent {
 	protected PacketModel toPacketModel(PacketBuilder builder) {
 		return builder
 				.consume(id)
-				.consume(chunkX)
-				.consume(chunkY)
+				.consume(regionX)
+				.consume(regionY)
 				.build();
 	}
 
 	@Override
 	protected P2PIWServerProtocol protocol() {
-		return MOVE_NOTIFICATION;
+		return ENTER_REGION_NOTIFICATION;
 	}
 
 	public int id() {
 		return id;
 	}
 
-	public int chunkX() {
-		return chunkX;
+	public int regionX() {
+		return regionX;
 	}
 
-	public int chunkY() {
-		return chunkY;
+	public int regionY() {
+		return regionY;
 	}
 
 }
