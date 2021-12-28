@@ -13,17 +13,16 @@ import p2pinfiniteworld.model.NomadTiny;
 
 public class P2PIWServerVisuals extends GameVisuals {
 
-	private static final int GRID_SQUARE_SIZE = 32;
-	private static final int REGION_SQUARE_SIZE = GRID_SQUARE_SIZE * 4;
-	private static final int GRID_START_X = 96;
+	public static final int GRID_SQUARE_SIZE = 32;
+	public static final int REGION_SQUARE_SIZE = GRID_SQUARE_SIZE * 4;
+	public static final int GRID_START_X = 96;
 
-	private static final int NOMAD_COLOUR = rgb(10, 125, 175);
-//	private static final int NEARBY_CHUNKS_COLOUR = rgb(104, 166, 68);
-	private static final int CHUNK_BORDER_COLOUR = rgb(111, 115, 122);
-	private static final int REGION_BORDER_COLOUR = rgb(255, 255, 255);
+//	public static final int NEARBY_CHUNKS_COLOUR = rgb(104, 166, 68);
+	public static final int CHUNK_BORDER_COLOUR = rgb(111, 115, 122);
+	public static final int REGION_BORDER_COLOUR = rgb(255, 255, 255);
 
-	private static final int BACKGROUND_COLOUR = rgb(54, 57, 63);
-	private static final int DARK_BACKGROUND_COLOUR = rgb(47, 49, 54);
+	public static final int BACKGROUND_COLOUR = rgb(54, 57, 63);
+	public static final int DARK_BACKGROUND_COLOUR = rgb(47, 49, 54);
 
 	private GameFont baloo2;
 	private TextRenderer textRenderer;
@@ -58,7 +57,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 			int colour = data.selectedNomad() == nomad ? DARK_BACKGROUND_COLOUR : BACKGROUND_COLOUR;
 			rectangleRenderer.render(glContext(), rootGui.dimensions(), 0, i * 2 * GRID_SQUARE_SIZE, GRID_START_X, 2 * GRID_SQUARE_SIZE, REGION_BORDER_COLOUR);
 			rectangleRenderer.render(glContext(), rootGui.dimensions(), 2, i * 2 * GRID_SQUARE_SIZE + 2, GRID_START_X - 4, 2 * GRID_SQUARE_SIZE - 4, colour);
-			diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, (GRID_START_X - GRID_SQUARE_SIZE) / 2, i * 2 * GRID_SQUARE_SIZE + 6, 28, 28, NOMAD_COLOUR);
+			diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, (GRID_START_X - GRID_SQUARE_SIZE) / 2, i * 2 * GRID_SQUARE_SIZE + 6, 28, 28, nomad.colour());
 			textRenderer.alignCenter();
 			textRenderer.render(glContext(), rootGui, 0, (int) ((i * 2 + 0.5f) * GRID_SQUARE_SIZE + 16), nomad.username(), 100, baloo2, 24, rgb(0, 0, 0));
 			i++;

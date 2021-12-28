@@ -27,7 +27,7 @@ public class P2PIWServerData extends GameData {
 		return selectedTiny;
 	}
 
-	public void setSelectedTiny(NomadTiny selectedTiny) {
+	public void setSelectedNomad(NomadTiny selectedTiny) {
 		this.selectedTiny = selectedTiny;
 	}
 
