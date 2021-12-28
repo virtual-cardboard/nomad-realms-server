@@ -1,14 +1,14 @@
 package p2pinfiniteworld.event;
 
-import static p2pinfiniteworld.protocols.P2PIWServerProtocol.JOIN_QUEUE_REQUEST;
+import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.JOIN_QUEUE_REQUEST;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import p2pinfiniteworld.protocols.P2PIWServerProtocol;
+import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
-public class P2PIWJoinQueueRequestEvent extends P2PIWServerGameEvent {
+public class P2PIWJoinQueueRequestEvent extends P2PIWNetworkEvent {
 
 	private String username;
 
@@ -26,7 +26,7 @@ public class P2PIWJoinQueueRequestEvent extends P2PIWServerGameEvent {
 	}
 
 	@Override
-	protected P2PIWServerProtocol protocol() {
+	protected P2PIWNetworkProtocol protocol() {
 		return JOIN_QUEUE_REQUEST;
 	}
 

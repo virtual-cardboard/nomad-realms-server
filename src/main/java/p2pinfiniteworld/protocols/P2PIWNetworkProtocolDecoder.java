@@ -10,20 +10,20 @@ import common.source.NetworkSource;
 import context.input.event.PacketReceivedInputEvent;
 import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketReader;
-import p2pinfiniteworld.event.P2PIWServerGameEvent;
+import p2pinfiniteworld.event.P2PIWNetworkEvent;
 
-public class P2PIWServerProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {
+public class P2PIWNetworkProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {
 
 	@SuppressWarnings("unchecked")
-	private static final Constructor<? extends P2PIWServerGameEvent>[] PROTOCOL_EVENTS = new Constructor[Short.MAX_VALUE];
+	private static final Constructor<? extends P2PIWNetworkEvent>[] PROTOCOL_EVENTS = new Constructor[Short.MAX_VALUE];
 	private static final PacketFormat[] PROTOCOL_FORMATS = new PacketFormat[Short.MAX_VALUE];
 
 	static {
-		P2PIWServerProtocol[] values = P2PIWServerProtocol.values();
+		P2PIWNetworkProtocol[] values = P2PIWNetworkProtocol.values();
 		for (short i = 0; i < values.length; i++) {
-			P2PIWServerProtocol value = values[i];
-			Class<? extends P2PIWServerGameEvent> clazz = value.clazz();
-			Constructor<? extends P2PIWServerGameEvent> constructor = null;
+			P2PIWNetworkProtocol value = values[i];
+			Class<? extends P2PIWNetworkEvent> clazz = value.clazz();
+			Constructor<? extends P2PIWNetworkEvent> constructor = null;
 			try {
 				constructor = clazz.getConstructor(NetworkSource.class, PacketReader.class);
 			} catch (NoSuchMethodException e) {
@@ -43,7 +43,7 @@ public class P2PIWServerProtocolDecoder implements Function<PacketReceivedInputE
 		PacketReader idReader = PROTOCOL_ID.reader(event.model());
 		int id = idReader.readShort() & 0xFFFF;
 
-		Constructor<? extends P2PIWServerGameEvent> constructor = PROTOCOL_EVENTS[id];
+		Constructor<? extends P2PIWNetworkEvent> constructor = PROTOCOL_EVENTS[id];
 		PacketFormat format = PROTOCOL_FORMATS[id];
 		PacketReader protocolReader = format.reader(idReader);
 

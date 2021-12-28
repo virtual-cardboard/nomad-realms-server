@@ -1,14 +1,14 @@
 package p2pinfiniteworld.event;
 
-import static p2pinfiniteworld.protocols.P2PIWServerProtocol.CLICK_CHUNK_NOTIFICATION;
+import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.CLICK_CHUNK_NOTIFICATION;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import p2pinfiniteworld.protocols.P2PIWServerProtocol;
+import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
-public class P2PIWClickChunkNotificationEvent extends P2PIWServerGameEvent {
+public class P2PIWClickChunkNotificationEvent extends P2PIWNetworkEvent {
 
 	private int id;
 	private int chunkX, chunkY;
@@ -31,7 +31,7 @@ public class P2PIWClickChunkNotificationEvent extends P2PIWServerGameEvent {
 	}
 
 	@Override
-	protected P2PIWServerProtocol protocol() {
+	protected P2PIWNetworkProtocol protocol() {
 		return CLICK_CHUNK_NOTIFICATION;
 	}
 

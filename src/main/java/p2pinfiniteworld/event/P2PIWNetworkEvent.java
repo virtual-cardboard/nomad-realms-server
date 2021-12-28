@@ -7,15 +7,15 @@ import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.address.PacketAddress;
-import p2pinfiniteworld.protocols.P2PIWServerProtocol;
+import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
-public abstract class P2PIWServerGameEvent extends GameEvent {
+public abstract class P2PIWNetworkEvent extends GameEvent {
 
-	public P2PIWServerGameEvent(NetworkSource source) {
+	public P2PIWNetworkEvent(NetworkSource source) {
 		super(source);
 	}
 
-	public P2PIWServerGameEvent(long time, NetworkSource source) {
+	public P2PIWNetworkEvent(long time, NetworkSource source) {
 		super(time, source);
 	}
 
@@ -32,6 +32,6 @@ public abstract class P2PIWServerGameEvent extends GameEvent {
 
 	protected abstract PacketModel toPacketModel(PacketBuilder builder);
 
-	protected abstract P2PIWServerProtocol protocol();
+	protected abstract P2PIWNetworkProtocol protocol();
 
 }

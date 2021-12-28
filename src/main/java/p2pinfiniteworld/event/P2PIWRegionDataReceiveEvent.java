@@ -1,14 +1,14 @@
 package p2pinfiniteworld.event;
 
-import static p2pinfiniteworld.protocols.P2PIWServerProtocol.REGION_DATA;
+import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.REGION_DATA;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import p2pinfiniteworld.protocols.P2PIWServerProtocol;
+import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
-public class P2PIWRegionDataReceiveEvent extends P2PIWServerGameEvent {
+public class P2PIWRegionDataReceiveEvent extends P2PIWNetworkEvent {
 
 	private int regionX, regionY;
 	private int[][] ages = new int[4][4];
@@ -39,7 +39,7 @@ public class P2PIWRegionDataReceiveEvent extends P2PIWServerGameEvent {
 	}
 
 	@Override
-	protected P2PIWServerProtocol protocol() {
+	protected P2PIWNetworkProtocol protocol() {
 		return REGION_DATA;
 	}
 

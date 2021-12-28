@@ -14,9 +14,9 @@ import p2pinfiniteworld.event.P2PIWEnterWorldNotificationEvent;
 import p2pinfiniteworld.event.P2PIWJoinQueueRequestEvent;
 import p2pinfiniteworld.event.P2PIWJoinQueueSuccessResponseEvent;
 import p2pinfiniteworld.event.P2PIWRegionDataReceiveEvent;
-import p2pinfiniteworld.event.P2PIWServerGameEvent;
+import p2pinfiniteworld.event.P2PIWNetworkEvent;
 
-public enum P2PIWServerProtocol {
+public enum P2PIWNetworkProtocol {
 
 	/** id, region_x, region_y */
 	ENTER_REGION_NOTIFICATION(P2PIWEnterRegionNotificationEvent.class, 100, new PacketFormat().with(BYTE, INT, INT)),
@@ -40,14 +40,14 @@ public enum P2PIWServerProtocol {
 	/**  */
 	JOIN_QUEUE_SUCCESS_RESPONSE(P2PIWJoinQueueSuccessResponseEvent.class, 201, new PacketFormat()),
 
-	/** chunk_x, chunk_y */
+	/** chunk_x, chunk_y, tick_0_time */
 	ENTER_WORLD_NOTIFICATION(P2PIWEnterWorldNotificationEvent.class, 202, new PacketFormat().with(INT, INT, LONG));
 
 	private short id;
-	private Class<? extends P2PIWServerGameEvent> clazz;
+	private Class<? extends P2PIWNetworkEvent> clazz;
 	private PacketFormat format;
 
-	private P2PIWServerProtocol(Class<? extends P2PIWServerGameEvent> clazz, int id, PacketFormat format) {
+	private P2PIWNetworkProtocol(Class<? extends P2PIWNetworkEvent> clazz, int id, PacketFormat format) {
 		this.clazz = clazz;
 		this.id = (short) id;
 		this.format = format;
@@ -61,7 +61,7 @@ public enum P2PIWServerProtocol {
 		return id;
 	}
 
-	public Class<? extends P2PIWServerGameEvent> clazz() {
+	public Class<? extends P2PIWNetworkEvent> clazz() {
 		return clazz;
 	}
 
