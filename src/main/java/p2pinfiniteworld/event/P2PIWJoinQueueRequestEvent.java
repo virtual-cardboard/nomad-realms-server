@@ -12,6 +12,11 @@ public class P2PIWJoinQueueRequestEvent extends P2PIWNetworkEvent {
 
 	private String username;
 
+	public P2PIWJoinQueueRequestEvent(String username) {
+		super(null);
+		this.username = username;
+	}
+
 	public P2PIWJoinQueueRequestEvent(NetworkSource source, PacketReader reader) {
 		super(source);
 		this.username = reader.readString();
