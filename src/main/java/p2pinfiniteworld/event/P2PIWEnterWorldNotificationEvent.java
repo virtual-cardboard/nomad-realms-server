@@ -13,6 +13,13 @@ public class P2PIWEnterWorldNotificationEvent extends P2PIWNetworkEvent {
 	private int chunkX, chunkY;
 	private long tick0Time;
 
+	public P2PIWEnterWorldNotificationEvent(int chunkX, int chunkY, long tick0Time) {
+		super(null);
+		this.chunkX = chunkX;
+		this.chunkY = chunkY;
+		this.tick0Time = tick0Time;
+	}
+
 	public P2PIWEnterWorldNotificationEvent(NetworkSource source, PacketReader reader) {
 		super(source);
 		this.chunkX = reader.readInt();
