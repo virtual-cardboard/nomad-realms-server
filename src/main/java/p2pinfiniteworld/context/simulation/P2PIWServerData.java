@@ -13,7 +13,7 @@ public class P2PIWServerData extends GameData {
 	private List<NomadTiny> tinies = new ArrayList<>();
 	private Queue<NomadTiny> queuedUsers = new ArrayDeque<>();
 
-	public NomadTiny selectedMini;
+	private NomadTiny selectedTiny;
 
 	public List<NomadTiny> nomads() {
 		return tinies;
@@ -21,6 +21,14 @@ public class P2PIWServerData extends GameData {
 
 	public Queue<NomadTiny> queuedUsers() {
 		return queuedUsers;
+	}
+
+	public NomadTiny selectedNomad() {
+		return selectedTiny;
+	}
+
+	public void setSelectedTiny(NomadTiny selectedTiny) {
+		this.selectedTiny = selectedTiny;
 	}
 
 }

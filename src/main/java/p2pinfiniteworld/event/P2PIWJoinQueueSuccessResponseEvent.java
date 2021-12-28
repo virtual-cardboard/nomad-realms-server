@@ -10,7 +10,7 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public class P2PIWJoinQueueSuccessResponseEvent extends P2PIWNetworkEvent {
 
-	public P2PIWJoinQueueSuccessResponseEvent(byte id) {
+	public P2PIWJoinQueueSuccessResponseEvent() {
 		super(null);
 	}
 
