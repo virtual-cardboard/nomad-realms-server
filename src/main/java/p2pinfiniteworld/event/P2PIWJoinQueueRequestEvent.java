@@ -1,6 +1,6 @@
 package p2pinfiniteworld.event;
 
-import static p2pinfiniteworld.protocols.P2PIWServerProtocol.JOIN_WORLD_REQUEST;
+import static p2pinfiniteworld.protocols.P2PIWServerProtocol.JOIN_QUEUE_REQUEST;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
@@ -8,11 +8,11 @@ import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import p2pinfiniteworld.protocols.P2PIWServerProtocol;
 
-public class P2PIWJoinWorldRequestEvent extends P2PIWServerGameEvent {
+public class P2PIWJoinQueueRequestEvent extends P2PIWServerGameEvent {
 
 	private String username;
 
-	public P2PIWJoinWorldRequestEvent(NetworkSource source, PacketReader reader) {
+	public P2PIWJoinQueueRequestEvent(NetworkSource source, PacketReader reader) {
 		super(source);
 		this.username = reader.readString();
 		reader.close();
@@ -27,7 +27,7 @@ public class P2PIWJoinWorldRequestEvent extends P2PIWServerGameEvent {
 
 	@Override
 	protected P2PIWServerProtocol protocol() {
-		return JOIN_WORLD_REQUEST;
+		return JOIN_QUEUE_REQUEST;
 	}
 
 	public String username() {

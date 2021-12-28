@@ -10,12 +10,12 @@ import p2pinfiniteworld.protocols.P2PIWServerProtocol;
 
 public class P2PIWEnterRegionNotificationEvent extends P2PIWServerGameEvent {
 
-	private int id;
+	private byte id;
 	private int regionX, regionY;
 
 	public P2PIWEnterRegionNotificationEvent(NetworkSource source, PacketReader reader) {
 		super(source);
-		this.id = reader.readInt();
+		this.id = reader.readByte();
 		this.regionX = reader.readInt();
 		this.regionY = reader.readInt();
 		reader.close();
