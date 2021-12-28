@@ -1,7 +1,7 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>virtual-cardboard</groupId>
-	<artifactId>nomad-realms-bootstrap-server</artifactId>
+	<artifactId>nomad-realms-server</artifactId>
 	<version>1</version>
 
 	<properties>
