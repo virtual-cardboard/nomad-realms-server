@@ -4,11 +4,9 @@ import static context.visuals.colour.Colour.rgb;
 
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
-import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.LineRenderer;
 import context.visuals.renderer.TextRenderer;
-import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
 import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
 import p2pinfiniteworld.model.NomadTiny;
@@ -20,7 +18,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	private static final int GRID_START_X = 96;
 
 	private static final int NOMAD_COLOUR = rgb(10, 125, 175);
-	private static final int NEARBY_CHUNKS_COLOUR = rgb(104, 166, 68);
+//	private static final int NEARBY_CHUNKS_COLOUR = rgb(104, 166, 68);
 	private static final int CHUNK_BORDER_COLOUR = rgb(111, 115, 122);
 	private static final int REGION_BORDER_COLOUR = rgb(255, 255, 255);
 
@@ -28,9 +26,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	private static final int DARK_BACKGROUND_COLOUR = rgb(47, 49, 54);
 
 	private GameFont baloo2;
-	private GameFont langar;
 	private TextRenderer textRenderer;
-	private TextureRenderer textureRenderer;
 	private DiffuseTextureRenderer diffuseTextureRenderer;
 	private RectangleRenderer rectangleRenderer;
 	private P2PIWServerData data;
@@ -41,9 +37,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	public void init() {
 		data = (P2PIWServerData) context().data();
 		baloo2 = resourcePack().getFont("baloo2");
-		langar = resourcePack().getFont("langar");
 		textRenderer = resourcePack().getRenderer("text", TextRenderer.class);
-		textureRenderer = new TextureRenderer((TextureShaderProgram) resourcePack().getShaderProgram("texture"), resourcePack().rectangleVAO());
 		diffuseTextureRenderer = resourcePack.getRenderer("diffuse_texture", DiffuseTextureRenderer.class);
 		rectangleRenderer = new RectangleRenderer(resourcePack().defaultShaderProgram(), resourcePack().rectangleVAO());
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
