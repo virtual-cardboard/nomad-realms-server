@@ -13,11 +13,11 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocolDecoder;
 public class P2PIWServerInput extends GameInput {
 
 	private P2PIWServerData data;
-	private long tick0Time;
+	private P2PIWServerLogic logic;
 
 	@Override
 	protected void init() {
-		tick0Time = System.currentTimeMillis();
+		logic = (P2PIWServerLogic) context().logic();
 		data = (P2PIWServerData) context().data();
 		addPacketReceivedFunction(new P2PIWNetworkProtocolDecoder());
 		addMousePressedFunction(this::handleMousePressed);
@@ -46,7 +46,7 @@ public class P2PIWServerInput extends GameInput {
 			data.nomads().add(data.selectedNomad());
 			data.selectedNomad().x = chunkX;
 			data.selectedNomad().y = chunkY;
-			context().sendPacket(new P2PIWEnterWorldNotificationEvent(chunkX, chunkY, tick0Time).toPacket(data.selectedNomad().address()));
+			context().sendPacket(new P2PIWEnterWorldNotificationEvent(chunkX, chunkY, logic.tick0Time()).toPacket(data.selectedNomad().address()));
 			data.setSelectedNomad(null);
 		} else {
 			for (NomadTiny nomad : data.nomads()) {
