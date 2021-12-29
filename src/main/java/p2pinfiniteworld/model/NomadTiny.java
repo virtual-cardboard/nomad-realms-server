@@ -2,6 +2,9 @@ package p2pinfiniteworld.model;
 
 import static java.lang.Math.floorDiv;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import common.math.Vector2i;
 import context.input.networking.packet.address.PacketAddress;
 
@@ -11,6 +14,9 @@ public class NomadTiny {
 	private int colour;
 	private String username;
 	private PacketAddress address;
+
+	private Set<Vector2i> visitedChunks = new HashSet<>();
+	private Set<Vector2i> visitedRegions = new HashSet<>();
 
 	public NomadTiny(int x, int y, PacketAddress address, String username, int colour) {
 		this.x = x;
@@ -38,6 +44,14 @@ public class NomadTiny {
 
 	public String username() {
 		return username;
+	}
+
+	public Set<Vector2i> visitedChunks() {
+		return visitedChunks;
+	}
+
+	public Set<Vector2i> visitedRegions() {
+		return visitedRegions;
 	}
 
 }

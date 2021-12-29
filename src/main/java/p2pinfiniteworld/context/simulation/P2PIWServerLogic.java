@@ -17,7 +17,7 @@ import p2pinfiniteworld.model.P2PIWRegion;
 
 public class P2PIWServerLogic extends GameLogic {
 
-	public static final int RENDER_DISTANCE = 2;
+	public static final int RENDER_DISTANCE = 1;
 
 	private P2PIWServerData data;
 
@@ -51,7 +51,10 @@ public class P2PIWServerLogic extends GameLogic {
 		for (NomadTiny nomad : data.nomads()) {
 			for (int i = nomad.y - RENDER_DISTANCE; i <= nomad.y + RENDER_DISTANCE; i++) {
 				for (int j = nomad.x - RENDER_DISTANCE; j <= nomad.x + RENDER_DISTANCE; j++) {
-					Vector2i regionCoord = new Vector2i(floorDiv(j, REGION_NUM_CHUNKS), floorDiv(j, REGION_NUM_CHUNKS));
+					Vector2i chunkCoord = new Vector2i(j, i);
+					Vector2i regionCoord = new Vector2i(floorDiv(j, REGION_NUM_CHUNKS), floorDiv(i, REGION_NUM_CHUNKS));
+					nomad.visitedChunks().add(chunkCoord);
+					nomad.visitedRegions().add(regionCoord);
 					P2PIWRegion region = data.getOrCreateRegion(regionCoord);
 					chunksToUpdate.add(region.chunks[floorMod(i, REGION_NUM_CHUNKS)][floorMod(j, REGION_NUM_CHUNKS)]);
 				}

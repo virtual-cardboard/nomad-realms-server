@@ -1,6 +1,6 @@
 package p2pinfiniteworld.context.simulation;
 
-import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_SQUARE_SIZE;
+import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.CHUNK_PIXEL_SIZE;
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_START_X;
 
 import common.event.GameEvent;
@@ -30,8 +30,8 @@ public class P2PIWServerInput extends GameInput {
 			for (NomadTiny nomad : data.queuedUsers()) {
 				int left = 0;
 				int right = GRID_START_X;
-				int top = i * 2 * GRID_SQUARE_SIZE;
-				int bottom = top + 2 * GRID_SQUARE_SIZE;
+				int top = i * 2 * CHUNK_PIXEL_SIZE;
+				int bottom = top + 2 * CHUNK_PIXEL_SIZE;
 				if (cursor().pos().x > left && cursor().pos().x < right && cursor().pos().y > top && cursor().pos().y < bottom) {
 					data.setSelectedNomad(nomad);
 					return null;
@@ -40,8 +40,8 @@ public class P2PIWServerInput extends GameInput {
 			}
 		}
 		if (data.selectedNomad() != null) {
-			int chunkX = (cursor().pos().x - GRID_START_X) / GRID_SQUARE_SIZE;
-			int chunkY = cursor().pos().y / GRID_SQUARE_SIZE;
+			int chunkX = (cursor().pos().x - GRID_START_X) / CHUNK_PIXEL_SIZE;
+			int chunkY = cursor().pos().y / CHUNK_PIXEL_SIZE;
 			data.queuedUsers().remove(data.selectedNomad());
 			data.nomads().add(data.selectedNomad());
 			data.selectedNomad().x = chunkX;
@@ -50,10 +50,10 @@ public class P2PIWServerInput extends GameInput {
 			data.setSelectedNomad(null);
 		} else {
 			for (NomadTiny nomad : data.nomads()) {
-				int left = GRID_START_X + nomad.x * GRID_SQUARE_SIZE;
-				int right = left + GRID_SQUARE_SIZE;
-				int top = nomad.y * GRID_SQUARE_SIZE;
-				int bottom = top + GRID_SQUARE_SIZE;
+				int left = GRID_START_X + nomad.x * CHUNK_PIXEL_SIZE;
+				int right = left + CHUNK_PIXEL_SIZE;
+				int top = nomad.y * CHUNK_PIXEL_SIZE;
+				int bottom = top + CHUNK_PIXEL_SIZE;
 				if (cursor().pos().x > left && cursor().pos().x < right && cursor().pos().y > top && cursor().pos().y < bottom) {
 					data.setSelectedNomad(nomad);
 					return null;
