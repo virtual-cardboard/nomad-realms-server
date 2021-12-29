@@ -1,19 +1,16 @@
 package p2pinfiniteworld.context.simulation;
 
-import static context.visuals.colour.Colour.rgb;
 import static java.lang.Math.floorDiv;
 import static java.lang.Math.floorMod;
-import static java.lang.Math.random;
 import static p2pinfiniteworld.context.simulation.P2PIWServerData.REGION_NUM_CHUNKS;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import common.math.Vector2i;
-import context.input.networking.packet.address.PacketAddress;
 import context.logic.GameLogic;
+import p2pinfiniteworld.context.simulation.logic.JoinQueueHandler;
 import p2pinfiniteworld.event.P2PIWJoinQueueRequestEvent;
-import p2pinfiniteworld.event.P2PIWJoinQueueSuccessResponseEvent;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.model.P2PIWChunk;
 import p2pinfiniteworld.model.P2PIWRegion;
@@ -34,25 +31,7 @@ public class P2PIWServerLogic extends GameLogic {
 	@Override
 	protected void init() {
 		data = (P2PIWServerData) context().data();
-		addHandler(P2PIWJoinQueueRequestEvent.class, this::handleJoinQueue);
-	}
-
-	private void handleJoinQueue(P2PIWJoinQueueRequestEvent event) {
-		String username = event.username();
-		PacketAddress address = event.source().address();
-
-		if (data.isQueued(address) || data.isInWorld(address)) {
-			return;
-		}
-
-		System.out.println(username + " requested to join queue");
-		data.queuedUsers().add(new NomadTiny(10, 10, address, username, randomColour()));
-
-		context().sendPacket(new P2PIWJoinQueueSuccessResponseEvent().toPacket(address));
-	}
-
-	private int randomColour() {
-		return rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()));
+		addHandler(P2PIWJoinQueueRequestEvent.class, new JoinQueueHandler(data, context()));
 	}
 
 	@Override
