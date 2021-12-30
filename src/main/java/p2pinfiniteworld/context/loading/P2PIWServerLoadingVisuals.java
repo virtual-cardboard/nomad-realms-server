@@ -27,6 +27,7 @@ import loading.NomadRealmsServerFontLoadTask;
 import loading.NomadRealmsServerShaderLoadTask;
 import loading.NomadRealmsServerTextureLoadTask;
 import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
+import p2pinfiniteworld.graphics.DottedLineRenderer;
 
 public class P2PIWServerLoadingVisuals extends GameVisuals {
 
@@ -45,6 +46,7 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 		Future<Shader> fTextFS = loader.submit(new ShaderLoadTask(FRAGMENT, "shaders/textFragmentShader.glsl"));
 		Future<Shader> fTextureFS = loader.submit(new ShaderLoadTask(FRAGMENT, "shaders/textureFragmentShader.glsl"));
 		Future<Shader> fLineFS = loader.submit(new ShaderLoadTask(FRAGMENT, "shaders/lineFragmentShader.glsl"));
+		Future<Shader> fDottedLineFS = loader.submit(new NomadRealmsServerShaderLoadTask(FRAGMENT, "shaders/dottedLineFragmentShader.glsl"));
 		Future<Shader> fDiffuseFS = loader.submit(new NomadRealmsServerShaderLoadTask(FRAGMENT, "shaders/diffuseFragmentShader.glsl"));
 
 		Map<String, String> texMap = new HashMap<>();
@@ -74,6 +76,12 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 			loader.submit(new ShaderProgramLoadTask(lineSP)).get();
 			resourcePack.putShaderProgram("line", lineSP);
 			resourcePack.putRenderer("line", new LineRenderer(lineSP, resourcePack.rectangleVAO()));
+
+			Shader dottedLineFS = fDottedLineFS.get();
+			LineShaderProgram dottedLineSP = new LineShaderProgram(resourcePack.transformationVertexShader(), dottedLineFS);
+			loader.submit(new ShaderProgramLoadTask(dottedLineSP)).get();
+			resourcePack.putShaderProgram("dotted_line", dottedLineSP);
+			resourcePack.putRenderer("dotted_line", new DottedLineRenderer(dottedLineSP, resourcePack.rectangleVAO()));
 
 			Shader diffuseFS = fDiffuseFS.get();
 			TextureShaderProgram diffuseSP = new TextureShaderProgram(texturedTransformationVS, diffuseFS);

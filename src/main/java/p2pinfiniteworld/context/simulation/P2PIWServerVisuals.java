@@ -14,6 +14,7 @@ import context.visuals.renderer.LineRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.text.GameFont;
 import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
+import p2pinfiniteworld.graphics.DottedLineRenderer;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.model.P2PIWChunk;
 import p2pinfiniteworld.model.P2PIWRegion;
@@ -40,6 +41,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	private RectangleRenderer rectangleRenderer;
 	private P2PIWServerData data;
 	private LineRenderer lineRenderer;
+	private DottedLineRenderer dottedLineRenderer;
 	private Texture tinyNomad;
 
 	@Override
@@ -50,6 +52,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 		diffuseTextureRenderer = resourcePack.getRenderer("diffuse_texture", DiffuseTextureRenderer.class);
 		rectangleRenderer = new RectangleRenderer(resourcePack().defaultShaderProgram(), resourcePack().rectangleVAO());
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
+		dottedLineRenderer = resourcePack().getRenderer("dotted_line", DottedLineRenderer.class);
 		tinyNomad = resourcePack.getTexture("tiny_nomad");
 	}
 

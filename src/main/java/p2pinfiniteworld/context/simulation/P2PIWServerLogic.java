@@ -36,7 +36,7 @@ public class P2PIWServerLogic extends GameLogic {
 
 	@Override
 	public void update() {
-		if (frame % 10 == 0) {
+		if (frame % 100 == 0) {
 			tick++;
 			updateWorld();
 			if (tick == 0) {
