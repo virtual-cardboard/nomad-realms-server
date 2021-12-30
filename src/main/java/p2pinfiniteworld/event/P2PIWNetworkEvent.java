@@ -11,17 +11,19 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public abstract class P2PIWNetworkEvent extends GameEvent {
 
+	private NetworkSource source;
+
 	public P2PIWNetworkEvent(NetworkSource source) {
-		super(source);
+		this.source = source;
 	}
 
 	public P2PIWNetworkEvent(long time, NetworkSource source) {
-		super(time, source);
+		super(time);
+		this.source = source;
 	}
 
-	@Override
 	public NetworkSource source() {
-		return (NetworkSource) super.source();
+		return source;
 	}
 
 	public PacketModel toPacket(PacketAddress address) {
