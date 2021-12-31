@@ -11,8 +11,11 @@ import org.lwjgl.glfw.GLFW;
 
 import common.event.GameEvent;
 import common.math.PosDim;
+import common.math.Vector2i;
 import context.input.GameInput;
+import context.input.event.MouseMovedInputEvent;
 import context.input.event.MousePressedInputEvent;
+import context.input.event.MouseReleasedInputEvent;
 import p2pinfiniteworld.event.P2PIWEnterWorldNotificationEvent;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocolDecoder;
@@ -23,6 +26,9 @@ public class P2PIWServerInput extends GameInput {
 	private P2PIWServerLogic logic;
 	private P2PIWServerVisuals visuals;
 
+	private Vector2i previousCursorPos;
+	private boolean pressed = false;
+
 	@Override
 	protected void init() {
 		logic = (P2PIWServerLogic) context().logic();
@@ -30,6 +36,8 @@ public class P2PIWServerInput extends GameInput {
 		visuals = (P2PIWServerVisuals) context().visuals();
 		addPacketReceivedFunction(new P2PIWNetworkProtocolDecoder());
 		addMousePressedFunction(this::handleMousePressed);
+		addMouseReleasedFunction(this::handleMouseReleased);
+		addMouseMovedFunction((e) -> pressed, this::handleMouseMoved, true);
 		addKeyPressedFunction((e) -> e.code() == GLFW.GLFW_KEY_Q, (e) -> {
 			NomadTiny newNomad = new NomadTiny(0, 0, null, "Bob", randomColour());
 			data.queuedUsers().add(newNomad);
@@ -43,6 +51,8 @@ public class P2PIWServerInput extends GameInput {
 	}
 
 	private GameEvent handleMousePressed(MousePressedInputEvent event) {
+		pressed = true;
+		previousCursorPos = cursor().pos();
 		if (cursor().pos().y < GRID_START_Y) {
 		} else if (cursor().pos().x < GRID_START_X) {
 			handleQueuePressed();
@@ -90,6 +100,19 @@ public class P2PIWServerInput extends GameInput {
 			}
 			i++;
 		}
+	}
+
+	private GameEvent handleMouseReleased(MouseReleasedInputEvent mousereleasedinputevent1) {
+		pressed = false;
+		return null;
+	}
+
+	private GameEvent handleMouseMoved(MouseMovedInputEvent event) {
+		System.out.println("Prev:" + previousCursorPos);
+		System.out.println("Now:" + cursor().pos());
+		visuals.gridOffset = visuals.gridOffset.sub(previousCursorPos).add(cursor().pos());
+		previousCursorPos = cursor().pos();
+		return null;
 	}
 
 }
