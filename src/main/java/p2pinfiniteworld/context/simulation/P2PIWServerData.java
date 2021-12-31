@@ -24,7 +24,8 @@ public class P2PIWServerData extends GameData {
 	private List<NomadTiny> nomads = new ArrayList<>();
 	private Queue<NomadTiny> queuedUsers = new ArrayDeque<>();
 
-	private NomadTiny selectedTiny;
+	private NomadTiny selectedQueueNomad;
+	private NomadTiny selectedWorldNomad;
 
 	public Map<Vector2i, P2PIWRegion> regions() {
 		return regions;
@@ -38,12 +39,20 @@ public class P2PIWServerData extends GameData {
 		return queuedUsers;
 	}
 
-	public NomadTiny selectedNomad() {
-		return selectedTiny;
+	public NomadTiny selectedQueueNomad() {
+		return selectedQueueNomad;
 	}
 
-	public void setSelectedNomad(NomadTiny selectedTiny) {
-		this.selectedTiny = selectedTiny;
+	public void setSelectedQueueNomad(NomadTiny selectedQueueNomad) {
+		this.selectedQueueNomad = selectedQueueNomad;
+	}
+
+	public NomadTiny selectedWorldNomad() {
+		return selectedWorldNomad;
+	}
+
+	public void setSelectedWorldNomad(NomadTiny selectedWorldNomad) {
+		this.selectedWorldNomad = selectedWorldNomad;
 	}
 
 	public boolean isQueued(PacketAddress address) {

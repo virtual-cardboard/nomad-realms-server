@@ -4,7 +4,8 @@ import static context.visuals.colour.Colour.rgb;
 import static context.visuals.colour.Colour.rgba;
 import static p2pinfiniteworld.context.simulation.P2PIWServerData.REGION_NUM_CHUNKS;
 
-import java.util.Set;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import common.math.Vector2i;
 import context.visuals.GameVisuals;
@@ -59,31 +60,37 @@ public class P2PIWServerVisuals extends GameVisuals {
 	@Override
 	public void render() {
 		background(BACKGROUND_COLOUR);
+		drawSelectedWorldNomadInfo();
 		drawGrid();
 		drawQueued();
 		drawNomads();
 		drawChunkInfo();
-		drawSelectedNomadInfo();
 	}
 
-	private void drawSelectedNomadInfo() {
-		if (data.selectedNomad() == null) {
+	private void drawSelectedWorldNomadInfo() {
+		NomadTiny nomad = data.selectedWorldNomad();
+		if (nomad == null) {
 			return;
 		}
-		for (Vector2i regionCoord : data.selectedNomad().visitedRegions()) {
+		for (Vector2i regionCoord : nomad.visitedRegions()) {
 			Vector2i regionCoordPixelCoord = new Vector2i(regionCoord.x, regionCoord.y).scale(REGION_PIXEL_SIZE).add(GRID_START_X, GRID_START_Y);
 			rectangleRenderer.render(glContext(), rootGui.dimensions(), regionCoordPixelCoord.x, regionCoordPixelCoord.y, REGION_PIXEL_SIZE, REGION_PIXEL_SIZE, VISITED_REGIONS_COLOUR);
 		}
-		for (Vector2i chunkCoord : data.selectedNomad().visitedChunks()) {
+		for (Vector2i chunkCoord : nomad.visitedChunks()) {
 			Vector2i chunkPixelCoord = new Vector2i(chunkCoord.x, chunkCoord.y).scale(CHUNK_PIXEL_SIZE).add(GRID_START_X, GRID_START_Y);
 			rectangleRenderer.render(glContext(), rootGui.dimensions(), chunkPixelCoord.x, chunkPixelCoord.y, CHUNK_PIXEL_SIZE, CHUNK_PIXEL_SIZE, VISITED_CHUNKS_COLOUR);
 		}
+		rectangleRenderer.render(glContext(), rootGui.dimensions(),
+				GRID_START_X + nomad.x * CHUNK_PIXEL_SIZE, GRID_START_Y + nomad.y * CHUNK_PIXEL_SIZE,
+				CHUNK_PIXEL_SIZE, CHUNK_PIXEL_SIZE, DARK_BACKGROUND_COLOUR);
 	}
 
 	private void drawChunkInfo() {
-		Set<Vector2i> regions = data.regions().keySet();
-		for (Vector2i regionCoord : regions) {
-			P2PIWRegion region = data.regions().get(regionCoord);
+		Iterator<Entry<Vector2i, P2PIWRegion>> iterator = data.regions().entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<Vector2i, P2PIWRegion> item = iterator.next();
+			Vector2i regionCoord = item.getKey();
+			P2PIWRegion region = item.getValue();
 			Vector2i regionPixelCoords = regionCoord.scale(REGION_PIXEL_SIZE).add(GRID_START_X, GRID_START_Y);
 			for (int i = 0; i < REGION_NUM_CHUNKS; i++) {
 				for (int j = 0; j < REGION_NUM_CHUNKS; j++) {
@@ -105,7 +112,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	private void drawQueued() {
 		int i = 0;
 		for (NomadTiny nomad : data.queuedUsers()) {
-			int colour = data.selectedNomad() == nomad ? DARK_BACKGROUND_COLOUR : BACKGROUND_COLOUR;
+			int colour = data.selectedQueueNomad() == nomad ? DARK_BACKGROUND_COLOUR : BACKGROUND_COLOUR;
 			rectangleRenderer.render(glContext(), rootGui.dimensions(), 0, i * 2 * CHUNK_PIXEL_SIZE, GRID_START_X, 2 * CHUNK_PIXEL_SIZE, REGION_BORDER_COLOUR);
 			rectangleRenderer.render(glContext(), rootGui.dimensions(), 2, i * 2 * CHUNK_PIXEL_SIZE + 2, GRID_START_X - 4, 2 * CHUNK_PIXEL_SIZE - 4, colour);
 			diffuseTextureRenderer.render(glContext(), rootGui, tinyNomad, (GRID_START_X - CHUNK_PIXEL_SIZE) / 2, i * 2 * CHUNK_PIXEL_SIZE + 6, NOMAD_PIXEL_SIZE, NOMAD_PIXEL_SIZE, nomad.colour());
