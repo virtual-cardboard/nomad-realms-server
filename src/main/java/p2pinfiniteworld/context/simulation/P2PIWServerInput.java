@@ -2,6 +2,7 @@ package p2pinfiniteworld.context.simulation;
 
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.CHUNK_PIXEL_SIZE;
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_START_X;
+import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_START_Y;
 
 import common.event.GameEvent;
 import context.input.GameInput;
@@ -46,7 +47,7 @@ public class P2PIWServerInput extends GameInput {
 			for (NomadTiny nomad : data.nomads()) {
 				int left = GRID_START_X + nomad.x * CHUNK_PIXEL_SIZE;
 				int right = left + CHUNK_PIXEL_SIZE;
-				int top = nomad.y * CHUNK_PIXEL_SIZE;
+				int top = GRID_START_Y + nomad.y * CHUNK_PIXEL_SIZE;
 				int bottom = top + CHUNK_PIXEL_SIZE;
 				if (cursor().pos().x > left && cursor().pos().x < right && cursor().pos().y > top && cursor().pos().y < bottom) {
 					data.setSelectedWorldNomad(nomad);

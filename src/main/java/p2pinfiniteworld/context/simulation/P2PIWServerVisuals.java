@@ -25,8 +25,8 @@ public class P2PIWServerVisuals extends GameVisuals {
 	public static final int CHUNK_PIXEL_SIZE = 64;
 	public static final int REGION_PIXEL_SIZE = CHUNK_PIXEL_SIZE * REGION_NUM_CHUNKS;
 	public static final int GRID_START_X = 3 * CHUNK_PIXEL_SIZE;
-	private static final int GRID_START_Y = 0;
-	private static final int NOMAD_PIXEL_SIZE = CHUNK_PIXEL_SIZE - 4;
+	public static final int GRID_START_Y = 10;
+	public static final int NOMAD_PIXEL_SIZE = CHUNK_PIXEL_SIZE - 4;
 
 	public static final int VISITED_CHUNKS_COLOUR = rgba(104, 166, 68, 128);
 	public static final int VISITED_REGIONS_COLOUR = rgba(255, 201, 14, 32);
@@ -135,19 +135,31 @@ public class P2PIWServerVisuals extends GameVisuals {
 
 	private void drawChunks() {
 		for (int i = 0; i < 60; i++) {
-			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X + i * CHUNK_PIXEL_SIZE, 0, GRID_START_X + i * CHUNK_PIXEL_SIZE, rootGui.dimensions().y, 5, CHUNK_BORDER_COLOUR);
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(),
+					GRID_START_X + i * CHUNK_PIXEL_SIZE, GRID_START_Y,
+					GRID_START_X + i * CHUNK_PIXEL_SIZE, rootGui.dimensions().y,
+					5, CHUNK_BORDER_COLOUR);
 		}
 		for (int i = 0; i < 40; i++) {
-			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X, i * CHUNK_PIXEL_SIZE, rootGui.dimensions().x, i * CHUNK_PIXEL_SIZE, 5, CHUNK_BORDER_COLOUR);
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(),
+					GRID_START_X, GRID_START_Y + i * CHUNK_PIXEL_SIZE,
+					rootGui.dimensions().x, GRID_START_Y + i * CHUNK_PIXEL_SIZE,
+					5, CHUNK_BORDER_COLOUR);
 		}
 	}
 
 	private void drawRegions() {
 		for (int i = 0; i < 60; i++) {
-			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X + i * REGION_PIXEL_SIZE, 0, GRID_START_X + i * REGION_PIXEL_SIZE, rootGui.dimensions().y, 5, REGION_BORDER_COLOUR);
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(),
+					GRID_START_X + i * REGION_PIXEL_SIZE, GRID_START_Y,
+					GRID_START_X + i * REGION_PIXEL_SIZE, rootGui.dimensions().y,
+					5, REGION_BORDER_COLOUR);
 		}
 		for (int i = 0; i < 40; i++) {
-			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(), GRID_START_X, i * REGION_PIXEL_SIZE, rootGui.dimensions().x, i * REGION_PIXEL_SIZE, 5, REGION_BORDER_COLOUR);
+			lineRenderer.renderPixelCoords(glContext(), rootGui.dimensions(),
+					GRID_START_X, GRID_START_Y + i * REGION_PIXEL_SIZE,
+					rootGui.dimensions().x, GRID_START_Y + i * REGION_PIXEL_SIZE,
+					5, REGION_BORDER_COLOUR);
 		}
 	}
 
