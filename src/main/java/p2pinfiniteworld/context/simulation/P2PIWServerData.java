@@ -4,10 +4,10 @@ import static context.input.networking.packet.address.PacketAddress.match;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import common.math.Vector2i;
 import context.data.GameData;
@@ -19,7 +19,7 @@ public class P2PIWServerData extends GameData {
 
 	public static final int REGION_NUM_CHUNKS = 4;
 
-	private Map<Vector2i, P2PIWRegion> regions = new HashMap<>();
+	private Map<Vector2i, P2PIWRegion> regions = new ConcurrentHashMap<>();
 
 	private List<NomadTiny> nomads = new ArrayList<>();
 	private Queue<NomadTiny> queuedUsers = new ArrayDeque<>();
