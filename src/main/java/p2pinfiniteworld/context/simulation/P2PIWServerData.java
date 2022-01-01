@@ -55,22 +55,22 @@ public class P2PIWServerData extends GameData {
 		this.selectedWorldNomad = selectedWorldNomad;
 	}
 
-	public boolean isQueued(PacketAddress address) {
+	public NomadTiny isQueued(PacketAddress address) {
 		for (NomadTiny nomad : queuedUsers) {
 			if (match(nomad.address(), address)) {
-				return true;
+				return nomad;
 			}
 		}
-		return false;
+		return null;
 	}
 
-	public boolean isInWorld(PacketAddress address) {
+	public NomadTiny isInWorld(PacketAddress address) {
 		for (NomadTiny nomad : nomads) {
 			if (match(nomad.address(), address)) {
-				return true;
+				return nomad;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public P2PIWRegion getOrCreateRegion(Vector2i regionCoord) {

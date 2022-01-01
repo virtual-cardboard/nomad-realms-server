@@ -7,14 +7,16 @@ import static context.input.networking.packet.PacketPrimitive.SHORT;
 import static context.input.networking.packet.PacketPrimitive.STRING;
 
 import context.input.networking.packet.PacketFormat;
-import p2pinfiniteworld.event.P2PIWChunkDataRequestEvent;
-import p2pinfiniteworld.event.P2PIWClickChunkNotificationEvent;
-import p2pinfiniteworld.event.P2PIWEnterRegionNotificationEvent;
-import p2pinfiniteworld.event.P2PIWEnterWorldNotificationEvent;
-import p2pinfiniteworld.event.P2PIWJoinQueueRequestEvent;
-import p2pinfiniteworld.event.P2PIWJoinQueueSuccessResponseEvent;
-import p2pinfiniteworld.event.P2PIWRegionDataReceiveEvent;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
+import p2pinfiniteworld.event.P2PIWRegionDataReceiveEvent;
+import p2pinfiniteworld.event.peer2peer.P2PIWChunkDataRequestEvent;
+import p2pinfiniteworld.event.peer2peer.P2PIWClickChunkNotificationEvent;
+import p2pinfiniteworld.event.peer2peer.P2PIWEnterRegionNotificationEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInQueueResponseEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInWorldResponseEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWEnterWorldNotificationEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueRequestEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueSuccessResponseEvent;
 
 public enum P2PIWNetworkProtocol {
 
@@ -40,8 +42,14 @@ public enum P2PIWNetworkProtocol {
 	/**  */
 	JOIN_QUEUE_SUCCESS_RESPONSE(P2PIWJoinQueueSuccessResponseEvent.class, 201, new PacketFormat()),
 
+	/**  */
+	ALREADY_IN_QUEUE_RESPONSE(P2PIWAlreadyInQueueResponseEvent.class, 202, new PacketFormat()),
+
 	/** chunk_x, chunk_y, tick_0_time */
-	ENTER_WORLD_NOTIFICATION(P2PIWEnterWorldNotificationEvent.class, 202, new PacketFormat().with(INT, INT, LONG));
+	ALREADY_IN_WORLD_RESPONSE(P2PIWAlreadyInWorldResponseEvent.class, 203, new PacketFormat().with(INT, INT, LONG)),
+
+	/** chunk_x, chunk_y, tick_0_time */
+	ENTER_WORLD_NOTIFICATION(P2PIWEnterWorldNotificationEvent.class, 210, new PacketFormat().with(INT, INT, LONG));
 
 	private short id;
 	private Class<? extends P2PIWNetworkEvent> clazz;
