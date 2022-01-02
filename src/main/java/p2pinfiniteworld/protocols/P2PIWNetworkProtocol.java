@@ -36,6 +36,8 @@ public enum P2PIWNetworkProtocol {
 	/** user_id, chunk_x, chunk_y */
 	CLICK_CHUNK_NOTIFICATION(P2PIWClickChunkNotificationEvent.class, 104, new PacketFormat().with(BYTE, INT, INT)),
 
+	CHECK_NOMAD_STATUS_REQUEST(P2PIWJoinQueueRequestEvent.class, 200, new PacketFormat()),
+
 	/** username */
 	JOIN_QUEUE_REQUEST(P2PIWJoinQueueRequestEvent.class, 200, new PacketFormat().with(STRING)),
 
