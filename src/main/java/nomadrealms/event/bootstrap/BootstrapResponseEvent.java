@@ -1,7 +1,7 @@
 package nomadrealms.event.bootstrap;
 
 import static networking.NetworkUtils.LOCAL_HOST;
-import static networking.NetworkUtils.toIP;
+import static networking.NetworkUtils.toAddress;
 import static nomadrealms.protocols.NomadRealmsServerProtocol.BOOTSTRAP_RESPONSE;
 
 import common.source.NetworkSource;
@@ -39,8 +39,8 @@ public class BootstrapResponseEvent extends NomadRealmsServerGameEvent {
 		super(source);
 		setTime(reader.readLong());
 		this.nonce = reader.readLong();
-		this.lanAddress = toIP(reader.readIPv4(), reader.readShort());
-		this.wanAddress = toIP(reader.readIPv4(), reader.readShort());
+		this.lanAddress = toAddress(reader.readIPv4(), reader.readShort());
+		this.wanAddress = toAddress(reader.readIPv4(), reader.readShort());
 		this.username = reader.readString();
 		reader.close();
 	}

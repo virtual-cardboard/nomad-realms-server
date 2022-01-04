@@ -1,8 +1,5 @@
 package p2pinfiniteworld.context.simulation.logic;
 
-import static context.visuals.colour.Colour.rgb;
-import static java.lang.Math.random;
-
 import java.util.function.Consumer;
 
 import context.GameContext;
@@ -11,26 +8,26 @@ import p2pinfiniteworld.context.simulation.P2PIWServerData;
 import p2pinfiniteworld.context.simulation.P2PIWServerLogic;
 import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInQueueResponseEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInWorldResponseEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueRequestEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueSuccessResponseEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;
 import p2pinfiniteworld.model.NomadTiny;
 
-public class JoinQueueHandler implements Consumer<P2PIWJoinQueueRequestEvent> {
+public class CheckStatusHandler implements Consumer<P2PIWCheckNomadStatusRequestEvent> {
 
 	private P2PIWServerData data;
 	private GameContext context;
 	private P2PIWServerLogic logic;
 
-	public JoinQueueHandler(P2PIWServerData data, P2PIWServerLogic logic, GameContext context) {
+	public CheckStatusHandler(P2PIWServerData data, P2PIWServerLogic logic, GameContext context) {
 		this.data = data;
 		this.logic = logic;
 		this.context = context;
 	}
 
 	@Override
-	public void accept(P2PIWJoinQueueRequestEvent event) {
-		String username = event.username();
+	public void accept(P2PIWCheckNomadStatusRequestEvent event) {
 		PacketAddress address = event.source().address();
+
+		System.out.println(address + " is checking status");
 
 		NomadTiny inQueue = data.isQueued(address);
 		if (inQueue != null) {
@@ -42,15 +39,7 @@ public class JoinQueueHandler implements Consumer<P2PIWJoinQueueRequestEvent> {
 			context.sendPacket(new P2PIWAlreadyInWorldResponseEvent(inWorld.x, inWorld.y, logic.tick0Time()).toPacket(address));
 			return;
 		}
-
-		System.out.println(username + " at " + address + " requested to join queue");
-		data.queuedUsers().add(new NomadTiny(10, 10, address, username, randomColour()));
-
-		context.sendPacket(new P2PIWJoinQueueSuccessResponseEvent().toPacket(address));
-	}
-
-	private int randomColour() {
-		return rgb((int) (255 * random()), (int) (255 * random()), (int) (255 * random()));
+		System.out.println(address + " tried to check status without joining queue first.");
 	}
 
 }

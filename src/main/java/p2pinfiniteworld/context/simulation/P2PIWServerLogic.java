@@ -9,7 +9,9 @@ import java.util.Set;
 
 import common.math.Vector2i;
 import context.logic.GameLogic;
+import p2pinfiniteworld.context.simulation.logic.CheckStatusHandler;
 import p2pinfiniteworld.context.simulation.logic.JoinQueueHandler;
+import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueRequestEvent;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.model.P2PIWChunk;
@@ -32,6 +34,7 @@ public class P2PIWServerLogic extends GameLogic {
 	protected void init() {
 		data = (P2PIWServerData) context().data();
 		addHandler(P2PIWJoinQueueRequestEvent.class, new JoinQueueHandler(data, this, context()));
+		addHandler(P2PIWCheckNomadStatusRequestEvent.class, new CheckStatusHandler(data, this, context()));
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class NetworkUtils {
 	 */
 	public static final PacketFormat PROTOCOL_ID = new PacketFormat().with(SHORT);
 
-	public static InetAddress toIP(byte[] bytes) {
+	public static InetAddress toAddress(byte[] bytes) {
 		InetAddress ip = null;
 		try {
 			ip = InetAddress.getByAddress(bytes);
@@ -42,8 +42,8 @@ public class NetworkUtils {
 		return ip;
 	}
 
-	public static PacketAddress toIP(byte[] bytes, short port) {
-		return new PacketAddress(toIP(bytes), port & 0xFFFF);
+	public static PacketAddress toAddress(byte[] bytes, short port) {
+		return new PacketAddress(toAddress(bytes), port & 0xFFFF);
 	}
 
 }

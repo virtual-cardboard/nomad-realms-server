@@ -3,8 +3,8 @@ package p2pinfiniteworld.context.simulation;
 import static context.input.networking.packet.address.PacketAddress.match;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,7 +21,7 @@ public class P2PIWServerData extends GameData {
 
 	private Map<Vector2i, P2PIWRegion> regions = new ConcurrentHashMap<>();
 
-	private List<NomadTiny> nomads = new ArrayList<>();
+	private Collection<NomadTiny> nomads = new HashSet<>();
 	private Queue<NomadTiny> queuedUsers = new ArrayDeque<>();
 
 	private NomadTiny selectedQueueNomad;
@@ -31,7 +31,7 @@ public class P2PIWServerData extends GameData {
 		return regions;
 	}
 
-	public List<NomadTiny> nomads() {
+	public Collection<NomadTiny> nomads() {
 		return nomads;
 	}
 

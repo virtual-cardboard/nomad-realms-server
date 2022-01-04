@@ -1,6 +1,6 @@
-package p2pinfiniteworld.event.peer2peer;
+package p2pinfiniteworld.event.peer2peer.game;
 
-import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.CHUNK_DATA_REQUEST;
+import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.CLICK_CHUNK_NOTIFICATION;
 
 import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
@@ -9,14 +9,14 @@ import context.input.networking.packet.PacketReader;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
-public class P2PIWChunkDataRequestEvent extends P2PIWNetworkEvent {
+public class P2PIWMoveNotificationEvent extends P2PIWNetworkEvent {
 
+	private int id;
 	private int chunkX, chunkY;
-	private long timestamp;
 
-	public P2PIWChunkDataRequestEvent(NetworkSource source, PacketReader reader) {
+	public P2PIWMoveNotificationEvent(NetworkSource source, PacketReader reader) {
 		super(source);
-		this.timestamp = reader.readLong();
+		this.id = reader.readInt();
 		this.chunkX = reader.readInt();
 		this.chunkY = reader.readInt();
 		reader.close();
@@ -25,7 +25,7 @@ public class P2PIWChunkDataRequestEvent extends P2PIWNetworkEvent {
 	@Override
 	protected PacketModel toPacketModel(PacketBuilder builder) {
 		return builder
-				.consume(timestamp)
+				.consume(id)
 				.consume(chunkX)
 				.consume(chunkY)
 				.build();
@@ -33,7 +33,11 @@ public class P2PIWChunkDataRequestEvent extends P2PIWNetworkEvent {
 
 	@Override
 	protected P2PIWNetworkProtocol protocol() {
-		return CHUNK_DATA_REQUEST;
+		return CLICK_CHUNK_NOTIFICATION;
+	}
+
+	public int id() {
+		return id;
 	}
 
 	public int chunkX() {
@@ -42,10 +46,6 @@ public class P2PIWChunkDataRequestEvent extends P2PIWNetworkEvent {
 
 	public int chunkY() {
 		return chunkY;
-	}
-
-	public long timestamp() {
-		return timestamp;
 	}
 
 }

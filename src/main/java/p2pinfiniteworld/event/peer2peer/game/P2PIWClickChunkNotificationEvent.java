@@ -1,4 +1,4 @@
-package p2pinfiniteworld.event.peer2peer;
+package p2pinfiniteworld.event.peer2peer.game;
 
 import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.CLICK_CHUNK_NOTIFICATION;
 
