@@ -1,9 +1,7 @@
 package p2pinfiniteworld.graphics;
 
 import common.math.Matrix4f;
-import common.math.Vector2f;
 import common.math.Vector3f;
-import context.GLContext;
 import context.visuals.builtin.LineShaderProgram;
 import context.visuals.builtin.RectangleVertexArrayObject;
 import context.visuals.lwjgl.ShaderProgram;
@@ -25,7 +23,7 @@ public class DottedLineRenderer extends GameRenderer {
 		this.vao = vao;
 	}
 
-	public void render(GLContext glContext, Vector2f screenDim, float x1, float y1, float x2, float y2, float lineLength, float gapLength, float offset, float width, int colour) {
+	public void render(float x1, float y1, float x2, float y2, float lineLength, float gapLength, float offset, float width, int colour) {
 		// Calculations for matrix transformations
 		width = Math.abs(width);
 		float halfWidth = width * 0.5f;
@@ -35,7 +33,7 @@ public class DottedLineRenderer extends GameRenderer {
 
 		// Matrix transformations
 		matrix4f.translate(-1, 1);
-		matrix4f.scale(2, -2).scale(1 / screenDim.x, 1 / screenDim.y);
+		matrix4f.scale(2, -2).scale(1 / glContext.width(), 1 / glContext.height());
 		matrix4f.translate(x1, y1);
 		matrix4f.rotate(-theta, Vector3f.Z_AXIS);
 		matrix4f.translate(-halfWidth, -halfWidth);

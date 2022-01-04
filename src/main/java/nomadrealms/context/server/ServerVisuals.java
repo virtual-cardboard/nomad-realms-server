@@ -47,26 +47,26 @@ public class ServerVisuals extends GameVisuals {
 	@Override
 	public void render() {
 		background(rgb(255, 255, 255));
-		textureRenderer.render(context().glContext(), yard, 256, 256 + 200, 1);
+		textureRenderer.render(yard, 256, 256 + 200, 1);
 		data.minis().sort(comparing(NomadMini::y));
 		for (int i = 0; i < data.minis().size(); i++) {
 			NomadMini mini = data.minis().get(i);
 			mini.update();
 			drawNomad(mini);
 		}
-		textureRenderer.render(context().glContext(), yardBottomFence, 256, 256 + 200, 1);
-		textureRenderer.render(context().glContext(), rootGui(), serverIcon, 900, 300, 500, 500);
+		textureRenderer.render(yardBottomFence, 256, 256 + 200, 1);
+		textureRenderer.render(serverIcon, 900, 300, 500, 500);
 		if (data.selectedMini != null) {
-			textRenderer.render(context().glContext(), 12, 800, data.selectedMini.username(), 0, baloo2, 28, 255);
+			textRenderer.render(12, 800, data.selectedMini.username(), 0, baloo2, 28, 255);
 		}
-		textRenderer.render(context().glContext(), 50, 10, "Nomad Realms Server", 0, langar, 44, 255);
+		textRenderer.render(50, 10, "Nomad Realms Server", 0, langar, 44, 255);
 	}
 
 	private void drawNomad(NomadMini mini) {
 		float x = mini.x();
 		float y = mini.y() - mini.h();
-		rectangleRenderer.render(context().glContext(), x + 12, y + 20, 35, 30, mini.colour());
-		textureRenderer.render(context().glContext(), rootGui(), nomad, x, y, 64, 64);
+		rectangleRenderer.render(x + 12, y + 20, 35, 30, mini.colour());
+		textureRenderer.render(nomad, x, y, 64, 64);
 	}
 
 }

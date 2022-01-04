@@ -13,6 +13,7 @@ import common.loader.loadtask.ShaderLoadTask;
 import common.loader.loadtask.ShaderProgramLoadTask;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.LineShaderProgram;
+import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextShaderProgram;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.builtin.TexturedTransformationVertexShader;
@@ -101,6 +102,8 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 			TextShaderProgram textSP = new TextShaderProgram(texturedTransformationVS, textFS);
 			loader.submit(new ShaderProgramLoadTask(textSP)).get();
 			resourcePack.putRenderer("text", new TextRenderer(textureRenderer, textSP, resourcePack.rectangleVAO(), textFBO));
+
+			resourcePack.putRenderer("rectangle", new RectangleRenderer(resourcePack().defaultShaderProgram(), resourcePack().rectangleVAO()));
 
 			fTexMap.forEach((name, fTexture) -> {
 				try {
