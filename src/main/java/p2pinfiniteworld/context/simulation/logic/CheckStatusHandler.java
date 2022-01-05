@@ -31,7 +31,7 @@ public class CheckStatusHandler implements Consumer<P2PIWCheckNomadStatusRequest
 
 		NomadTiny inQueue = data.isQueued(address);
 		if (inQueue != null) {
-			context.sendPacket(new P2PIWAlreadyInQueueResponseEvent().toPacket(address));
+			context.sendPacket(new P2PIWAlreadyInQueueResponseEvent(logic.tick0Time()).toPacket(address));
 			return;
 		}
 		NomadTiny inWorld = data.isInWorld(address);

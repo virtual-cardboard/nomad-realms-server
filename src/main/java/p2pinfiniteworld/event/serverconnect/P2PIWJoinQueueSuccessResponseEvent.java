@@ -11,24 +11,32 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public class P2PIWJoinQueueSuccessResponseEvent extends P2PIWNetworkEvent {
 
+	private long tick0Time;
+
 	public P2PIWJoinQueueSuccessResponseEvent() {
 		super(null);
 	}
 
 	public P2PIWJoinQueueSuccessResponseEvent(NetworkSource source, PacketReader reader) {
 		super(source);
+		tick0Time = reader.readLong();
 		reader.close();
 	}
 
 	@Override
 	protected PacketModel toPacketModel(PacketBuilder builder) {
 		return builder
+				.consume(tick0Time)
 				.build();
 	}
 
 	@Override
 	protected P2PIWNetworkProtocol protocol() {
 		return JOIN_QUEUE_SUCCESS_RESPONSE;
+	}
+
+	public long tick0Time() {
+		return 0;
 	}
 
 }

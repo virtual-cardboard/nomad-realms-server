@@ -16,7 +16,7 @@ import context.input.GameInput;
 import context.input.event.MouseMovedInputEvent;
 import context.input.event.MousePressedInputEvent;
 import context.input.event.MouseReleasedInputEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWEnterWorldNotificationEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWReadyToJoinNetworkResponse;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocolDecoder;
 
@@ -73,7 +73,7 @@ public class P2PIWServerInput extends GameInput {
 			data.selectedQueueNomad().x = chunkX;
 			data.selectedQueueNomad().y = chunkY;
 			if (data.selectedQueueNomad().address() != null) {
-				context().sendPacket(new P2PIWEnterWorldNotificationEvent(chunkX, chunkY, logic.tick0Time()).toPacket(data.selectedQueueNomad().address()));
+				context().sendPacket(new P2PIWReadyToJoinNetworkResponse(chunkX, chunkY, data.addressList()).toPacket(data.selectedQueueNomad().address()));
 			} else {
 				System.out.println("Added in nomad without address");
 			}

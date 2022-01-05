@@ -1,6 +1,6 @@
 package p2pinfiniteworld.event.serverconnect;
 
-import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.ENTER_WORLD_NOTIFICATION;
+import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.READY_TO_JOIN_NETWORK_RESPONSE;
 
 import java.net.Inet4Address;
 import java.util.ArrayList;
@@ -17,15 +17,20 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public class P2PIWReadyToJoinNetworkResponse extends P2PIWNetworkEvent {
 
+	private int chunkX, chunkY;
 	private List<PacketAddress> networkAddresses = new ArrayList<>();
 
-	public P2PIWReadyToJoinNetworkResponse(List<PacketAddress> networkAddresses) {
+	public P2PIWReadyToJoinNetworkResponse(int chunkX, int chunkY, List<PacketAddress> networkAddresses) {
 		super(null);
+		this.chunkX = chunkX;
+		this.chunkY = chunkY;
 		this.networkAddresses = networkAddresses;
 	}
 
 	public P2PIWReadyToJoinNetworkResponse(NetworkSource source, PacketReader reader) {
 		super(source);
+		chunkX = reader.readInt();
+		chunkY = reader.readInt();
 		byte[][] ips = reader.readIPv4Array();
 		short[] ports = reader.readShortArray();
 		for (int i = 0; i < ips.length; i++) {
@@ -44,6 +49,8 @@ public class P2PIWReadyToJoinNetworkResponse extends P2PIWNetworkEvent {
 			ports[i] = address.shortPort();
 		}
 		return builder
+				.consume(chunkX)
+				.consume(chunkY)
 				.consume(ips)
 				.consume(ports)
 				.build();
@@ -51,11 +58,19 @@ public class P2PIWReadyToJoinNetworkResponse extends P2PIWNetworkEvent {
 
 	@Override
 	protected P2PIWNetworkProtocol protocol() {
-		return ENTER_WORLD_NOTIFICATION;
+		return READY_TO_JOIN_NETWORK_RESPONSE;
 	}
 
 	public List<PacketAddress> networkAddresses() {
 		return networkAddresses;
+	}
+
+	public int chunkX() {
+		return chunkX;
+	}
+
+	public int chunkY() {
+		return chunkY;
 	}
 
 }

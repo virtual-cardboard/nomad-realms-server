@@ -11,7 +11,7 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public class P2PIWAlreadyInQueueResponseEvent extends P2PIWNetworkEvent {
 
-	public P2PIWAlreadyInQueueResponseEvent() {
+	public P2PIWAlreadyInQueueResponseEvent(long tick0Time) {
 		super(null);
 	}
 

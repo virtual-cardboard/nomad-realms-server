@@ -52,6 +52,9 @@ public class P2PIWServerLogic extends GameLogic {
 	private void updateWorld() {
 		Set<P2PIWChunk> chunksToUpdate = new HashSet<>();
 		for (NomadTiny nomad : data.nomads()) {
+			if (nomad.pendingJoin()) {
+				continue;
+			}
 			for (int i = nomad.y - RENDER_DISTANCE; i <= nomad.y + RENDER_DISTANCE; i++) {
 				for (int j = nomad.x - RENDER_DISTANCE; j <= nomad.x + RENDER_DISTANCE; j++) {
 					Vector2i chunkCoord = new Vector2i(j, i);

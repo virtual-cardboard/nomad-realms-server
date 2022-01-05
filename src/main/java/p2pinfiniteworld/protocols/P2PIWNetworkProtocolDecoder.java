@@ -38,8 +38,6 @@ public class P2PIWNetworkProtocolDecoder implements Function<PacketReceivedInput
 
 	@Override
 	public GameEvent apply(PacketReceivedInputEvent event) {
-		System.out.println("Received packet from: " + event.source().address());
-
 		PacketReader idReader = PROTOCOL_ID.reader(event.model());
 		int id = idReader.readShort() & 0xFFFF;
 
@@ -48,13 +46,23 @@ public class P2PIWNetworkProtocolDecoder implements Function<PacketReceivedInput
 		PacketReader protocolReader = format.reader(idReader);
 
 		try {
-			return constructor.newInstance(event.source(), protocolReader);
+			P2PIWNetworkEvent instance = constructor.newInstance(event.source(), protocolReader);
+			print(event, instance);
+			return instance;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		System.out.println("Unknown protocol id " + id);
 		return null;
+	}
+
+	private void print(PacketReceivedInputEvent event, P2PIWNetworkEvent instance) {
+		String simpleName = instance.getClass().getSimpleName();
+		if (simpleName.startsWith("P2PIW")) {
+			simpleName = simpleName.substring(5);
+		}
+		System.out.println("Received " + simpleName + " from: " + event.source().address());
 	}
 
 }

@@ -3,8 +3,10 @@ package p2pinfiniteworld.context.simulation;
 import static context.input.networking.packet.address.PacketAddress.match;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -80,6 +82,14 @@ public class P2PIWServerData extends GameData {
 			regions.put(regionCoord, region);
 		}
 		return region;
+	}
+
+	public List<PacketAddress> addressList() {
+		List<PacketAddress> list = new ArrayList<>();
+		for (NomadTiny nomad : nomads) {
+			list.add(nomad.address());
+		}
+		return list;
 	}
 
 }

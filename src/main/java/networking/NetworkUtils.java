@@ -19,7 +19,7 @@ public class NetworkUtils {
 		InetAddress serverDest = null;
 		try {
 			localHost = InetAddress.getLocalHost();
-			serverDest = InetAddress.getByName("72.140.156.47");
+			serverDest = InetAddress.getByName("99.250.93.242");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

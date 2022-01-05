@@ -20,6 +20,7 @@ import p2pinfiniteworld.event.peer2peer.session.P2PIWPeerJoinNetworkConfirmation
 import p2pinfiniteworld.event.peer2peer.session.P2PIWPeerJoinNetworkConsensusEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInQueueResponseEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInWorldResponseEvent;
+import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWEnterWorldNotificationEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueRequestEvent;
 import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueSuccessResponseEvent;
@@ -51,13 +52,13 @@ public enum P2PIWNetworkProtocol {
 
 	PEER_JOIN_NETWORK_CONFIRMATION(P2PIWPeerJoinNetworkConfirmationEvent.class, 52, new PacketFormat().with(IP_V4, SHORT)),
 
-	CHECK_NOMAD_STATUS_REQUEST(P2PIWJoinQueueRequestEvent.class, 200, new PacketFormat()),
+	CHECK_NOMAD_STATUS_REQUEST(P2PIWCheckNomadStatusRequestEvent.class, 199, new PacketFormat()),
 
 	/** username */
 	JOIN_QUEUE_REQUEST(P2PIWJoinQueueRequestEvent.class, 200, new PacketFormat().with(STRING)),
 
-	/**  */
-	JOIN_QUEUE_SUCCESS_RESPONSE(P2PIWJoinQueueSuccessResponseEvent.class, 201, new PacketFormat()),
+	/** tick_0_time */
+	JOIN_QUEUE_SUCCESS_RESPONSE(P2PIWJoinQueueSuccessResponseEvent.class, 201, new PacketFormat().with(LONG)),
 
 	/**  */
 	ALREADY_IN_QUEUE_RESPONSE(P2PIWAlreadyInQueueResponseEvent.class, 202, new PacketFormat()),
@@ -65,8 +66,8 @@ public enum P2PIWNetworkProtocol {
 	/** chunk_x, chunk_y, tick_0_time */
 	ALREADY_IN_WORLD_RESPONSE(P2PIWAlreadyInWorldResponseEvent.class, 203, new PacketFormat().with(INT, INT, LONG)),
 
-	/** network_ip_array, network_port_array */
-	READY_TO_JOIN_NETWORK_RESPONSE(P2PIWReadyToJoinNetworkResponse.class, 204, new PacketFormat().with(IP_V4_ARRAY, SHORT_ARRAY)),
+	/** chunk_x, chunk_y, network_ip_array, network_port_array */
+	READY_TO_JOIN_NETWORK_RESPONSE(P2PIWReadyToJoinNetworkResponse.class, 204, new PacketFormat().with(INT, INT, IP_V4_ARRAY, SHORT_ARRAY)),
 
 	/** chunk_x, chunk_y, tick_0_time */
 	ENTER_WORLD_NOTIFICATION(P2PIWEnterWorldNotificationEvent.class, 210, new PacketFormat().with(INT, INT, LONG));
