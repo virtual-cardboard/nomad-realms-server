@@ -14,7 +14,7 @@ public class NomadTiny {
 	private int colour;
 	private String username;
 	private PacketAddress address;
-	private boolean pendingJoin = false;
+	private boolean pendingJoin = true;
 
 	private Set<Vector2i> visitedChunks = new HashSet<>();
 	private Set<Vector2i> visitedRegions = new HashSet<>();
@@ -25,10 +25,6 @@ public class NomadTiny {
 		this.address = address;
 		this.username = username;
 		this.colour = colour;
-	}
-
-	public boolean pendingJoin() {
-		return pendingJoin;
 	}
 
 	public Vector2i region() {
@@ -57,6 +53,14 @@ public class NomadTiny {
 
 	public Set<Vector2i> visitedRegions() {
 		return visitedRegions;
+	}
+
+	public boolean pendingJoin() {
+		return pendingJoin;
+	}
+
+	public void setPendingJoin(boolean pendingJoin) {
+		this.pendingJoin = pendingJoin;
 	}
 
 }

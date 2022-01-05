@@ -52,6 +52,7 @@ public class P2PIWServerLogic extends GameLogic {
 	private void updateWorld() {
 		Set<P2PIWChunk> chunksToUpdate = new HashSet<>();
 		for (NomadTiny nomad : data.nomads()) {
+			System.out.println(nomad.pendingJoin());
 			if (nomad.pendingJoin()) {
 				continue;
 			}
