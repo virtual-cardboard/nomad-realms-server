@@ -11,20 +11,18 @@ import context.input.networking.packet.address.PacketAddress;
 
 public class NetworkUtils {
 
-	public static final NetworkSource LOCAL_HOST;
 	public static final NetworkSource SERVER;
+	public static final NetworkSource P2PIW_SERVER;
 
 	static {
-		InetAddress localHost = null;
 		InetAddress serverDest = null;
 		try {
-			localHost = InetAddress.getLocalHost();
 			serverDest = InetAddress.getByName("99.250.93.242");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		LOCAL_HOST = new NetworkSource(new PacketAddress(localHost, 45000));
 		SERVER = new NetworkSource(new PacketAddress(serverDest, 45000));
+		P2PIW_SERVER = new NetworkSource(new PacketAddress(serverDest, 45001));
 	}
 
 	/**

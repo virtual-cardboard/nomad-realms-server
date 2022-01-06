@@ -36,7 +36,7 @@ public class ServerVisuals extends GameVisuals {
 		baloo2 = rp.getFont("baloo2");
 		langar = rp.getFont("langar");
 		textRenderer = rp.getRenderer("text", TextRenderer.class);
-		textureRenderer = new TextureRenderer((TextureShaderProgram) rp.getShaderProgram("texture"), rp.rectangleVAO());
+		textureRenderer = new TextureRenderer(glContext(), (TextureShaderProgram) rp.getShaderProgram("texture"), rp.rectangleVAO());
 		serverIcon = rp.getTexture("server");
 		yard = rp.getTexture("yard");
 		yardBottomFence = rp.getTexture("yard_bottom_fence");

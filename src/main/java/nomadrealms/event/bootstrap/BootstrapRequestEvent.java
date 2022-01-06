@@ -1,6 +1,5 @@
 package nomadrealms.event.bootstrap;
 
-import static networking.NetworkUtils.LOCAL_HOST;
 import static networking.NetworkUtils.toAddress;
 import static nomadrealms.protocols.NomadRealmsServerProtocol.BOOTSTRAP_REQUEST;
 
@@ -24,7 +23,7 @@ public class BootstrapRequestEvent extends NomadRealmsServerGameEvent {
 	}
 
 	public BootstrapRequestEvent(PacketAddress lanAddress, String username) {
-		super(LOCAL_HOST);
+		super(null);
 		this.lanAddress = lanAddress;
 		this.username = username;
 	}

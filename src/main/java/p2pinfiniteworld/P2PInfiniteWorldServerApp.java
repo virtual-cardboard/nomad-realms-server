@@ -21,7 +21,7 @@ public class P2PInfiniteWorldServerApp {
 		GameContext context = new GameContext(data, input, logic, visuals);
 		new GameEngine("P2P Infinite World Server", context)
 				.enableLoading()
-				.enableNetworking(45000)
+				.enableNetworking(45001)
 				.enableRendering()
 				.enablePrintProgress()
 				.windowDimensions(32 * 50, 32 * 30)

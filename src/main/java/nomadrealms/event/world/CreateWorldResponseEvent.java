@@ -1,6 +1,5 @@
 package nomadrealms.event.world;
 
-import static networking.NetworkUtils.LOCAL_HOST;
 import static nomadrealms.protocols.NomadRealmsServerProtocol.CREATE_WORLD_RESPONSE;
 
 import common.source.NetworkSource;
@@ -20,7 +19,7 @@ public class CreateWorldResponseEvent extends NomadRealmsServerGameEvent {
 	}
 
 	public CreateWorldResponseEvent(long seed) {
-		super(LOCAL_HOST);
+		super(null);
 		this.seed = seed;
 	}
 
