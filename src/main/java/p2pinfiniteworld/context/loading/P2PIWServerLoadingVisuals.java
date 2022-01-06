@@ -42,6 +42,7 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 		// Font textures
 		Future<Texture> fBaloo2Tex = loader.submit(new NomadRealmsServerTextureLoadTask("fonts/baloo2.png"));
 		Future<Texture> fLangarTex = loader.submit(new NomadRealmsServerTextureLoadTask("fonts/langar.png"));
+		Future<Texture> fFredokaOneTex = loader.submit(new NomadRealmsServerTextureLoadTask("fonts/fredokaOne.png"));
 
 		// Shaders
 		Future<Shader> fTextFS = loader.submit(new ShaderLoadTask(FRAGMENT, "shaders/textFragmentShader.glsl"));
@@ -71,6 +72,11 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 			Future<GameFont> fLangarFont = loader.submit(new NomadRealmsServerFontLoadTask("fonts/langar.vcfont", langarTex));
 			GameFont langarFont = fLangarFont.get();
 			resourcePack.putFont("langar", langarFont);
+
+			Texture fredokaOneTex = fFredokaOneTex.get();
+			Future<GameFont> fFredokaOneFont = loader.submit(new NomadRealmsServerFontLoadTask("fonts/fredokaOne.vcfont", fredokaOneTex));
+			GameFont fredokaOneFont = fFredokaOneFont.get();
+			resourcePack.putFont("fredokaOne", fredokaOneFont);
 
 			Shader lineFS = fLineFS.get();
 			LineShaderProgram lineSP = new LineShaderProgram(resourcePack.transformationVertexShader(), lineFS);

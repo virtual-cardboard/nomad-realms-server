@@ -33,6 +33,7 @@ public class P2PIWServerLogic extends GameLogic {
 	@Override
 	protected void init() {
 		data = (P2PIWServerData) context().data();
+		data.addServerMessage("Server started successfully");
 		addHandler(P2PIWJoinQueueRequestEvent.class, new JoinQueueHandler(data, this, context()));
 		addHandler(P2PIWCheckNomadStatusRequestEvent.class, new CheckStatusHandler(data, this, context()));
 	}

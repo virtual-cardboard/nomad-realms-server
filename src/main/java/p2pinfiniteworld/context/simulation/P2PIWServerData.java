@@ -103,4 +103,12 @@ public class P2PIWServerData extends GameData {
 		this.logMessages = logMessages;
 	}
 
+	public void addMessage(String source, String string) {
+		logMessages.addMessage(source, string);
+	}
+
+	public void addServerMessage(String string) {
+		logMessages.addMessage("Server", string);
+	}
+
 }

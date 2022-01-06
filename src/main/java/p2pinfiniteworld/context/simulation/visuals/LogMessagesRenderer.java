@@ -12,6 +12,7 @@ import context.visuals.renderer.GameRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.text.GameFont;
 import p2pinfiniteworld.context.simulation.P2PIWServerData;
+import p2pinfiniteworld.model.LogMessages;
 
 public class LogMessagesRenderer extends GameRenderer {
 
@@ -25,20 +26,18 @@ public class LogMessagesRenderer extends GameRenderer {
 	public Vector2i gridOffset = new Vector2i();
 	public float logMessagesY = OPEN_MESSAGES_Y;
 
-	private P2PIWServerData data;
 	private RectangleRenderer rectangleRenderer;
 	private TextRenderer textRenderer;
 	private GameFont baloo2;
 
 	public LogMessagesRenderer(GLContext glContext, P2PIWServerData data, RectangleRenderer rectangleRenderer, TextRenderer textRenderer, GameFont baloo2) {
 		super(glContext);
-		this.data = data;
 		this.rectangleRenderer = rectangleRenderer;
 		this.textRenderer = textRenderer;
 		this.baloo2 = baloo2;
 	}
 
-	public void render(boolean logOpen) {
+	public void render(LogMessages logMessages, boolean logOpen, GameFont font) {
 		int padding = 8;
 		rectangleRenderer.render(width() - LOG_MESSAGES_WIDTH - LOG_MESSAGES_RIGHT_PADDING,
 				logMessagesY,
@@ -51,11 +50,12 @@ public class LogMessagesRenderer extends GameRenderer {
 				height() - logMessagesY - LOG_MESSAGES_BAR_HEIGHT,
 				BACKGROUND_COLOUR);
 		int i = 0;
-		while (i < data.logMessages().size() && messageYPosition(i) > logMessagesY + LOG_MESSAGES_BAR_HEIGHT - LOG_MESSAGES_INE_HEIGHT) {
+		textRenderer.alignLeft();
+		while (i < logMessages.size() && messageYPosition(i) > logMessagesY + LOG_MESSAGES_BAR_HEIGHT - LOG_MESSAGES_INE_HEIGHT) {
 			textRenderer.render(
 					(int) width() - LOG_MESSAGES_WIDTH - LOG_MESSAGES_RIGHT_PADDING + 10,
 					messageYPosition(i),
-					data.logMessages().get(i), 100000, baloo2, 24, rgb(0, 0, 0));
+					logMessages.get(i), 100000, font, 16, WHITE);
 			i++;
 		}
 		rectangleRenderer.render(width() - LOG_MESSAGES_WIDTH - LOG_MESSAGES_RIGHT_PADDING,
@@ -76,7 +76,7 @@ public class LogMessagesRenderer extends GameRenderer {
 	}
 
 	private int messageYPosition(int i) {
-		return (int) (height() + logMessagesY - OPEN_MESSAGES_Y - 28 * (i + 1) - 12);
+		return (int) (height() + logMessagesY - OPEN_MESSAGES_Y - 16 * (i + 1) - 8);
 	}
 
 }

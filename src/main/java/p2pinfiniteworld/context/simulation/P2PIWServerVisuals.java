@@ -42,9 +42,10 @@ public class P2PIWServerVisuals extends GameVisuals {
 
 	public Vector2i gridOffset = new Vector2i();
 
-	public boolean logOpen = false;
+	public boolean logOpen = true;
 
 	private GameFont baloo2;
+	private GameFont fredokaOne;
 	private TextRenderer textRenderer;
 	private DiffuseTextureRenderer diffuseTextureRenderer;
 	private RectangleRenderer rectangleRenderer;
@@ -58,6 +59,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	public void init() {
 		data = (P2PIWServerData) context().data();
 		baloo2 = resourcePack().getFont("baloo2");
+		fredokaOne = resourcePack().getFont("fredokaOne");
 		textRenderer = resourcePack().getRenderer("text", TextRenderer.class);
 		diffuseTextureRenderer = resourcePack.getRenderer("diffuse_texture", DiffuseTextureRenderer.class);
 		rectangleRenderer = resourcePack.getRenderer("rectangle", RectangleRenderer.class);
@@ -80,7 +82,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	}
 
 	private void drawLogMessages() {
-		logMessagesRenderer.render(logOpen);
+		logMessagesRenderer.render(data.logMessages(), logOpen, fredokaOne);
 	}
 
 	private void drawInfo() {

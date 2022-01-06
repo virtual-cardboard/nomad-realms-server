@@ -32,23 +32,24 @@ public class JoinQueueHandler implements Consumer<P2PIWJoinQueueRequestEvent> {
 		String username = event.username();
 		PacketAddress address = event.source().address();
 
-		System.out.println(username + " at " + address + " requested to join queue");
+		data.addMessage(username, address + " requesting to join queue");
 
 		NomadTiny inQueue = data.isQueued(address);
 		if (inQueue != null) {
-			System.out.println(username + " already in queue");
+			data.addServerMessage(username + " already in queue");
 			context.sendPacket(new P2PIWAlreadyInQueueResponseEvent(logic.tick0Time()).toPacket(address));
 			return;
 		}
 		NomadTiny inWorld = data.isInWorld(address);
 		if (inWorld != null) {
-			System.out.println(username + " already in world");
+			data.addServerMessage(username + " already in world");
 			context.sendPacket(new P2PIWAlreadyInWorldResponseEvent(inWorld.x, inWorld.y, logic.tick0Time()).toPacket(address));
 			return;
 		}
 
 		data.queuedUsers().add(new NomadTiny(10, 10, address, username, randomColour()));
 
+		data.addServerMessage(username + " joined queue successfully");
 		context.sendPacket(new P2PIWJoinQueueSuccessResponseEvent().toPacket(address));
 	}
 

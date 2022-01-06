@@ -60,8 +60,8 @@ public enum P2PIWNetworkProtocol {
 	/** tick_0_time */
 	JOIN_QUEUE_SUCCESS_RESPONSE(P2PIWJoinQueueSuccessResponseEvent.class, 201, new PacketFormat().with(LONG)),
 
-	/**  */
-	ALREADY_IN_QUEUE_RESPONSE(P2PIWAlreadyInQueueResponseEvent.class, 202, new PacketFormat()),
+	/** tick_0_time */
+	ALREADY_IN_QUEUE_RESPONSE(P2PIWAlreadyInQueueResponseEvent.class, 202, new PacketFormat().with(LONG)),
 
 	/** chunk_x, chunk_y, tick_0_time */
 	ALREADY_IN_WORLD_RESPONSE(P2PIWAlreadyInWorldResponseEvent.class, 203, new PacketFormat().with(INT, INT, LONG)),

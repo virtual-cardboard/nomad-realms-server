@@ -15,6 +15,7 @@ public class P2PIWAlreadyInQueueResponseEvent extends P2PIWNetworkEvent {
 
 	public P2PIWAlreadyInQueueResponseEvent(long tick0Time) {
 		super(null);
+		this.tick0Time = tick0Time;
 	}
 
 	public P2PIWAlreadyInQueueResponseEvent(NetworkSource source, PacketReader reader) {
