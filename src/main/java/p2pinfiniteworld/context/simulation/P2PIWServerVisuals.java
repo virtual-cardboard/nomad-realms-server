@@ -16,6 +16,7 @@ import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.LineRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.text.GameFont;
+import p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer;
 import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
 import p2pinfiniteworld.graphics.DottedLineRenderer;
 import p2pinfiniteworld.model.NomadTiny;
@@ -34,11 +35,14 @@ public class P2PIWServerVisuals extends GameVisuals {
 	public static final int VISITED_REGIONS_COLOUR = rgba(255, 201, 14, 32);
 	public static final int CHUNK_BORDER_COLOUR = rgb(111, 115, 122);
 	public static final int REGION_BORDER_COLOUR = rgb(255, 255, 255);
+	public static final int WHITE = rgb(255, 255, 255);
 
 	public static final int BACKGROUND_COLOUR = rgb(54, 57, 63);
 	public static final int DARK_BACKGROUND_COLOUR = rgb(47, 49, 54);
 
 	public Vector2i gridOffset = new Vector2i();
+
+	public boolean logOpen = false;
 
 	private GameFont baloo2;
 	private TextRenderer textRenderer;
@@ -47,6 +51,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 	private P2PIWServerData data;
 	private LineRenderer lineRenderer;
 	private DottedLineRenderer dottedLineRenderer;
+	private LogMessagesRenderer logMessagesRenderer;
 	private Texture tinyNomad;
 
 	@Override
@@ -59,6 +64,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
 		dottedLineRenderer = resourcePack().getRenderer("dotted_line", DottedLineRenderer.class);
 		tinyNomad = resourcePack.getTexture("tiny_nomad");
+		logMessagesRenderer = new LogMessagesRenderer(glContext(), data, rectangleRenderer, textRenderer, baloo2);
 	}
 
 	@Override
@@ -70,6 +76,11 @@ public class P2PIWServerVisuals extends GameVisuals {
 		drawChunkInfo();
 		drawInfo();
 		drawQueued();
+		drawLogMessages();
+	}
+
+	private void drawLogMessages() {
+		logMessagesRenderer.render(logOpen);
 	}
 
 	private void drawInfo() {
@@ -207,6 +218,10 @@ public class P2PIWServerVisuals extends GameVisuals {
 					NOMAD_PIXEL_SIZE, NOMAD_PIXEL_SIZE,
 					nomad.colour());
 		}
+	}
+
+	public LogMessagesRenderer logMessagesRenderer() {
+		return logMessagesRenderer;
 	}
 
 }

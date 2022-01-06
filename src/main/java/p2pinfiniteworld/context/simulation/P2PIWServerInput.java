@@ -6,6 +6,9 @@ import static java.lang.Math.random;
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.CHUNK_PIXEL_SIZE;
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_START_X;
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_START_Y;
+import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LOG_MESSAGES_BAR_HEIGHT;
+import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LOG_MESSAGES_RIGHT_PADDING;
+import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LOG_MESSAGES_WIDTH;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -16,6 +19,7 @@ import context.input.GameInput;
 import context.input.event.MouseMovedInputEvent;
 import context.input.event.MousePressedInputEvent;
 import context.input.event.MouseReleasedInputEvent;
+import p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer;
 import p2pinfiniteworld.event.serverconnect.P2PIWReadyToJoinNetworkResponse;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocolDecoder;
@@ -23,7 +27,6 @@ import p2pinfiniteworld.protocols.P2PIWNetworkProtocolDecoder;
 public class P2PIWServerInput extends GameInput {
 
 	private P2PIWServerData data;
-	private P2PIWServerLogic logic;
 	private P2PIWServerVisuals visuals;
 
 	private Vector2i previousCursorPos;
@@ -31,7 +34,6 @@ public class P2PIWServerInput extends GameInput {
 
 	@Override
 	protected void init() {
-		logic = (P2PIWServerLogic) context().logic();
 		data = (P2PIWServerData) context().data();
 		visuals = (P2PIWServerVisuals) context().visuals();
 		addPacketReceivedFunction(new P2PIWNetworkProtocolDecoder());
@@ -51,7 +53,14 @@ public class P2PIWServerInput extends GameInput {
 	}
 
 	private GameEvent handleMousePressed(MousePressedInputEvent event) {
-		if (cursor().pos().y < GRID_START_Y) {
+		LogMessagesRenderer logRenderer = visuals.logMessagesRenderer();
+		if (cursor().pos().y > logRenderer.logMessagesY
+				&& cursor().pos().x > visuals.rootGui().dimensions().x - LOG_MESSAGES_WIDTH - LOG_MESSAGES_RIGHT_PADDING
+				&& cursor().pos().x < visuals.rootGui().dimensions().x - LOG_MESSAGES_RIGHT_PADDING) {
+			if (cursor().pos().y < logRenderer.logMessagesY + LOG_MESSAGES_BAR_HEIGHT) {
+				visuals.logOpen = !visuals.logOpen;
+			}
+		} else if (cursor().pos().y < GRID_START_Y) {
 		} else if (cursor().pos().x < GRID_START_X) {
 			handleQueuePressed();
 		} else {

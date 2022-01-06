@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import common.math.Vector2i;
 import context.data.GameData;
 import context.input.networking.packet.address.PacketAddress;
+import p2pinfiniteworld.model.LogMessages;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.model.P2PIWRegion;
 
@@ -28,6 +29,8 @@ public class P2PIWServerData extends GameData {
 
 	private NomadTiny selectedQueueNomad;
 	private NomadTiny selectedWorldNomad;
+
+	private LogMessages logMessages = new LogMessages();
 
 	public Map<Vector2i, P2PIWRegion> regions() {
 		return regions;
@@ -90,6 +93,14 @@ public class P2PIWServerData extends GameData {
 			list.add(nomad.address());
 		}
 		return list;
+	}
+
+	public LogMessages logMessages() {
+		return logMessages;
+	}
+
+	public void setLogMessages(LogMessages logMessages) {
+		this.logMessages = logMessages;
 	}
 
 }
