@@ -11,7 +11,6 @@ import context.visuals.builtin.RectangleRenderer;
 import context.visuals.renderer.GameRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.text.GameFont;
-import p2pinfiniteworld.context.simulation.P2PIWServerData;
 import p2pinfiniteworld.model.LogMessages;
 
 public class LogMessagesRenderer extends GameRenderer {
@@ -30,7 +29,7 @@ public class LogMessagesRenderer extends GameRenderer {
 	private TextRenderer textRenderer;
 	private GameFont baloo2;
 
-	public LogMessagesRenderer(GLContext glContext, P2PIWServerData data, RectangleRenderer rectangleRenderer, TextRenderer textRenderer, GameFont baloo2) {
+	public LogMessagesRenderer(GLContext glContext, RectangleRenderer rectangleRenderer, TextRenderer textRenderer, GameFont baloo2) {
 		super(glContext);
 		this.rectangleRenderer = rectangleRenderer;
 		this.textRenderer = textRenderer;

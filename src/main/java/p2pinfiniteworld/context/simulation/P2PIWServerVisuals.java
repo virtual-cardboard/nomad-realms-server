@@ -66,7 +66,7 @@ public class P2PIWServerVisuals extends GameVisuals {
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
 		dottedLineRenderer = resourcePack().getRenderer("dotted_line", DottedLineRenderer.class);
 		tinyNomad = resourcePack.getTexture("tiny_nomad");
-		logMessagesRenderer = new LogMessagesRenderer(glContext(), data, rectangleRenderer, textRenderer, baloo2);
+		logMessagesRenderer = new LogMessagesRenderer(glContext(), rectangleRenderer, textRenderer, baloo2);
 	}
 
 	@Override
