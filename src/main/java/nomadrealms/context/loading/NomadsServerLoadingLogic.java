@@ -1,6 +1,8 @@
 package nomadrealms.context.loading;
 
 import context.GameContext;
+import context.audio.DefaultGameAudio;
+import context.audio.GameAudio;
 import context.data.GameData;
 import context.input.GameInput;
 import context.logic.GameLogic;
@@ -22,11 +24,12 @@ public class NomadsServerLoadingLogic extends GameLogic {
 	@Override
 	public void update() {
 		if (serverLoadingVisuals.initialized()) {
+			GameAudio audio = new DefaultGameAudio();
 			GameData data = new ServerData();
 			GameInput input = new ServerInput();
 			GameLogic logic = new ServerLogic();
 			GameVisuals visuals = new ServerVisuals();
-			GameContext context = new GameContext(data, input, logic, visuals);
+			GameContext context = new GameContext(audio, data, input, logic, visuals);
 			context().transition(context);
 		}
 	}

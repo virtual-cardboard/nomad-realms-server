@@ -1,6 +1,8 @@
 package p2pinfiniteworld;
 
 import context.GameContext;
+import context.audio.DefaultGameAudio;
+import context.audio.GameAudio;
 import context.data.DefaultGameData;
 import context.data.GameData;
 import context.input.DefaultGameInput;
@@ -14,11 +16,12 @@ import p2pinfiniteworld.context.loading.P2PIWServerLoadingVisuals;
 public class P2PInfiniteWorldServerApp {
 
 	public static void main(String[] args) {
+		GameAudio audio = new DefaultGameAudio();
 		GameData data = new DefaultGameData();
 		GameInput input = new DefaultGameInput();
 		GameLogic logic = new P2PIWServerLoadingLogic();
 		GameVisuals visuals = new P2PIWServerLoadingVisuals();
-		GameContext context = new GameContext(data, input, logic, visuals);
+		GameContext context = new GameContext(audio, data, input, logic, visuals);
 		new GameEngine("P2P Infinite World Server", context)
 				.enableLoading()
 				.enableNetworking(45001)
