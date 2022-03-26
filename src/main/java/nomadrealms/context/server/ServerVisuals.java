@@ -32,7 +32,7 @@ public class ServerVisuals extends GameVisuals {
 	@Override
 	public void init() {
 		data = (ServerData) context().data();
-		ResourcePack rp = context().resourcePack();
+		ResourcePack rp = resourcePack();
 		baloo2 = rp.getFont("baloo2");
 		langar = rp.getFont("langar");
 		textRenderer = rp.getRenderer("text", TextRenderer.class);

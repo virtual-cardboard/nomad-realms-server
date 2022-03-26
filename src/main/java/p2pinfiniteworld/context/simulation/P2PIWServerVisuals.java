@@ -61,11 +61,11 @@ public class P2PIWServerVisuals extends GameVisuals {
 		baloo2 = resourcePack().getFont("baloo2");
 		fredokaOne = resourcePack().getFont("fredokaOne");
 		textRenderer = resourcePack().getRenderer("text", TextRenderer.class);
-		diffuseTextureRenderer = resourcePack.getRenderer("diffuse_texture", DiffuseTextureRenderer.class);
-		rectangleRenderer = resourcePack.getRenderer("rectangle", RectangleRenderer.class);
+		diffuseTextureRenderer = resourcePack().getRenderer("diffuse_texture", DiffuseTextureRenderer.class);
+		rectangleRenderer = resourcePack().getRenderer("rectangle", RectangleRenderer.class);
 		lineRenderer = resourcePack().getRenderer("line", LineRenderer.class);
 		dottedLineRenderer = resourcePack().getRenderer("dotted_line", DottedLineRenderer.class);
-		tinyNomad = resourcePack.getTexture("tiny_nomad");
+		tinyNomad = resourcePack().getTexture("tiny_nomad");
 		logMessagesRenderer = new LogMessagesRenderer(glContext(), rectangleRenderer, textRenderer, baloo2);
 	}
 
@@ -98,7 +98,8 @@ public class P2PIWServerVisuals extends GameVisuals {
 			return;
 		}
 		for (Vector2i regionCoord : nomad.visitedRegions()) {
-			Vector2i regionCoordPixelCoord = new Vector2i(regionCoord.x, regionCoord.y).scale(REGION_PIXEL_SIZE).add(GRID_START_X, GRID_START_Y).add(gridOffset);
+			Vector2i regionCoordPixelCoord = new Vector2i(regionCoord.x, regionCoord.y).scale(REGION_PIXEL_SIZE).add(GRID_START_X, GRID_START_Y)
+					.add(gridOffset);
 			rectangleRenderer.render(regionCoordPixelCoord.x, regionCoordPixelCoord.y, REGION_PIXEL_SIZE, REGION_PIXEL_SIZE, VISITED_REGIONS_COLOUR);
 		}
 		for (Vector2i chunkCoord : nomad.visitedChunks()) {
@@ -215,7 +216,8 @@ public class P2PIWServerVisuals extends GameVisuals {
 
 	private void renderNomad(NomadTiny nomad) {
 		Vector2f pos = new Vector2f(gridOffset.x + GRID_START_X + nomad.x * CHUNK_PIXEL_SIZE + 2, gridOffset.y + GRID_START_Y + nomad.y * CHUNK_PIXEL_SIZE + 2);
-		if (pos.x < rootGui.dimensions().x && pos.y < rootGui.dimensions().y && pos.x + NOMAD_PIXEL_SIZE > GRID_START_X && pos.y + NOMAD_PIXEL_SIZE > GRID_START_Y) {
+		if (pos.x < rootGui.dimensions().x && pos.y < rootGui.dimensions().y && pos.x + NOMAD_PIXEL_SIZE > GRID_START_X
+				&& pos.y + NOMAD_PIXEL_SIZE > GRID_START_Y) {
 			diffuseTextureRenderer.render(tinyNomad, pos.x, pos.y,
 					NOMAD_PIXEL_SIZE, NOMAD_PIXEL_SIZE,
 					nomad.colour());

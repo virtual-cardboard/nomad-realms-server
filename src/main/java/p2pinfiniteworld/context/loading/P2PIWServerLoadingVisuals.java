@@ -11,6 +11,7 @@ import common.loader.loadtask.EmptyTextureLoadTask;
 import common.loader.loadtask.FrameBufferObjectLoadTask;
 import common.loader.loadtask.ShaderLoadTask;
 import common.loader.loadtask.ShaderProgramLoadTask;
+import context.ResourcePack;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.LineShaderProgram;
 import context.visuals.builtin.RectangleRenderer;
@@ -37,7 +38,8 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 
 	@Override
 	public void init() {
-		TexturedTransformationVertexShader texturedTransformationVS = resourcePack.texturedTransformationVertexShader();
+		ResourcePack rp = resourcePack();
+		TexturedTransformationVertexShader texturedTransformationVS = rp.texturedTransformationVertexShader();
 
 		// Font textures
 		Future<Texture> fBaloo2Tex = loader.submit(new NomadRealmsServerTextureLoadTask("fonts/baloo2.png"));
@@ -61,59 +63,59 @@ public class P2PIWServerLoadingVisuals extends GameVisuals {
 			int h = 600;
 			Texture textTexture = loader.submit(new EmptyTextureLoadTask(w, h)).get();
 			FrameBufferObject textFBO = loader.submit(new FrameBufferObjectLoadTask(textTexture, null)).get();
-			resourcePack.putFBO("text", textFBO);
+			rp.putFBO("text", textFBO);
 
 			Texture baloo2Tex = fBaloo2Tex.get();
 			Future<GameFont> fBaloo2Font = loader.submit(new NomadRealmsServerFontLoadTask("fonts/baloo2.vcfont", baloo2Tex));
 			GameFont baloo2Font = fBaloo2Font.get();
-			resourcePack.putFont("baloo2", baloo2Font);
+			rp.putFont("baloo2", baloo2Font);
 
 			Texture langarTex = fLangarTex.get();
 			Future<GameFont> fLangarFont = loader.submit(new NomadRealmsServerFontLoadTask("fonts/langar.vcfont", langarTex));
 			GameFont langarFont = fLangarFont.get();
-			resourcePack.putFont("langar", langarFont);
+			rp.putFont("langar", langarFont);
 
 			Texture fredokaOneTex = fFredokaOneTex.get();
 			Future<GameFont> fFredokaOneFont = loader.submit(new NomadRealmsServerFontLoadTask("fonts/fredokaOne.vcfont", fredokaOneTex));
 			GameFont fredokaOneFont = fFredokaOneFont.get();
-			resourcePack.putFont("fredokaOne", fredokaOneFont);
+			rp.putFont("fredokaOne", fredokaOneFont);
 
 			Shader lineFS = fLineFS.get();
-			LineShaderProgram lineSP = new LineShaderProgram(resourcePack.transformationVertexShader(), lineFS);
+			LineShaderProgram lineSP = new LineShaderProgram(rp.transformationVertexShader(), lineFS);
 			loader.submit(new ShaderProgramLoadTask(lineSP)).get();
-			resourcePack.putShaderProgram("line", lineSP);
-			resourcePack.putRenderer("line", new LineRenderer(lineSP, resourcePack.rectangleVAO()));
+			rp.putShaderProgram("line", lineSP);
+			rp.putRenderer("line", new LineRenderer(lineSP, rp.rectangleVAO()));
 
 			Shader dottedLineFS = fDottedLineFS.get();
-			LineShaderProgram dottedLineSP = new LineShaderProgram(resourcePack.transformationVertexShader(), dottedLineFS);
+			LineShaderProgram dottedLineSP = new LineShaderProgram(rp.transformationVertexShader(), dottedLineFS);
 			loader.submit(new ShaderProgramLoadTask(dottedLineSP)).get();
-			resourcePack.putShaderProgram("dotted_line", dottedLineSP);
-			resourcePack.putRenderer("dotted_line", new DottedLineRenderer(dottedLineSP, resourcePack.rectangleVAO()));
+			rp.putShaderProgram("dotted_line", dottedLineSP);
+			rp.putRenderer("dotted_line", new DottedLineRenderer(dottedLineSP, rp.rectangleVAO()));
 
 			Shader diffuseFS = fDiffuseFS.get();
 			TextureShaderProgram diffuseSP = new TextureShaderProgram(texturedTransformationVS, diffuseFS);
 			loader.submit(new ShaderProgramLoadTask(diffuseSP)).get();
-			resourcePack.putShaderProgram("diffuse_texture", diffuseSP);
-			DiffuseTextureRenderer diffuseTextureRenderer = new DiffuseTextureRenderer(diffuseSP, resourcePack.rectangleVAO());
-			resourcePack.putRenderer("diffuse_texture", diffuseTextureRenderer);
+			rp.putShaderProgram("diffuse_texture", diffuseSP);
+			DiffuseTextureRenderer diffuseTextureRenderer = new DiffuseTextureRenderer(diffuseSP, rp.rectangleVAO());
+			rp.putRenderer("diffuse_texture", diffuseTextureRenderer);
 
 			Shader textureFS = fTextureFS.get();
 			TextureShaderProgram textureSP = new TextureShaderProgram(texturedTransformationVS, textureFS);
 			loader.submit(new ShaderProgramLoadTask(textureSP)).get();
-			resourcePack.putShaderProgram("texture", textureSP);
-			TextureRenderer textureRenderer = new TextureRenderer(textureSP, resourcePack.rectangleVAO());
-			resourcePack.putRenderer("texture", textureRenderer);
+			rp.putShaderProgram("texture", textureSP);
+			TextureRenderer textureRenderer = new TextureRenderer(textureSP, rp.rectangleVAO());
+			rp.putRenderer("texture", textureRenderer);
 
 			Shader textFS = fTextFS.get();
 			TextShaderProgram textSP = new TextShaderProgram(texturedTransformationVS, textFS);
 			loader.submit(new ShaderProgramLoadTask(textSP)).get();
-			resourcePack.putRenderer("text", new TextRenderer(textureRenderer, textSP, resourcePack.rectangleVAO(), textFBO));
+			rp.putRenderer("text", new TextRenderer(textureRenderer, textSP, rp.rectangleVAO(), textFBO));
 
-			resourcePack.putRenderer("rectangle", new RectangleRenderer(resourcePack().defaultShaderProgram(), resourcePack().rectangleVAO()));
+			rp.putRenderer("rectangle", new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO()));
 
 			fTexMap.forEach((name, fTexture) -> {
 				try {
-					resourcePack.putTexture(name, fTexture.get());
+					rp.putTexture(name, fTexture.get());
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}

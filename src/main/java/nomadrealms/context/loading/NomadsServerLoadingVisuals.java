@@ -34,7 +34,7 @@ public class NomadsServerLoadingVisuals extends GameVisuals {
 	@Override
 	public void init() {
 		GameLoader loader = loader();
-		ResourcePack rp = context().resourcePack();
+		ResourcePack rp = resourcePack();
 
 		TexturedTransformationVertexShader texturedTransformationVS = rp.texturedTransformationVertexShader();
 
