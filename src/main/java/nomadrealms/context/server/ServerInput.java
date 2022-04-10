@@ -6,6 +6,7 @@ import java.util.Random;
 import context.input.GameInput;
 import engine.common.math.Vector2f;
 import event.network.bootstrap.BootstrapResponseEvent;
+import networking.NetworkCluster;
 import networking.protocols.NomadRealmsProtocolDecoder;
 import nomadrealms.model.NomadMini;
 
@@ -45,6 +46,9 @@ public class ServerInput extends GameInput {
 					long nonce = new Random().nextLong();
 					context().sendPacket(new BootstrapResponseEvent(nonce, n1.lanAddress(), n1.wanAddress(), n1.username()).toPacket(n2.wanAddress()));
 					context().sendPacket(new BootstrapResponseEvent(nonce, n2.lanAddress(), n2.wanAddress(), n2.username()).toPacket(n1.wanAddress()));
+					NetworkCluster cluster = data.getCluster(0);
+					cluster.addPeer(n1.address());
+					cluster.addPeer(n2.address());
 					break;
 				}
 			}
