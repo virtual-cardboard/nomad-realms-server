@@ -6,6 +6,7 @@ import static java.lang.Math.random;
 
 import context.input.networking.packet.address.PacketAddress;
 import engine.common.math.Vector2f;
+import networking.PlayerData;
 
 public class NomadMini {
 
@@ -34,14 +35,12 @@ public class NomadMini {
 
 	private int state = RESTING;
 	private String username;
-	private PacketAddress lanAddress;
-	private PacketAddress wanAddress;
+	private PlayerData address;
 
 	public NomadMini(int colour, String username, PacketAddress lanAddress, PacketAddress wanAddress) {
 		this.colour = colour;
 		this.username = username;
-		this.lanAddress = lanAddress;
-		this.wanAddress = wanAddress;
+		this.address = new PlayerData(wanAddress, lanAddress, username);
 	}
 
 	public void update() {
@@ -73,12 +72,16 @@ public class NomadMini {
 		}
 	}
 
+	public PlayerData address() {
+		return address;
+	}
+
 	public PacketAddress lanAddress() {
-		return lanAddress;
+		return address.lanAddress;
 	}
 
 	public PacketAddress wanAddress() {
-		return wanAddress;
+		return address.wanAddress;
 	}
 
 	public String username() {
