@@ -2,10 +2,10 @@ package p2pinfiniteworld.event.peer2peer.game;
 
 import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.ENTER_REGION_NOTIFICATION;
 
-import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
+import engine.common.source.NetworkSource;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 

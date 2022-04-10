@@ -2,10 +2,10 @@ package p2pinfiniteworld.event;
 
 import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.REGION_DATA;
 
-import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
+import engine.common.source.NetworkSource;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public class P2PIWRegionDataReceiveEvent extends P2PIWNetworkEvent {

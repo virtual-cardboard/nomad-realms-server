@@ -7,15 +7,15 @@ import static p2pinfiniteworld.context.simulation.P2PIWServerData.REGION_NUM_CHU
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import common.math.PosDim;
-import common.math.Vector2f;
-import common.math.Vector2i;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.LineRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.text.GameFont;
+import engine.common.math.PosDim;
+import engine.common.math.Vector2f;
+import engine.common.math.Vector2i;
 import p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer;
 import p2pinfiniteworld.graphics.DiffuseTextureRenderer;
 import p2pinfiniteworld.graphics.DottedLineRenderer;

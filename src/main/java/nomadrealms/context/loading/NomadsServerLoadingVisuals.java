@@ -7,11 +7,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import common.loader.GameLoader;
-import common.loader.loadtask.EmptyTextureLoadTask;
-import common.loader.loadtask.FrameBufferObjectLoadTask;
-import common.loader.loadtask.ShaderLoadTask;
-import common.loader.loadtask.ShaderProgramLoadTask;
 import context.ResourcePack;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.TextShaderProgram;
@@ -23,6 +18,11 @@ import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
 import context.visuals.text.GameFont;
+import engine.common.loader.GameLoader;
+import engine.common.loader.loadtask.EmptyTextureLoadTask;
+import engine.common.loader.loadtask.FrameBufferObjectLoadTask;
+import engine.common.loader.loadtask.ShaderLoadTask;
+import engine.common.loader.loadtask.ShaderProgramLoadTask;
 import loading.NomadRealmsServerFontLoadTask;
 import loading.NomadRealmsServerTextureLoadTask;
 

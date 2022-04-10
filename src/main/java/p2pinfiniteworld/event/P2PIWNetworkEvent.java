@@ -1,12 +1,12 @@
 package p2pinfiniteworld.event;
 
-import static networking.NetworkUtils.PROTOCOL_ID;
+import static networking.ServerNetworkUtils.PROTOCOL_ID;
 
-import common.event.GameEvent;
-import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.address.PacketAddress;
+import engine.common.event.GameEvent;
+import engine.common.source.NetworkSource;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
 public abstract class P2PIWNetworkEvent extends GameEvent {

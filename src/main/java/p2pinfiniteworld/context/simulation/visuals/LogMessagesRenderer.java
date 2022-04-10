@@ -5,12 +5,12 @@ import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.BACKGROUND_
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.DARK_BACKGROUND_COLOUR;
 import static p2pinfiniteworld.context.simulation.P2PIWServerVisuals.GRID_START_Y;
 
-import common.math.Vector2i;
 import context.GLContext;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.renderer.GameRenderer;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.text.GameFont;
+import engine.common.math.Vector2i;
 import p2pinfiniteworld.model.LogMessages;
 
 public class LogMessagesRenderer extends GameRenderer {

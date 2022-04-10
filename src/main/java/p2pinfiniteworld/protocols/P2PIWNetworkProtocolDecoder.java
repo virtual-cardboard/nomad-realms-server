@@ -1,15 +1,15 @@
 package p2pinfiniteworld.protocols;
 
-import static networking.NetworkUtils.PROTOCOL_ID;
+import static networking.ServerNetworkUtils.PROTOCOL_ID;
 
 import java.lang.reflect.Constructor;
 import java.util.function.Function;
 
-import common.event.GameEvent;
-import common.source.NetworkSource;
 import context.input.event.PacketReceivedInputEvent;
 import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketReader;
+import engine.common.event.GameEvent;
+import engine.common.source.NetworkSource;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
 
 public class P2PIWNetworkProtocolDecoder implements Function<PacketReceivedInputEvent, GameEvent> {

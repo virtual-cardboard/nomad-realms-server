@@ -6,12 +6,12 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import networking.NetworkUtils;
+import engine.common.source.NetworkSource;
+import networking.ServerNetworkUtils;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
@@ -34,7 +34,7 @@ public class P2PIWReadyToJoinNetworkResponse extends P2PIWNetworkEvent {
 		byte[][] ips = reader.readIPv4Array();
 		short[] ports = reader.readShortArray();
 		for (int i = 0; i < ips.length; i++) {
-			networkAddresses().add(NetworkUtils.toAddress(ips[i], ports[i]));
+			networkAddresses().add(ServerNetworkUtils.toAddress(ips[i], ports[i]));
 		}
 		reader.close();
 	}

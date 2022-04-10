@@ -7,8 +7,8 @@ import static p2pinfiniteworld.context.simulation.P2PIWServerData.REGION_NUM_CHU
 import java.util.HashSet;
 import java.util.Set;
 
-import common.math.Vector2i;
 import context.logic.GameLogic;
+import engine.common.math.Vector2i;
 import p2pinfiniteworld.context.simulation.logic.CheckStatusHandler;
 import p2pinfiniteworld.context.simulation.logic.JoinQueueHandler;
 import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;

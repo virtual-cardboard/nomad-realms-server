@@ -1,11 +1,11 @@
 package nomadrealms.model;
 
-import static common.math.Vector2f.fromAngleLength;
+import static engine.common.math.Vector2f.fromAngleLength;
 import static java.lang.Math.PI;
 import static java.lang.Math.random;
 
-import common.math.Vector2f;
 import context.input.networking.packet.address.PacketAddress;
+import engine.common.math.Vector2f;
 
 public class NomadMini {
 

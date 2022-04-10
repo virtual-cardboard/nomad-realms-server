@@ -5,8 +5,8 @@ import static java.lang.Math.floorDiv;
 import java.util.HashSet;
 import java.util.Set;
 
-import common.math.Vector2i;
 import context.input.networking.packet.address.PacketAddress;
+import engine.common.math.Vector2i;
 
 public class NomadTiny {
 

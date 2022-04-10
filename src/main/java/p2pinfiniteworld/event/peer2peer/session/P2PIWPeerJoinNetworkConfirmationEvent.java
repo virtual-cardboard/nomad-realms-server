@@ -2,12 +2,12 @@ package p2pinfiniteworld.event.peer2peer.session;
 
 import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.PEER_JOIN_NETWORK_CONSENSUS;
 
-import common.source.NetworkSource;
 import context.input.networking.packet.PacketBuilder;
 import context.input.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import context.input.networking.packet.address.PacketAddress;
-import networking.NetworkUtils;
+import engine.common.source.NetworkSource;
+import networking.ServerNetworkUtils;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;
 
@@ -24,7 +24,7 @@ public class P2PIWPeerJoinNetworkConfirmationEvent extends P2PIWNetworkEvent {
 		super(source);
 		byte[] ip = reader.readIPv4();
 		short port = reader.readShort();
-		this.joinerAddress = NetworkUtils.toAddress(ip, port);
+		this.joinerAddress = ServerNetworkUtils.toAddress(ip, port);
 		reader.close();
 	}
 

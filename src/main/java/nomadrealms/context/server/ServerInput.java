@@ -3,11 +3,11 @@ package nomadrealms.context.server;
 import java.util.List;
 import java.util.Random;
 
-import common.math.Vector2f;
 import context.input.GameInput;
-import nomadrealms.event.bootstrap.BootstrapResponseEvent;
+import engine.common.math.Vector2f;
+import event.network.bootstrap.BootstrapResponseEvent;
+import networking.protocols.NomadRealmsProtocolDecoder;
 import nomadrealms.model.NomadMini;
-import nomadrealms.protocols.NomadRealmsServerProtocolDecoder;
 
 public class ServerInput extends GameInput {
 
@@ -51,7 +51,7 @@ public class ServerInput extends GameInput {
 			data.selectedMini = null;
 			return null;
 		}, false);
-		addPacketReceivedFunction(new NomadRealmsServerProtocolDecoder());
+		addPacketReceivedFunction(new NomadRealmsProtocolDecoder());
 	}
 
 }

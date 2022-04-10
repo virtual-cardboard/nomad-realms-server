@@ -5,11 +5,11 @@ import static context.input.networking.packet.PacketPrimitive.SHORT;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import common.source.NetworkSource;
 import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.address.PacketAddress;
+import engine.common.source.NetworkSource;
 
-public class NetworkUtils {
+public class ServerNetworkUtils {
 
 	public static final NetworkSource SERVER;
 	public static final NetworkSource P2PIW_SERVER;

@@ -42,6 +42,7 @@ public class ServerVisuals extends GameVisuals {
 		yardBottomFence = rp.getTexture("yard_bottom_fence");
 		nomad = rp.getTexture("nomad");
 		rectangleRenderer = new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO());
+		rp.putRenderer("rectangle", rectangleRenderer);
 	}
 
 	@Override

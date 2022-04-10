@@ -12,13 +12,13 @@ import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LO
 
 import org.lwjgl.glfw.GLFW;
 
-import common.event.GameEvent;
-import common.math.PosDim;
-import common.math.Vector2i;
 import context.input.GameInput;
 import context.input.event.MouseMovedInputEvent;
 import context.input.event.MousePressedInputEvent;
 import context.input.event.MouseReleasedInputEvent;
+import engine.common.event.GameEvent;
+import engine.common.math.PosDim;
+import engine.common.math.Vector2i;
 import p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer;
 import p2pinfiniteworld.event.serverconnect.P2PIWReadyToJoinNetworkResponse;
 import p2pinfiniteworld.model.NomadTiny;

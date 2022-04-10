@@ -1,7 +1,7 @@
 package loading;
 
-import common.loader.loadtask.TextureLoadTask;
 import context.visuals.lwjgl.Texture;
+import engine.common.loader.loadtask.TextureLoadTask;
 
 public class NomadRealmsServerTextureLoadTask extends TextureLoadTask {
 

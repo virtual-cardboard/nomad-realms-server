@@ -1,11 +1,11 @@
 package p2pinfiniteworld.graphics;
 
-import common.math.Matrix4f;
 import context.visuals.builtin.RectangleVertexArrayObject;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.lwjgl.ShaderProgram;
 import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.GameRenderer;
+import engine.common.math.Matrix4f;
 
 public class DiffuseTextureRenderer extends GameRenderer {
 

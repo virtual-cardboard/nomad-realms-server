@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
-import common.math.Vector2i;
 import context.data.GameData;
 import context.input.networking.packet.address.PacketAddress;
+import engine.common.math.Vector2i;
 import p2pinfiniteworld.model.LogMessages;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.model.P2PIWRegion;
