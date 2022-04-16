@@ -2,7 +2,6 @@ package nomadrealms.context.server;
 
 import static context.visuals.colour.Colour.rgb;
 import static java.lang.Math.random;
-import static networking.ServerNetworkUtils.SERVER;
 
 import java.net.Inet4Address;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ServerLogic extends GameLogic {
 				cluster = new NetworkCluster(new WorldInfo(event.worldID, "World 0", 0));
 				data.addCluster(cluster);
 				cluster.addPeer(new PlayerData(event.source().address(), event.lanAddress, event.username));
-				JoinEmptyClusterResponseEvent response = new JoinEmptyClusterResponseEvent(SERVER);
+				JoinEmptyClusterResponseEvent response = new JoinEmptyClusterResponseEvent();
 				context().sendPacket(response.toPacket(event.source().address()));
 			} else {
 				List<PlayerData> peers = cluster.peers();
@@ -47,7 +46,7 @@ public class ServerLogic extends GameLogic {
 					lanAddresses[i] = (Inet4Address) peer.lanAddress.ip();
 					wanAddresses[i] = (Inet4Address) peer.wanAddress.ip();
 				}
-				JoinClusterResponseEvent response = new JoinClusterResponseEvent(SERVER, lanAddresses, wanAddresses);
+				JoinClusterResponseEvent response = new JoinClusterResponseEvent(lanAddresses, wanAddresses);
 				context().sendPacket(response.toPacket(event.source().address()));
 			}
 		});
