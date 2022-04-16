@@ -23,4 +23,12 @@ public class NetworkCluster {
 		backups.add(address);
 	}
 
+	public List<PlayerData> peers() {
+		return peers;
+	}
+
+	public WorldInfo worldInfo() {
+		return worldInfo;
+	}
+
 }

@@ -29,4 +29,8 @@ public class ServerData extends GameData {
 		return clusters.get(id);
 	}
 
+	public void addCluster(NetworkCluster cluster) {
+		clusters.put(cluster.worldInfo().id, cluster);
+	}
+
 }
