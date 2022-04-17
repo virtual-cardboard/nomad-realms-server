@@ -7,6 +7,7 @@ import java.net.Inet4Address;
 import java.util.List;
 
 import context.logic.GameLogic;
+import event.network.NomadRealmsNetworkEvent;
 import event.network.bootstrap.BootstrapRequestEvent;
 import event.network.join.JoinClusterRequestEvent;
 import event.network.join.JoinClusterResponseEvent;
@@ -50,6 +51,7 @@ public class ServerLogic extends GameLogic {
 				context().sendPacket(response.toPacket(event.source().address()));
 			}
 		});
+		addHandler(NomadRealmsNetworkEvent.class, this::printEvent);
 //		Random rand = new Random();
 //		addHandler(CreateWorldRequestEvent.class, (event) -> {
 //			WorldInfo worldInfo = new WorldInfo();
@@ -62,6 +64,10 @@ public class ServerLogic extends GameLogic {
 
 	@Override
 	public void update() {
+	}
+
+	private void printEvent(NomadRealmsNetworkEvent event) {
+		System.out.println("Received " + event.getClass().getSimpleName() + " from " + event.source().address());
 	}
 
 }
