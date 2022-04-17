@@ -1,5 +1,10 @@
 package nomadrealms.context.server;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.util.List;
+import java.util.Random;
+
 import com.sun.net.httpserver.HttpServer;
 import context.input.GameInput;
 import engine.common.math.Vector2f;
@@ -8,11 +13,6 @@ import networking.NetworkCluster;
 import networking.protocols.NomadRealmsProtocolDecoder;
 import nomadrealms.context.server.input.JoinClusterHttpHandler;
 import nomadrealms.model.NomadMini;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.List;
-import java.util.Random;
 
 public class ServerInput extends GameInput {
 
@@ -69,6 +69,7 @@ public class ServerInput extends GameInput {
 			server.createContext("/join", httpHandler);
 			server.setExecutor(null); // creates a default executor
 			server.start();
+			System.out.println("HTTP server started");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
