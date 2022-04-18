@@ -19,12 +19,26 @@ public class JoinClusterHttpHandler implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange t) throws IOException {
+		t.getRemoteAddress();
 		String query = t.getRequestURI().getQuery();
-		Map<String, String> map = queryToMap(query);
-		String name = map.get("name");
-		System.out.println(name);
-		String response = "Hello, " + name + "! You have reached the join cluster endpoint";
-		t.sendResponseHeaders(200, response.length());
+		t.getRequestHeaders().forEach((s, list) -> System.out.println(list));
+		String response;
+		if (t.getRequestHeaders().containsKey("from") && t.getRequestHeaders().get("from").contains("nomad-realms")) {
+			Map<String, String> map = queryToMap(query);
+			String name = map.get("name");
+			System.out.println(name);
+			response = "Hello, " + name + "! You have reached the join cluster endpoint";
+//			response.getBytes();
+			t.sendResponseHeaders(200, response.length());
+		} else {
+			response = "Access Denied. Sorry!";
+			t.sendResponseHeaders(400, response.length());
+		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		OutputStream os = t.getResponseBody();
 		os.write(response.getBytes());
 		os.close();

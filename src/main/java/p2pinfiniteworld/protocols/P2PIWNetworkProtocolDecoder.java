@@ -6,8 +6,8 @@ import java.lang.reflect.Constructor;
 import java.util.function.Function;
 
 import context.input.event.PacketReceivedInputEvent;
-import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.PacketReader;
+import context.input.networking.packet.SerializationFormat;
 import engine.common.event.GameEvent;
 import engine.common.source.NetworkSource;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
@@ -16,7 +16,7 @@ public class P2PIWNetworkProtocolDecoder implements Function<PacketReceivedInput
 
 	@SuppressWarnings("unchecked")
 	private static final Constructor<? extends P2PIWNetworkEvent>[] PROTOCOL_EVENTS = new Constructor[Short.MAX_VALUE];
-	private static final PacketFormat[] PROTOCOL_FORMATS = new PacketFormat[Short.MAX_VALUE];
+	private static final SerializationFormat[] PROTOCOL_FORMATS = new SerializationFormat[Short.MAX_VALUE];
 
 	static {
 		P2PIWNetworkProtocol[] values = P2PIWNetworkProtocol.values();
@@ -42,7 +42,7 @@ public class P2PIWNetworkProtocolDecoder implements Function<PacketReceivedInput
 		int id = idReader.readShort() & 0xFFFF;
 
 		Constructor<? extends P2PIWNetworkEvent> constructor = PROTOCOL_EVENTS[id];
-		PacketFormat format = PROTOCOL_FORMATS[id];
+		SerializationFormat format = PROTOCOL_FORMATS[id];
 		PacketReader protocolReader = format.reader(idReader);
 
 		try {
