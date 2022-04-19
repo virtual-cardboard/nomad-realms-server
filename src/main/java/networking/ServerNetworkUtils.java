@@ -5,7 +5,7 @@ import static context.input.networking.packet.PacketPrimitive.SHORT;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import context.input.networking.packet.SerializationFormat;
+import context.input.networking.packet.PacketFormat;
 import context.input.networking.packet.address.PacketAddress;
 import engine.common.source.NetworkSource;
 
@@ -28,7 +28,7 @@ public class ServerNetworkUtils {
 	/**
 	 * protocol_id
 	 */
-	public static final SerializationFormat PROTOCOL_ID = new SerializationFormat().with(SHORT);
+	public static final PacketFormat PROTOCOL_ID = new PacketFormat().with(SHORT);
 
 	public static InetAddress toAddress(byte[] bytes) {
 		InetAddress ip = null;
