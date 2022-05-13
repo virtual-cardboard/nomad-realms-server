@@ -3,7 +3,7 @@ package p2pinfiniteworld.event.serverconnect;
 import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.ALREADY_IN_WORLD_RESPONSE;
 
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketModel;
+import engine.common.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
 import engine.common.source.NetworkSource;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;

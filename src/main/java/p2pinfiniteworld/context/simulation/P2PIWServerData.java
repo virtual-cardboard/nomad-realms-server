@@ -1,6 +1,6 @@
 package p2pinfiniteworld.context.simulation;
 
-import static context.input.networking.packet.address.PacketAddress.match;
+import static engine.common.networking.packet.address.PacketAddress.match;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
 import context.data.GameData;
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 import engine.common.math.Vector2i;
 import p2pinfiniteworld.model.LogMessages;
 import p2pinfiniteworld.model.NomadTiny;

@@ -3,9 +3,9 @@ package p2pinfiniteworld.event.peer2peer.session;
 import static p2pinfiniteworld.protocols.P2PIWNetworkProtocol.PEER_JOIN_NETWORK_CONSENSUS;
 
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketModel;
+import engine.common.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 import engine.common.source.NetworkSource;
 import networking.ServerNetworkUtils;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;

@@ -3,8 +3,8 @@ package p2pinfiniteworld.event;
 import static networking.ServerNetworkUtils.PROTOCOL_ID;
 
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketModel;
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.PacketModel;
+import engine.common.networking.packet.address.PacketAddress;
 import engine.common.event.GameEvent;
 import engine.common.source.NetworkSource;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocol;

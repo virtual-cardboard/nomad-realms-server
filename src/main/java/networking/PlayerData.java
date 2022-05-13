@@ -1,6 +1,6 @@
 package networking;
 
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 
 public final class PlayerData {
 

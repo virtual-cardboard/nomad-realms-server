@@ -4,7 +4,7 @@ import static engine.common.math.Vector2f.fromAngleLength;
 import static java.lang.Math.PI;
 import static java.lang.Math.random;
 
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 import engine.common.math.Vector2f;
 import networking.PlayerData;
 

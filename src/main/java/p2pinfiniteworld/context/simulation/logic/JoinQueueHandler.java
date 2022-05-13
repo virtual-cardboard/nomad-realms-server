@@ -6,7 +6,7 @@ import static java.lang.Math.random;
 import java.util.function.Consumer;
 
 import context.GameContext;
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 import p2pinfiniteworld.context.simulation.P2PIWServerData;
 import p2pinfiniteworld.context.simulation.P2PIWServerLogic;
 import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInQueueResponseEvent;

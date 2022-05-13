@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import context.input.networking.packet.PacketBuilder;
-import context.input.networking.packet.PacketModel;
+import engine.common.networking.packet.PacketModel;
 import context.input.networking.packet.PacketReader;
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 import engine.common.source.NetworkSource;
 import networking.ServerNetworkUtils;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;

@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import context.input.networking.packet.PacketFormat;
-import context.input.networking.packet.address.PacketAddress;
+import engine.common.networking.packet.address.PacketAddress;
 import engine.common.source.NetworkSource;
 
 public class ServerNetworkUtils {
