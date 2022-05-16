@@ -23,6 +23,9 @@ public class JoinClusterHttpHandler implements HttpHandler {
 		String query = t.getRequestURI().getQuery();
 		t.getRequestHeaders().forEach((s, list) -> System.out.println(list));
 		String response;
+		String clientWanAddress = t.getRemoteAddress().getHostName();
+		int clientWanPort = t.getRemoteAddress().getPort();
+		System.out.println("Received request from " + clientWanAddress + " port=" + clientWanPort);
 		if (t.getRequestHeaders().containsKey("from") && t.getRequestHeaders().get("from").contains("nomad-realms")) {
 			Map<String, String> map = queryToMap(query);
 			String name = map.get("name");
