@@ -10,8 +10,6 @@ import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LO
 import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LOG_MESSAGES_RIGHT_PADDING;
 import static p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer.LOG_MESSAGES_WIDTH;
 
-import org.lwjgl.glfw.GLFW;
-
 import context.input.GameInput;
 import context.input.event.MouseMovedInputEvent;
 import context.input.event.MousePressedInputEvent;
@@ -19,8 +17,8 @@ import context.input.event.MouseReleasedInputEvent;
 import engine.common.event.GameEvent;
 import engine.common.math.PosDim;
 import engine.common.math.Vector2i;
+import org.lwjgl.glfw.GLFW;
 import p2pinfiniteworld.context.simulation.visuals.LogMessagesRenderer;
-import p2pinfiniteworld.event.serverconnect.P2PIWReadyToJoinNetworkResponse;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.protocols.P2PIWNetworkProtocolDecoder;
 
@@ -82,7 +80,7 @@ public class P2PIWServerInput extends GameInput {
 			data.selectedQueueNomad().x = chunkX;
 			data.selectedQueueNomad().y = chunkY;
 			if (data.selectedQueueNomad().address() != null) {
-				context().sendPacket(new P2PIWReadyToJoinNetworkResponse(chunkX, chunkY, data.addressList()).toPacket(data.selectedQueueNomad().address()));
+				context().sendPacket(new P2PIWReadyToJoinNetworkResponse(chunkX, chunkY, data.addressList()).toPacketModel(data.selectedQueueNomad().address()));
 			} else {
 				System.out.println("Added in nomad without address");
 			}

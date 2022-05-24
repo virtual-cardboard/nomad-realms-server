@@ -6,9 +6,6 @@ import context.GameContext;
 import engine.common.networking.packet.address.PacketAddress;
 import p2pinfiniteworld.context.simulation.P2PIWServerData;
 import p2pinfiniteworld.context.simulation.P2PIWServerLogic;
-import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInQueueResponseEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInWorldResponseEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;
 import p2pinfiniteworld.model.NomadTiny;
 
 public class CheckStatusHandler implements Consumer<P2PIWCheckNomadStatusRequestEvent> {
@@ -31,12 +28,12 @@ public class CheckStatusHandler implements Consumer<P2PIWCheckNomadStatusRequest
 
 		NomadTiny inQueue = data.isQueued(address);
 		if (inQueue != null) {
-			context.sendPacket(new P2PIWAlreadyInQueueResponseEvent(logic.tick0Time()).toPacket(address));
+			context.sendPacket(new P2PIWAlreadyInQueueResponseEvent(logic.tick0Time()).toPacketModel(address));
 			return;
 		}
 		NomadTiny inWorld = data.isInWorld(address);
 		if (inWorld != null) {
-			context.sendPacket(new P2PIWAlreadyInWorldResponseEvent(inWorld.x, inWorld.y, logic.tick0Time()).toPacket(address));
+			context.sendPacket(new P2PIWAlreadyInWorldResponseEvent(inWorld.x, inWorld.y, logic.tick0Time()).toPacketModel(address));
 			return;
 		}
 		System.out.println(address + " tried to check status without joining queue first.");

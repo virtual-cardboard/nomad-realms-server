@@ -1,13 +1,18 @@
 package nomadrealms.context.server.input;
 
+import static java.lang.Math.abs;
+
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import engine.common.QueueGroup;
+import event.network.c2s.JoinClusterResponseEvent;
 
 public class JoinClusterHttpHandler implements HttpHandler {
 
@@ -22,7 +27,7 @@ public class JoinClusterHttpHandler implements HttpHandler {
 		t.getRemoteAddress();
 		String query = t.getRequestURI().getQuery();
 		t.getRequestHeaders().forEach((s, list) -> System.out.println(list));
-		String response;
+		byte[] response;
 		String clientWanAddress = t.getRemoteAddress().getHostName();
 		int clientWanPort = t.getRemoteAddress().getPort();
 		System.out.println("Received request from " + clientWanAddress + " port=" + clientWanPort);
@@ -30,12 +35,12 @@ public class JoinClusterHttpHandler implements HttpHandler {
 			Map<String, String> map = queryToMap(query);
 			String name = map.get("name");
 			System.out.println(name);
-			response = "Hello, " + name + "! You have reached the join cluster endpoint";
+			response = new JoinClusterResponseEvent(abs(new Random().nextLong()), new ArrayList<>(), new ArrayList<>()).serialize();
 //			response.getBytes();
-			t.sendResponseHeaders(200, response.length());
+			t.sendResponseHeaders(200, response.length);
 		} else {
-			response = "Access Denied. Sorry!";
-			t.sendResponseHeaders(400, response.length());
+			response = new JoinClusterResponseEvent(-1, new ArrayList<>(), new ArrayList<>()).serialize();
+			t.sendResponseHeaders(400, response.length);
 		}
 		try {
 			Thread.sleep(500);
@@ -43,7 +48,7 @@ public class JoinClusterHttpHandler implements HttpHandler {
 			e.printStackTrace();
 		}
 		OutputStream os = t.getResponseBody();
-		os.write(response.getBytes());
+		os.write(response);
 		os.close();
 	}
 

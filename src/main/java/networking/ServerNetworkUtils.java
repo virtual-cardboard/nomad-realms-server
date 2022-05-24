@@ -1,11 +1,8 @@
 package networking;
 
-import static context.input.networking.packet.PacketPrimitive.SHORT;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import context.input.networking.packet.PacketFormat;
 import engine.common.networking.packet.address.PacketAddress;
 import engine.common.source.NetworkSource;
 
@@ -24,11 +21,6 @@ public class ServerNetworkUtils {
 		SERVER = new NetworkSource(new PacketAddress(serverDest, 45000));
 		P2PIW_SERVER = new NetworkSource(new PacketAddress(serverDest, 45001));
 	}
-
-	/**
-	 * protocol_id
-	 */
-	public static final PacketFormat PROTOCOL_ID = new PacketFormat().with(SHORT);
 
 	public static InetAddress toAddress(byte[] bytes) {
 		InetAddress ip = null;
