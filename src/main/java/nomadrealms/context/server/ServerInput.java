@@ -15,9 +15,11 @@ import nomadrealms.model.NomadMini;
 
 public class ServerInput extends GameInput {
 
+	private ServerData data;
+
 	@Override
 	protected void init() {
-		ServerData data = (ServerData) context().data();
+		data = (ServerData) context().data();
 		addMousePressedFunction(event -> true, event -> {
 			List<NomadMini> minis = data.minis();
 			for (int i = minis.size() - 1; i >= 0; i--) {
@@ -59,13 +61,13 @@ public class ServerInput extends GameInput {
 			return null;
 		}, false);
 		addPacketReceivedFunction(new NomadRealmsProtocolDecoder());
-		setupServer(new JoinClusterHttpHandler(data));
+		setupServer();
 	}
 
-	private void setupServer(JoinClusterHttpHandler httpHandler) {
+	private void setupServer() {
 		try {
-			HttpServer server = HttpServer.create(new InetSocketAddress(45000), 0);
-			server.createContext("/join", httpHandler);
+			HttpServer server = HttpServer.create(new InetSocketAddress(45001), 0);
+			server.createContext("/join", new JoinClusterHttpHandler(data));
 			server.setExecutor(null); // creates a default executor
 			server.start();
 			System.out.println("HTTP server started at " + server.getAddress());

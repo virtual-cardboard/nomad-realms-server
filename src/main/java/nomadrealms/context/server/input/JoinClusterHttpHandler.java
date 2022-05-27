@@ -23,8 +23,8 @@ public class JoinClusterHttpHandler implements HttpHandler {
 	public void handle(HttpExchange t) throws IOException {
 		t.getRemoteAddress();
 		String query = t.getRequestURI().getQuery();
-		t.getRequestHeaders().forEach((s, list) -> System.out.println(list));
-		String clientWanAddress = t.getRemoteAddress().getHostName();
+//		t.getRequestHeaders().forEach((s, list) -> System.out.println(s + ": " + list));
+		String clientWanAddress = t.getRemoteAddress().getAddress().toString();
 		int clientWanPort = t.getRemoteAddress().getPort();
 		System.out.println("Received request from " + clientWanAddress + " port=" + clientWanPort);
 		int numRead = t.getRequestBody().read(bytes);
