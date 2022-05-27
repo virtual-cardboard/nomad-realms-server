@@ -59,7 +59,7 @@ public class ServerInput extends GameInput {
 			return null;
 		}, false);
 		addPacketReceivedFunction(new NomadRealmsProtocolDecoder());
-		setupServer(new JoinClusterHttpHandler(queueGroup()));
+		setupServer(new JoinClusterHttpHandler(data));
 	}
 
 	private void setupServer(JoinClusterHttpHandler httpHandler) {
@@ -68,7 +68,7 @@ public class ServerInput extends GameInput {
 			server.createContext("/join", httpHandler);
 			server.setExecutor(null); // creates a default executor
 			server.start();
-			System.out.println("HTTP server started");
+			System.out.println("HTTP server started at " + server.getAddress());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

@@ -1,25 +1,22 @@
 package nomadrealms.context.server.input;
 
-import static java.lang.Math.abs;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.Random;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import engine.common.QueueGroup;
+import event.network.c2s.JoinClusterRequestEvent;
 import event.network.c2s.JoinClusterResponseEvent;
+import nomadrealms.context.server.ServerData;
 
 public class JoinClusterHttpHandler implements HttpHandler {
 
-	private QueueGroup queueGroup;
+	private final byte[] bytes = new byte[65536];
 
-	public JoinClusterHttpHandler(QueueGroup queueGroup) {
-		this.queueGroup = queueGroup;
+	public JoinClusterHttpHandler(ServerData data) {
 	}
 
 	@Override
@@ -27,45 +24,35 @@ public class JoinClusterHttpHandler implements HttpHandler {
 		t.getRemoteAddress();
 		String query = t.getRequestURI().getQuery();
 		t.getRequestHeaders().forEach((s, list) -> System.out.println(list));
-		byte[] response;
 		String clientWanAddress = t.getRemoteAddress().getHostName();
 		int clientWanPort = t.getRemoteAddress().getPort();
 		System.out.println("Received request from " + clientWanAddress + " port=" + clientWanPort);
-		if (t.getRequestHeaders().containsKey("from") && t.getRequestHeaders().get("from").contains("nomad-realms")) {
-			Map<String, String> map = queryToMap(query);
-			String name = map.get("name");
-			System.out.println(name);
-			response = new JoinClusterResponseEvent(abs(new Random().nextLong()), new ArrayList<>(), new ArrayList<>()).serialize();
-//			response.getBytes();
-			t.sendResponseHeaders(200, response.length);
-		} else {
-			response = new JoinClusterResponseEvent(-1, new ArrayList<>(), new ArrayList<>()).serialize();
-			t.sendResponseHeaders(400, response.length);
+		int numRead = t.getRequestBody().read(bytes);
+		try {
+			JoinClusterRequestEvent request = new JoinClusterRequestEvent(Arrays.copyOfRange(bytes, 0, numRead));
+			long worldId = request.worldID();
+			System.out.println(clientWanAddress + ":" + clientWanPort + " is trying to join world with Id=" + worldId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Could not create JoinClusterRequestEvent from the HTTP request body. 400 Bad Request");
+			t.sendResponseHeaders(400, 0);
+			OutputStream os = t.getResponseBody();
+			os.write(new byte[] {});
+			os.close();
+			return;
 		}
+		JoinClusterResponseEvent response = new JoinClusterResponseEvent(new Random().nextLong(), new ArrayList<>(), new ArrayList<>());
+		byte[] serializedResponse = response.serialize();
+		t.sendResponseHeaders(200, serializedResponse.length);
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		OutputStream os = t.getResponseBody();
-		os.write(response);
+		os.write(serializedResponse);
 		os.close();
-	}
-
-	public Map<String, String> queryToMap(String query) {
-		if (query == null) {
-			return null;
-		}
-		Map<String, String> result = new HashMap<>();
-		for (String param : query.split("&")) {
-			String[] entry = param.split("=");
-			if (entry.length > 1) {
-				result.put(entry[0], entry[1]);
-			} else {
-				result.put(entry[0], "");
-			}
-		}
-		return result;
 	}
 
 }
