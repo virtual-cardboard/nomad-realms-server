@@ -49,6 +49,8 @@ public class JoinClusterHttpHandler implements HttpHandler {
 			cluster.peers().forEach(peer -> {
 				JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(currentTimeMillis(), nonce, request.lanAddress(), clientAddress);
 				data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress));
+				data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.lanAddress));
+				System.out.println("Sending JoiningPlayerNetworkEvent to " + peer.username);
 			});
 			List<PacketAddress> peerLanAddresses = cluster.peers().stream().map(p -> p.lanAddress).collect(toList());
 			List<PacketAddress> peerWanAddresses = cluster.peers().stream().map(p -> p.wanAddress).collect(toList());
