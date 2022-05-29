@@ -22,6 +22,8 @@ import nomadrealms.model.WorldInfo;
 
 public class JoinClusterHttpHandler implements HttpHandler {
 
+	public static final int JOIN_TIME_OFFSET = 5000;
+	
 	private final ServerData data;
 	private final byte[] bytes = new byte[65536];
 
@@ -53,7 +55,7 @@ public class JoinClusterHttpHandler implements HttpHandler {
 			List<PacketAddress> peerLanAddresses = cluster.peers().stream().map(p -> p.lanAddress).collect(toList());
 			List<PacketAddress> peerWanAddresses = cluster.peers().stream().map(p -> p.wanAddress).collect(toList());
 			cluster.addPeer(new PlayerData(clientAddress, request.lanAddress(), request.username()));
-			JoinClusterResponseEvent response = new JoinClusterResponseEvent(nonce, peerLanAddresses, peerWanAddresses);
+			JoinClusterResponseEvent response = new JoinClusterResponseEvent(currentTimeMillis() + JOIN_TIME_OFFSET, nonce, peerLanAddresses, peerWanAddresses);
 			byte[] serializedResponse = response.serialize();
 
 			try {
