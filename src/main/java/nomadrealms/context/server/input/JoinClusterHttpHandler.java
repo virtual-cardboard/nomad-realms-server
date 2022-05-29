@@ -31,8 +31,6 @@ public class JoinClusterHttpHandler implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange t) throws IOException {
-		t.getRemoteAddress();
-		String query = t.getRequestURI().getQuery();
 //		t.getRequestHeaders().forEach((s, list) -> System.out.println(s + ": " + list));
 		PacketAddress clientAddress = new PacketAddress(t.getRemoteAddress().getAddress(), t.getRemoteAddress().getPort());
 		System.out.println("Received request from " + clientAddress);
