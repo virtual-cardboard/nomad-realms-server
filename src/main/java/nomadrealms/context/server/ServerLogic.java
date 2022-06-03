@@ -1,7 +1,11 @@
 package nomadrealms.context.server;
 
+import static java.lang.System.currentTimeMillis;
+
 import context.logic.GameLogic;
 import event.network.NomadRealmsP2PNetworkEvent;
+import event.network.p2p.time.TimeRequestEvent;
+import event.network.p2p.time.TimeResponseEvent;
 
 public class ServerLogic extends GameLogic {
 
@@ -37,6 +41,7 @@ public class ServerLogic extends GameLogic {
 //				context().sendPacket(response.toPacket(event.source().address()));
 //			}
 //		});
+		addHandler(TimeRequestEvent.class, this::handleTimeRequest);
 		addHandler(NomadRealmsP2PNetworkEvent.class, this::printEvent);
 //		Random rand = new Random();
 //		addHandler(CreateWorldRequestEvent.class, (event) -> {
@@ -46,6 +51,12 @@ public class ServerLogic extends GameLogic {
 //			data.worldInfos().add(worldInfo);
 //			context().sendPacket(new CreateWorldResponseEvent(worldInfo.seed).toPacket(event.source().address()));
 //		});
+	}
+
+	private void handleTimeRequest(TimeRequestEvent t) {
+		TimeResponseEvent response = new TimeResponseEvent(t.time(), currentTimeMillis());
+		System.out.println("Sending response: " + response.receiveTime() + "  " + response.sendTime());
+		context().sendPacket(response.toPacketModel(t.source().address()));
 	}
 
 	@Override

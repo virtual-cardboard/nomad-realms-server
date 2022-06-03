@@ -12,7 +12,6 @@ import networking.NetworkCluster;
 import networking.protocols.NomadRealmsProtocolDecoder;
 import nomadrealms.context.server.input.JoinClusterHttpHandler;
 import nomadrealms.context.server.input.JoinClusterSuccessEventHandler;
-import nomadrealms.context.server.input.TimeRequestHandler;
 import nomadrealms.model.NomadMini;
 
 public class ServerInput extends GameInput {
@@ -71,7 +70,6 @@ public class ServerInput extends GameInput {
 			HttpServer server = HttpServer.create(new InetSocketAddress(45001), 0);
 			server.createContext("/join", new JoinClusterHttpHandler(data));
 			server.createContext("/joinSuccess", new JoinClusterSuccessEventHandler(data));
-			server.createContext("/time", new TimeRequestHandler());
 			server.setExecutor(null); // creates a default executor
 			server.start();
 			System.out.println("HTTP server started at " + server.getAddress());
