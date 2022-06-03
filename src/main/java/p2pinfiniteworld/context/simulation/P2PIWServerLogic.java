@@ -11,8 +11,6 @@ import context.logic.GameLogic;
 import engine.common.math.Vector2i;
 import p2pinfiniteworld.context.simulation.logic.CheckStatusHandler;
 import p2pinfiniteworld.context.simulation.logic.JoinQueueHandler;
-import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueRequestEvent;
 import p2pinfiniteworld.model.NomadTiny;
 import p2pinfiniteworld.model.P2PIWChunk;
 import p2pinfiniteworld.model.P2PIWRegion;

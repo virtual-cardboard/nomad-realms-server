@@ -8,17 +8,19 @@ import java.util.Random;
 import com.sun.net.httpserver.HttpServer;
 import context.input.GameInput;
 import engine.common.math.Vector2f;
-import event.network.bootstrap.BootstrapResponseEvent;
 import networking.NetworkCluster;
 import networking.protocols.NomadRealmsProtocolDecoder;
 import nomadrealms.context.server.input.JoinClusterHttpHandler;
+import nomadrealms.context.server.input.JoinClusterSuccessEventHandler;
 import nomadrealms.model.NomadMini;
 
 public class ServerInput extends GameInput {
 
+	private ServerData data;
+
 	@Override
 	protected void init() {
-		ServerData data = (ServerData) context().data();
+		data = (ServerData) context().data();
 		addMousePressedFunction(event -> true, event -> {
 			List<NomadMini> minis = data.minis();
 			for (int i = minis.size() - 1; i >= 0; i--) {
@@ -48,8 +50,8 @@ public class ServerInput extends GameInput {
 					minis.remove(n1);
 					minis.remove(n2);
 					long nonce = new Random().nextLong();
-					context().sendPacket(new BootstrapResponseEvent(nonce, n1.lanAddress(), n1.wanAddress(), n1.username()).toPacket(n2.wanAddress()));
-					context().sendPacket(new BootstrapResponseEvent(nonce, n2.lanAddress(), n2.wanAddress(), n2.username()).toPacket(n1.wanAddress()));
+//					context().sendPacket(new BootstrapResponseEvent(nonce, n1.lanAddress(), n1.wanAddress(), n1.username()).toPacket(n2.wanAddress()));
+//					context().sendPacket(new BootstrapResponseEvent(nonce, n2.lanAddress(), n2.wanAddress(), n2.username()).toPacket(n1.wanAddress()));
 					NetworkCluster cluster = data.getCluster(0);
 					cluster.addPeer(n1.address());
 					cluster.addPeer(n2.address());
@@ -60,16 +62,17 @@ public class ServerInput extends GameInput {
 			return null;
 		}, false);
 		addPacketReceivedFunction(new NomadRealmsProtocolDecoder());
-		setupServer(new JoinClusterHttpHandler(queueGroup()));
+		setupServer();
 	}
 
-	private void setupServer(JoinClusterHttpHandler httpHandler) {
+	private void setupServer() {
 		try {
-			HttpServer server = HttpServer.create(new InetSocketAddress(45000), 0);
-			server.createContext("/join", httpHandler);
+			HttpServer server = HttpServer.create(new InetSocketAddress(45001), 0);
+			server.createContext("/join", new JoinClusterHttpHandler(data));
+			server.createContext("/joinSuccess", new JoinClusterSuccessEventHandler(data));
 			server.setExecutor(null); // creates a default executor
 			server.start();
-			System.out.println("HTTP server started");
+			System.out.println("HTTP server started at " + server.getAddress());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

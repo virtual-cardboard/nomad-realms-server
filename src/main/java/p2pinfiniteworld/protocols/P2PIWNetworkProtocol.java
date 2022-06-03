@@ -1,121 +1,104 @@
 package p2pinfiniteworld.protocols;
 
-import static context.input.networking.packet.PacketPrimitive.BYTE;
-import static context.input.networking.packet.PacketPrimitive.INT;
-import static context.input.networking.packet.PacketPrimitive.IP_V4;
-import static context.input.networking.packet.PacketPrimitive.IP_V4_ARRAY;
-import static context.input.networking.packet.PacketPrimitive.LONG;
-import static context.input.networking.packet.PacketPrimitive.SHORT;
-import static context.input.networking.packet.PacketPrimitive.SHORT_ARRAY;
-import static context.input.networking.packet.PacketPrimitive.STRING;
+import static derealizer.SerializationClassGenerator.generate;
+import static derealizer.datatype.SerializationDataType.BYTE;
+import static derealizer.datatype.SerializationDataType.INT;
+import static derealizer.datatype.SerializationDataType.LONG;
+import static derealizer.datatype.SerializationDataType.SHORT;
+import static derealizer.datatype.SerializationDataType.STRING_UTF8;
+import static derealizer.datatype.SerializationDataType.pojo;
+import static derealizer.datatype.SerializationDataType.repeated;
+import static derealizer.format.SerializationFormat.types;
+import static engine.common.networking.packet.NetworkingSerializationFormats.PACKET_ADDRESS;
 
-import context.input.networking.packet.PacketFormat;
+import derealizer.format.FieldNames;
+import derealizer.format.SerializationFormat;
+import derealizer.format.SerializationFormatEnum;
 import p2pinfiniteworld.event.P2PIWNetworkEvent;
-import p2pinfiniteworld.event.P2PIWRegionDataReceiveEvent;
-import p2pinfiniteworld.event.peer2peer.game.P2PIWChunkDataRequestEvent;
-import p2pinfiniteworld.event.peer2peer.game.P2PIWClickChunkNotificationEvent;
-import p2pinfiniteworld.event.peer2peer.game.P2PIWEnterRegionNotificationEvent;
-import p2pinfiniteworld.event.peer2peer.session.P2PIWJoinNetworkRequestEvent;
-import p2pinfiniteworld.event.peer2peer.session.P2PIWPeerJoinNetworkConfirmationEvent;
-import p2pinfiniteworld.event.peer2peer.session.P2PIWPeerJoinNetworkConsensusEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInQueueResponseEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWAlreadyInWorldResponseEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWCheckNomadStatusRequestEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWEnterWorldNotificationEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueRequestEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWJoinQueueSuccessResponseEvent;
-import p2pinfiniteworld.event.serverconnect.P2PIWReadyToJoinNetworkResponse;
 
-public enum P2PIWNetworkProtocol {
+public enum P2PIWNetworkProtocol implements SerializationFormatEnum<P2PIWNetworkEvent> {
 
-	/**
-	 * region_x, region_y
-	 */
-	ENTER_REGION_NOTIFICATION(P2PIWEnterRegionNotificationEvent.class, 100, new PacketFormat().with(INT, INT)),
+	@FieldNames({ "regionX", "regionY" })
+	ENTER_REGION_NOTIFICATION(types(INT, INT)),
+	@FieldNames({ "timestamp", "chunkX", "chunkY" })
+	CHUNK_DATA_REQUEST(types(LONG, INT, INT)),
+	@FieldNames({ "age", "value" })
+	AGE_VALUE_PAIR(types(INT, SHORT)),
+	@FieldNames({ "regionX", "regionY", "ageValuePairs" })
+	REGION_DATA(types(INT, INT, repeated(pojo(AGE_VALUE_PAIR)))),
+	@FieldNames({ "user_id", "chunkX", "chunkY" })
+	CLICK_CHUNK_NOTIFICATION(types(BYTE, INT, INT)),
+	@FieldNames({ "username" })
+	JOIN_NETWORK_REQUEST(types(STRING_UTF8)),
+	@FieldNames({ "joinerAddress" })
+	PEER_JOIN_NETWORK_CONSENSUS(types(pojo(PACKET_ADDRESS))),
+	@FieldNames({ "joinerAddress" })
+	PEER_JOIN_NETWORK_CONFIRMATION(types(pojo(PACKET_ADDRESS))),
+	@FieldNames({})
+	CHECK_NOMAD_STATUS_REQUEST(types()),
+	@FieldNames({ "username" })
+	JOIN_QUEUE_REQUEST(types(STRING_UTF8)),
+	@FieldNames({ "tick0Time" })
+	JOIN_QUEUE_SUCCESS_RESPONSE(types(LONG)),
+	@FieldNames({ "tick0Time" })
+	ALREADY_IN_QUEUE_RESPONSE(types(LONG)),
+	@FieldNames({ "chunkX", "chunkY", "tick0Time" })
+	ALREADY_IN_WORLD_RESPONSE(types(INT, INT, LONG)),
+	@FieldNames({ "chunkX", "chunkY", "networkAddresses" })
+	READY_TO_JOIN_NETWORK_RESPONSE(types(INT, INT, repeated(pojo(PACKET_ADDRESS)))),
+	@FieldNames({ "chunkX", "chunkY", "tick0Time" })
+	ENTER_WORLD_NOTIFICATION(types(INT, INT, LONG)),
+	;
 
-	/**
-	 * timestamp, chunk_x, chunk_y
-	 */
-	CHUNK_DATA_REQUEST(P2PIWChunkDataRequestEvent.class, 102, new PacketFormat().with(LONG, INT, INT)),
-
-	/**
-	 * region_x, region_y, 16 x (age, value)
-	 */
-	REGION_DATA(P2PIWRegionDataReceiveEvent.class, 103, new PacketFormat().with(INT, INT,
-			INT, SHORT, INT, SHORT, INT, SHORT, INT, SHORT,
-			INT, SHORT, INT, SHORT, INT, SHORT, INT, SHORT,
-			INT, SHORT, INT, SHORT, INT, SHORT, INT, SHORT,
-			INT, SHORT, INT, SHORT, INT, SHORT, INT, SHORT)),
-
-	/**
-	 * user_id, chunk_x, chunk_y
-	 */
-	CLICK_CHUNK_NOTIFICATION(P2PIWClickChunkNotificationEvent.class, 104, new PacketFormat().with(BYTE, INT, INT)),
-
-	/**
-	 * username
-	 */
-	JOIN_NETWORK_REQUEST(P2PIWJoinNetworkRequestEvent.class, 50, new PacketFormat().with(STRING)),
-
-	/**
-	 * joiner_wan_ip, joiner_wan_port
-	 */
-	PEER_JOIN_NETWORK_CONSENSUS(P2PIWPeerJoinNetworkConsensusEvent.class, 51, new PacketFormat().with(IP_V4, SHORT)),
-
-	PEER_JOIN_NETWORK_CONFIRMATION(P2PIWPeerJoinNetworkConfirmationEvent.class, 52, new PacketFormat().with(IP_V4, SHORT)),
-
-	CHECK_NOMAD_STATUS_REQUEST(P2PIWCheckNomadStatusRequestEvent.class, 199, new PacketFormat()),
-
-	/**
-	 * username
-	 */
-	JOIN_QUEUE_REQUEST(P2PIWJoinQueueRequestEvent.class, 200, new PacketFormat().with(STRING)),
-
-	/**
-	 * tick_0_time
-	 */
-	JOIN_QUEUE_SUCCESS_RESPONSE(P2PIWJoinQueueSuccessResponseEvent.class, 201, new PacketFormat().with(LONG)),
-
-	/**
-	 * tick_0_time
-	 */
-	ALREADY_IN_QUEUE_RESPONSE(P2PIWAlreadyInQueueResponseEvent.class, 202, new PacketFormat().with(LONG)),
-
-	/**
-	 * chunk_x, chunk_y, tick_0_time
-	 */
-	ALREADY_IN_WORLD_RESPONSE(P2PIWAlreadyInWorldResponseEvent.class, 203, new PacketFormat().with(INT, INT, LONG)),
-
-	/**
-	 * chunk_x, chunk_y, network_ip_array, network_port_array
-	 */
-	READY_TO_JOIN_NETWORK_RESPONSE(P2PIWReadyToJoinNetworkResponse.class, 204, new PacketFormat().with(INT, INT, IP_V4_ARRAY, SHORT_ARRAY)),
-
-	/**
-	 * chunk_x, chunk_y, tick_0_time
-	 */
-	ENTER_WORLD_NOTIFICATION(P2PIWEnterWorldNotificationEvent.class, 210, new PacketFormat().with(INT, INT, LONG));
-
-	private short id;
-	private Class<? extends P2PIWNetworkEvent> clazz;
-	private PacketFormat format;
-
-	private P2PIWNetworkProtocol(Class<? extends P2PIWNetworkEvent> clazz, int id, PacketFormat format) {
-		this.clazz = clazz;
-		this.id = (short) id;
-		this.format = format;
+	static {
+		ENTER_REGION_NOTIFICATION.id = 100;
+		CHUNK_DATA_REQUEST.id = 102;
+		REGION_DATA.id = 103;
+		CLICK_CHUNK_NOTIFICATION.id = 104;
+		JOIN_NETWORK_REQUEST.id = 50;
+		PEER_JOIN_NETWORK_CONSENSUS.id = 51;
+		PEER_JOIN_NETWORK_CONFIRMATION.id = 52;
+		CHECK_NOMAD_STATUS_REQUEST.id = 199;
+		JOIN_QUEUE_REQUEST.id = 200;
+		JOIN_QUEUE_SUCCESS_RESPONSE.id = 201;
+		ALREADY_IN_QUEUE_RESPONSE.id = 202;
+		ALREADY_IN_WORLD_RESPONSE.id = 203;
+		READY_TO_JOIN_NETWORK_RESPONSE.id = 204;
+		ENTER_WORLD_NOTIFICATION.id = 210;
 	}
 
-	public PacketFormat format() {
-		return format;
+	private short id = -1;
+	private final SerializationFormat format;
+	private final Class<? extends P2PIWNetworkEvent> pojoClass;
+	private final Class<? extends P2PIWNetworkEvent> superClass;
+
+	P2PIWNetworkProtocol(SerializationFormat format) {
+		this.format = format;
+		this.pojoClass = null;
+		this.superClass = P2PIWNetworkEvent.class;
 	}
 
 	public short id() {
 		return id;
 	}
 
-	public Class<? extends P2PIWNetworkEvent> clazz() {
-		return clazz;
+	@Override
+	public SerializationFormat format() {
+		return format;
+	}
+
+	@Override
+	public Class<? extends P2PIWNetworkEvent> pojoClass() {
+		return pojoClass;
+	}
+
+	@Override
+	public Class<? extends P2PIWNetworkEvent> superClass() {
+		return superClass;
+	}
+
+	public static void main(String[] args) {
+		generate(P2PIWNetworkProtocol.class, P2PIWNetworkEvent.class);
 	}
 
 }
