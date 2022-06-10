@@ -55,7 +55,6 @@ public class ServerLogic extends GameLogic {
 
 	private void handleTimeRequest(TimeRequestEvent t) {
 		TimeResponseEvent response = new TimeResponseEvent(t.time(), currentTimeMillis());
-		System.out.println("Sending response: " + response.receiveTime() + "  " + response.sendTime());
 		context().sendPacket(response.toPacketModel(t.source().address()));
 	}
 
