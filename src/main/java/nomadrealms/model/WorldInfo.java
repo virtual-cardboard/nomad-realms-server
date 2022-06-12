@@ -2,16 +2,18 @@ package nomadrealms.model;
 
 public class WorldInfo {
 
-	public long id;
+	public final long id;
 	public String name;
-	public long seed;
+	public final long seed;
+	public final long tick0Time;
 
 	public long lastPlayed;
 
-	public WorldInfo(long id, String name, long seed) {
+	public WorldInfo(long id, String name, long seed, long tick0Time) {
 		this.id = id;
 		this.name = name;
 		this.seed = seed;
+		this.tick0Time = tick0Time;
 		lastPlayed = System.currentTimeMillis();
 	}
 

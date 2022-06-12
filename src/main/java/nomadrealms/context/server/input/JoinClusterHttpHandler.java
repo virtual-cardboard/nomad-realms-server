@@ -32,7 +32,7 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		long worldId = request.worldID();
 		System.out.println(clientAddress + " is trying to join world with Id=" + worldId);
 		if (data.getCluster(worldId) == null) {
-			data.addCluster(new NetworkCluster(new WorldInfo(0, "This is a test", 12345)));
+			data.addCluster(new NetworkCluster(new WorldInfo(0, "This is a test", 12345, 1655063005817L)));
 		}
 		NetworkCluster cluster = data.getCluster(worldId);
 		long nonce = new Random().nextLong();
@@ -45,7 +45,11 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		List<PacketAddress> peerLanAddresses = cluster.peers().stream().map(p -> p.lanAddress).collect(toList());
 		List<PacketAddress> peerWanAddresses = cluster.peers().stream().map(p -> p.wanAddress).collect(toList());
 		cluster.addPeer(new PlayerData(clientAddress, request.lanAddress(), request.username()));
-		return new JoinClusterResponseEvent(currentTimeMillis() + JOIN_TIME_OFFSET, nonce, peerLanAddresses, peerWanAddresses);
+		long tick0Time = cluster.worldInfo().tick0Time;
+		long spawnTick = (currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / 100;
+		long spawnTime = tick0Time + spawnTick * 100;
+		System.out.println("Spawning player at tick: " + spawnTick + " time:" + spawnTime);
+		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, peerLanAddresses, peerWanAddresses);
 	}
 
 }
