@@ -36,8 +36,11 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		}
 		NetworkCluster cluster = data.getCluster(worldId);
 		long nonce = new Random().nextLong();
+		long tick0Time = cluster.worldInfo().tick0Time;
+		long spawnTick = (currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / 100;
+		long spawnTime = tick0Time + spawnTick * 100;
 		cluster.peers().forEach(peer -> {
-			JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(currentTimeMillis(), nonce, request.lanAddress(), clientAddress, 0);
+			JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(spawnTick, nonce, request.lanAddress(), clientAddress, 0);
 			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress));
 			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.lanAddress));
 			System.out.println("Sending JoiningPlayerNetworkEvent to " + peer.username);
@@ -45,9 +48,6 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		List<PacketAddress> peerLanAddresses = cluster.peers().stream().map(p -> p.lanAddress).collect(toList());
 		List<PacketAddress> peerWanAddresses = cluster.peers().stream().map(p -> p.wanAddress).collect(toList());
 		cluster.addPeer(new PlayerData(clientAddress, request.lanAddress(), request.username()));
-		long tick0Time = cluster.worldInfo().tick0Time;
-		long spawnTick = (currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / 100;
-		long spawnTime = tick0Time + spawnTick * 100;
 		System.out.println("Spawning player at tick: " + spawnTick + " time:" + spawnTime);
 		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, peerLanAddresses, peerWanAddresses, 0);
 	}
