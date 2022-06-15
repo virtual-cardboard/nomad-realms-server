@@ -1,5 +1,6 @@
 package nomadrealms.context.server.input;
 
+import static constants.NomadRealmsConstants.TICK_TIME;
 import static java.lang.System.currentTimeMillis;
 import static java.util.stream.Collectors.toList;
 
@@ -37,8 +38,8 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		NetworkCluster cluster = data.getCluster(worldId);
 		long nonce = new Random().nextLong();
 		long tick0Time = cluster.worldInfo().tick0Time;
-		long spawnTick = (currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / 100;
-		long spawnTime = tick0Time + spawnTick * 100;
+		long spawnTick = (long) ((currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / TICK_TIME);
+		long spawnTime = (long) (tick0Time + spawnTick * TICK_TIME);
 		cluster.peers().forEach(peer -> {
 			JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(spawnTick, nonce, request.lanAddress(), clientAddress, 0);
 			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress));
