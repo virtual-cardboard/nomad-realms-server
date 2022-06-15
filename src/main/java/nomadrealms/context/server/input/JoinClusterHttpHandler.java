@@ -18,7 +18,7 @@ import nomadrealms.model.WorldInfo;
 
 public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestEvent, JoinClusterResponseEvent> {
 
-	public static final int JOIN_TIME_OFFSET = 5000;
+	public static final int JOIN_TIME_OFFSET = 2000;
 
 	private final ServerData data;
 	private final byte[] bytes = new byte[65536];
@@ -38,8 +38,8 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		NetworkCluster cluster = data.getCluster(worldId);
 		long nonce = new Random().nextLong();
 		long tick0Time = cluster.worldInfo().tick0Time;
-		long spawnTick = (long) ((currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / TICK_TIME);
-		long spawnTime = (long) (tick0Time + spawnTick * TICK_TIME);
+		long spawnTick = (currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / TICK_TIME;
+		long spawnTime = tick0Time + spawnTick * TICK_TIME;
 		cluster.peers().forEach(peer -> {
 			JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(spawnTick, nonce, request.lanAddress(), clientAddress, 0);
 			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress));
