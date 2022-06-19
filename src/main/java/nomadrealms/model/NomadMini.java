@@ -4,9 +4,9 @@ import static engine.common.math.Vector2f.fromAngleLength;
 import static java.lang.Math.PI;
 import static java.lang.Math.random;
 
-import engine.common.networking.packet.address.PacketAddress;
 import engine.common.math.Vector2f;
-import networking.PlayerData;
+import engine.common.networking.packet.address.PacketAddress;
+import model.Player;
 
 public class NomadMini {
 
@@ -35,12 +35,12 @@ public class NomadMini {
 
 	private int state = RESTING;
 	private String username;
-	private PlayerData address;
+	private Player address;
 
 	public NomadMini(int colour, String username, PacketAddress lanAddress, PacketAddress wanAddress) {
 		this.colour = colour;
 		this.username = username;
-		this.address = new PlayerData(wanAddress, lanAddress, username);
+		this.address = new Player(wanAddress, lanAddress, username);
 	}
 
 	public void update() {
@@ -72,7 +72,7 @@ public class NomadMini {
 		}
 	}
 
-	public PlayerData address() {
+	public Player address() {
 		return address;
 	}
 

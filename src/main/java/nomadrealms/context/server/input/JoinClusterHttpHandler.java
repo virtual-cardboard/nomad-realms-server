@@ -11,8 +11,9 @@ import engine.common.networking.packet.address.PacketAddress;
 import event.network.c2s.JoinClusterRequestEvent;
 import event.network.c2s.JoinClusterResponseEvent;
 import event.network.p2p.s2c.JoiningPlayerNetworkEvent;
+import model.Player;
+import model.PlayerSession;
 import networking.NetworkCluster;
-import networking.PlayerData;
 import nomadrealms.context.server.ServerData;
 import nomadrealms.model.WorldInfo;
 
@@ -40,15 +41,15 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		long tick0Time = cluster.worldInfo().tick0Time;
 		long spawnTick = (currentTimeMillis() + JOIN_TIME_OFFSET - tick0Time) / TICK_TIME;
 		long spawnTime = tick0Time + spawnTick * TICK_TIME;
-		cluster.peers().forEach(peer -> {
+		cluster.playerSessions().forEach(peer -> {
 			JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(spawnTick, nonce, request.lanAddress(), clientAddress, 0);
-			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress));
-			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.lanAddress));
-			System.out.println("Sending JoiningPlayerNetworkEvent to " + peer.username);
+			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress()));
+			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.lanAddress()));
+			System.out.println("Sending JoiningPlayerNetworkEvent to " + peer.player().username());
 		});
-		List<PacketAddress> peerLanAddresses = cluster.peers().stream().map(p -> p.lanAddress).collect(toList());
-		List<PacketAddress> peerWanAddresses = cluster.peers().stream().map(p -> p.wanAddress).collect(toList());
-		cluster.addPeer(new PlayerData(clientAddress, request.lanAddress(), request.username()));
+		List<PacketAddress> peerLanAddresses = cluster.playerSessions().stream().map(p -> p.lanAddress()).collect(toList());
+		List<PacketAddress> peerWanAddresses = cluster.playerSessions().stream().map(p -> p.wanAddress()).collect(toList());
+		cluster.addPlayerSession(new PlayerSession(new Player(0, request.username()), request.lanAddress(), clientAddress));
 		System.out.println("Spawning player at tick: " + spawnTick + " time:" + spawnTime);
 		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, peerLanAddresses, peerWanAddresses, 0);
 	}
