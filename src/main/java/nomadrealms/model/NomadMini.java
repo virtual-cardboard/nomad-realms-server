@@ -5,7 +5,6 @@ import static java.lang.Math.PI;
 import static java.lang.Math.random;
 
 import engine.common.math.Vector2f;
-import engine.common.networking.packet.address.PacketAddress;
 import model.Player;
 
 public class NomadMini {
@@ -37,10 +36,10 @@ public class NomadMini {
 	private String username;
 	private Player address;
 
-	public NomadMini(int colour, String username, PacketAddress lanAddress, PacketAddress wanAddress) {
+	public NomadMini(int colour, String username) {
 		this.colour = colour;
 		this.username = username;
-		this.address = new Player(wanAddress, lanAddress, username);
+		this.address = new Player(0, username); // TODO
 	}
 
 	public void update() {
@@ -74,14 +73,6 @@ public class NomadMini {
 
 	public Player address() {
 		return address;
-	}
-
-	public PacketAddress lanAddress() {
-		return address.lanAddress;
-	}
-
-	public PacketAddress wanAddress() {
-		return address.wanAddress;
 	}
 
 	public String username() {
