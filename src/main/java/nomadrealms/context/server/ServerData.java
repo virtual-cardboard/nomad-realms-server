@@ -17,14 +17,13 @@ public class ServerData extends GameData {
 
 	public NomadMini selectedMini;
 
-	public NomadRealmsDatabase database;
+	private NomadRealmsDatabase database;
 
 	@Override
 	protected void init() {
 		database = new NomadRealmsDatabase();
 		database.connect();
-		database.testing();
-		System.out.println("Yay! Connected to database");
+		System.out.println("Connected to database");
 	}
 
 	public List<NomadMini> minis() {
@@ -33,6 +32,10 @@ public class ServerData extends GameData {
 
 	public NetworkCluster getCluster(long id) {
 		return clusters.get(id);
+	}
+
+	public NomadRealmsDatabase database() {
+		return database;
 	}
 
 	public void addCluster(NetworkCluster cluster) {
