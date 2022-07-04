@@ -51,7 +51,7 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		List<PacketAddress> peerLanAddresses = cluster.playerSessions().stream().map(p -> p.lanAddress()).collect(toList());
 		List<PacketAddress> peerWanAddresses = cluster.playerSessions().stream().map(p -> p.wanAddress()).collect(toList());
 		String username = data.database().getUsername(request.playerId());
-		cluster.addPlayerSession(new PlayerSession(new Player(0, username), request.lanAddress(), clientAddress));
+		cluster.addPlayerSession(new PlayerSession(new Player(request.playerId(), username), request.lanAddress(), clientAddress));
 		System.out.println("Spawning player at tick: " + spawnTick + " time:" + spawnTime);
 		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, username, peerLanAddresses, peerWanAddresses, 0);
 	}
