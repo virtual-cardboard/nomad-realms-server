@@ -21,7 +21,7 @@ public class NomadRealmsDatabase {
 			dbSource.setUrl("jdbc:postgresql://free-tier11.gcp-us-east1.cockroachlabs.cloud:26257/defaultdb" +
 					"?options=--cluster%3Dnomad-realms-cluster-1145&sslmode=verify-full");
 			dbSource.setUser("virtualcardboard");
-			dbSource.setPassword("RSlnFuOi6hXgofBjvNZ95A");
+			dbSource.setPassword("kzRCW7sKEpVV2d0FYulBCA");
 			connected = true;
 		}
 	}
