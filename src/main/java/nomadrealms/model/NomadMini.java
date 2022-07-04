@@ -58,8 +58,8 @@ public class NomadMini {
 			} else { // Hopping
 				timeForHop--;
 				h = (int) (HOP_HEIGHT * Math.sin(timeForHop * PI / HOP_DURATION));
-				x += direction.x;
-				y += direction.y;
+				x += direction.x();
+				y += direction.y();
 				if (timeForHop == 0) {
 					numHopsLeft--;
 					timeForHop = HOP_DURATION;
@@ -111,8 +111,8 @@ public class NomadMini {
 	}
 
 	public void setPos(Vector2f vec2f) {
-		x = vec2f.x;
-		y = vec2f.y;
+		x = vec2f.x();
+		y = vec2f.y();
 		x = Math.max(40, Math.min(410, x));
 		y = Math.max(240, Math.min(600, y));
 	}
