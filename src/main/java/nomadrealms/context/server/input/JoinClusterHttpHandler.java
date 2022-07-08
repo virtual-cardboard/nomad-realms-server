@@ -19,7 +19,7 @@ import nomadrealms.model.WorldInfo;
 
 public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestEvent, JoinClusterResponseEvent> {
 
-	public static final int JOIN_TIME_OFFSET = 2000;
+	public static final int JOIN_TIME_OFFSET = 6000;
 
 	private final ServerData data;
 	private final byte[] bytes = new byte[65536];
@@ -50,10 +50,11 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 		});
 		List<PacketAddress> peerLanAddresses = cluster.playerSessions().stream().map(p -> p.lanAddress()).collect(toList());
 		List<PacketAddress> peerWanAddresses = cluster.playerSessions().stream().map(p -> p.wanAddress()).collect(toList());
-		String username = data.database().getUsername(request.playerId());
-		cluster.addPlayerSession(new PlayerSession(new Player(request.playerId(), username), request.lanAddress(), clientAddress));
+//		String username = data.database().getUsername(request.playerId());
+		cluster.addPlayerSession(new PlayerSession(new Player(request.playerId(), "username"), request.lanAddress(), clientAddress));
 		System.out.println("Spawning player at tick: " + spawnTick + " time:" + spawnTime);
-		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, username, peerLanAddresses, peerWanAddresses, 0);
+		int idRange = cluster.generateNewIdRange();
+		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, "username", peerLanAddresses, peerWanAddresses, 0, idRange);
 	}
 
 }
