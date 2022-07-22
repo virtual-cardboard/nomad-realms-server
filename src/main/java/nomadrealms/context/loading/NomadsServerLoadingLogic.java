@@ -25,7 +25,7 @@ public class NomadsServerLoadingLogic extends GameLogic {
 	public void update() {
 		if (serverLoadingVisuals.initialized()) {
 			GameAudio audio = new DefaultGameAudio();
-			GameData data = new ServerData();
+			GameData data = new ServerData(((NomadsServerLoadingData) context().data()).tools());
 			GameInput input = new ServerInput();
 			GameLogic logic = new ServerLogic();
 			GameVisuals visuals = new ServerVisuals();

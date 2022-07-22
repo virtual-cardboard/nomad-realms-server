@@ -7,6 +7,7 @@ import context.ResourcePack;
 import context.visuals.GameVisuals;
 import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextureShaderProgram;
+import context.visuals.gui.renderer.RootGuiRenderer;
 import context.visuals.lwjgl.Texture;
 import context.visuals.renderer.TextRenderer;
 import context.visuals.renderer.TextureRenderer;
@@ -25,6 +26,7 @@ public class ServerVisuals extends GameVisuals {
 	private Texture nomad;
 	private RectangleRenderer rectangleRenderer;
 	private ServerData data;
+	private RootGuiRenderer rootGuiRenderer;
 
 	public ServerVisuals() {
 	}
@@ -41,8 +43,10 @@ public class ServerVisuals extends GameVisuals {
 		yard = rp.getTexture("yard");
 		yardBottomFence = rp.getTexture("yard_bottom_fence");
 		nomad = rp.getTexture("nomad");
-		rectangleRenderer = new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO());
-		rp.putRenderer("rectangle", rectangleRenderer);
+		rectangleRenderer = rp.getRenderer("rectangle", RectangleRenderer.class);
+		rootGuiRenderer = rp.getRenderer("rootGui", RootGuiRenderer.class);
+
+		rootGui().addChild(data.tools().consoleGui);
 	}
 
 	@Override
@@ -61,6 +65,8 @@ public class ServerVisuals extends GameVisuals {
 			textRenderer.render(12, 800, data.selectedMini.username(), 0, baloo2, 28, 255);
 		}
 		textRenderer.render(50, 10, "Nomad Realms Server", 0, langar, 44, 255);
+
+		rootGuiRenderer.render(context().data(), rootGui());
 	}
 
 	private void drawNomad(NomadMini mini) {

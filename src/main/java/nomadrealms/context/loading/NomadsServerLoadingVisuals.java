@@ -9,9 +9,11 @@ import java.util.concurrent.Future;
 
 import context.ResourcePack;
 import context.visuals.GameVisuals;
+import context.visuals.builtin.RectangleRenderer;
 import context.visuals.builtin.TextShaderProgram;
 import context.visuals.builtin.TextureShaderProgram;
 import context.visuals.builtin.TexturedTransformationVertexShader;
+import context.visuals.gui.renderer.RootGuiRenderer;
 import context.visuals.lwjgl.FrameBufferObject;
 import context.visuals.lwjgl.Shader;
 import context.visuals.lwjgl.Texture;
@@ -33,6 +35,7 @@ public class NomadsServerLoadingVisuals extends GameVisuals {
 
 	@Override
 	public void init() {
+		long time = System.currentTimeMillis();
 		GameLoader loader = loader();
 		ResourcePack rp = resourcePack();
 
@@ -83,6 +86,10 @@ public class NomadsServerLoadingVisuals extends GameVisuals {
 			loader.submit(new ShaderProgramLoadTask(textSP)).get();
 			rp.putRenderer("text", new TextRenderer(textureRenderer, textSP, rp.rectangleVAO(), textFBO));
 
+			rp.putRenderer("rootGui", new RootGuiRenderer());
+
+			rp.putRenderer("rectangle", new RectangleRenderer(rp.defaultShaderProgram(), rp.rectangleVAO()));
+
 			fTexMap.forEach((name, fTexture) -> {
 				try {
 					rp.putTexture(name, fTexture.get());
@@ -90,6 +97,10 @@ public class NomadsServerLoadingVisuals extends GameVisuals {
 					e.printStackTrace();
 				}
 			});
+
+			NomadsServerLoadingData data = (NomadsServerLoadingData) context().data();
+			data.initTools();
+			data.tools().logMessage("Finished loading in " + (System.currentTimeMillis() - time) + "ms.", 0x29cf3aff);
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}

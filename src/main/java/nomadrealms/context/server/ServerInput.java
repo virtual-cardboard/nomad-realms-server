@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.sun.net.httpserver.HttpServer;
+import context.game.input.debugui.DebuguiKeyPressedFunction;
 import context.input.GameInput;
 import engine.common.math.Vector2f;
 import networking.NetworkCluster;
@@ -61,6 +62,9 @@ public class ServerInput extends GameInput {
 			data.selectedMini = null;
 			return null;
 		}, false);
+
+		addKeyPressedFunction(new DebuguiKeyPressedFunction(data.tools()));
+
 		addPacketReceivedFunction(new NomadRealmsProtocolDecoder());
 		setupServer();
 	}
