@@ -33,7 +33,7 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 	@Override
 	public JoinClusterResponseEvent handle(JoinClusterRequestEvent request, PacketAddress clientAddress) {
 		long worldId = request.worldID();
-		System.out.println(clientAddress + " is trying to join world with Id=" + worldId);
+		data.tools().logMessage(clientAddress + " is trying to join world with Id=" + worldId, 0x00e626FF);
 		if (data.getCluster(worldId) == null) {
 			data.addCluster(new NetworkCluster(new WorldInfo(0, "This is a test", 12345, 1655063005817L)));
 		}
@@ -48,13 +48,13 @@ public class JoinClusterHttpHandler extends HttpEventHandler<JoinClusterRequestE
 			JoiningPlayerNetworkEvent joiningPlayerEvent = new JoiningPlayerNetworkEvent(spawnTick, nonce, request.lanAddress(), clientAddress, spawnPos);
 			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.wanAddress()));
 			data.context().sendPacket(joiningPlayerEvent.toPacketModel(peer.lanAddress()));
-			System.out.println("Sending JoiningPlayerNetworkEvent to " + peer.player().username());
+			data.tools().logMessage("Sending JoiningPlayerNetworkEvent to " + peer.player().username());
 		});
 		List<PacketAddress> peerLanAddresses = cluster.playerSessions().stream().map(PlayerSession::lanAddress).collect(toList());
 		List<PacketAddress> peerWanAddresses = cluster.playerSessions().stream().map(PlayerSession::wanAddress).collect(toList());
 		String username = data.database().getUsername(request.playerId());
 		cluster.addPlayerSession(new PlayerSession(new Player(request.playerId(), username), request.lanAddress(), clientAddress));
-		System.out.println("Spawning player at tick: " + spawnTick + " time:" + spawnTime);
+		data.tools().logMessage("Spawning player at tick: " + spawnTick + " time:" + spawnTime, 0x4fbcffFF);
 		int idRange = cluster.generateNewIdRange();
 		return new JoinClusterResponseEvent(spawnTime, spawnTick, nonce, username, peerLanAddresses, peerWanAddresses, spawnPos, idRange);
 	}

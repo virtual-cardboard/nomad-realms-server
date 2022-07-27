@@ -9,9 +9,11 @@ import event.network.p2p.time.TimeResponseEvent;
 
 public class ServerLogic extends GameLogic {
 
+	private ServerData data;
+
 	@Override
 	protected void init() {
-		ServerData data = (ServerData) context().data();
+		data = (ServerData) context().data();
 //		addHandler(GameEvent.class, event -> {
 //			throw new RuntimeException("Was expecting Bootstrap Request");
 //		});
@@ -63,7 +65,7 @@ public class ServerLogic extends GameLogic {
 	}
 
 	private void printEvent(NomadRealmsP2PNetworkEvent event) {
-		System.out.println("Received " + event.getClass().getSimpleName() + " from " + event.source().address());
+		data.tools().logMessage("Received " + event.getClass().getSimpleName() + " from " + event.source().address());
 	}
 
 }

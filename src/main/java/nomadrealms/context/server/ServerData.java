@@ -30,7 +30,7 @@ public class ServerData extends GameData {
 	protected void init() {
 		database = new NomadRealmsDatabase();
 		database.connect();
-		System.out.println("Connected to database");
+		tools.logMessage("Connected to database", 0xeba8FF);
 	}
 
 	public Tools tools() {

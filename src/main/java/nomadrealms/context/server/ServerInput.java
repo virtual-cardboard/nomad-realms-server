@@ -76,7 +76,7 @@ public class ServerInput extends GameInput {
 			server.createContext("/joinSuccess", new JoinClusterSuccessEventHandler(data));
 			server.setExecutor(null); // creates a default executor
 			server.start();
-			System.out.println("HTTP server started at " + server.getAddress());
+			data.tools().logMessage("HTTP server started at " + server.getAddress());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

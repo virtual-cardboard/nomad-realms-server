@@ -19,7 +19,7 @@ public class JoinClusterSuccessEventHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange t) throws IOException {
 		PacketAddress clientAddress = new PacketAddress(t.getRemoteAddress().getAddress(), t.getRemoteAddress().getPort());
-		System.out.println("Client at " + clientAddress + " has successfully joined cluster.");
+		data.tools().logMessage("Client at " + clientAddress + " has successfully joined cluster.");
 		t.sendResponseHeaders(200, 0);
 		OutputStream os = t.getResponseBody();
 		os.close();
