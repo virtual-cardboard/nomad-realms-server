@@ -1,6 +1,6 @@
 package nomadrealms.context.server.input;
 
-import static constants.NomadRealmsConstants.TICK_TIME;
+import static app.NomadRealmsClient.TICK_TIME;
 import static java.lang.System.currentTimeMillis;
 import static java.util.stream.Collectors.toList;
 
