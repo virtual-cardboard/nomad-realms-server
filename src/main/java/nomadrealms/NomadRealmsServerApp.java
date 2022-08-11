@@ -26,6 +26,7 @@ public class NomadRealmsServerApp {
 				.enableLoading()
 				.enableNetworking(45000)
 				.enableRendering()
+				.disableAudio()
 				.enablePrintProgress()
 				.windowDimensions(512, 1012)
 				.run();
