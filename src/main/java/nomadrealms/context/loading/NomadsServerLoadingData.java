@@ -1,20 +1,20 @@
 package nomadrealms.context.loading;
 
 import context.data.GameData;
-import context.game.data.Tools;
+import context.game.data.DebugTools;
 import context.visuals.gui.constraint.dimension.PixelDimensionConstraint;
 import context.visuals.gui.constraint.position.PixelPositionConstraint;
 
 public class NomadsServerLoadingData extends GameData {
 
-	private Tools tools;
+	private DebugTools tools;
 
-	public Tools tools() {
+	public DebugTools tools() {
 		return tools;
 	}
 
 	public void initTools() {
-		tools = new Tools(resourcePack());
+		tools = new DebugTools(resourcePack());
 		tools.consoleGui.setPadding(20);
 		tools.consoleGui.setFontSize(20);
 		tools.consoleGui.setPosY(new PixelPositionConstraint(0));
