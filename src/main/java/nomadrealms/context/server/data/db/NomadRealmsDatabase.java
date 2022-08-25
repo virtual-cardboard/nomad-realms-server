@@ -9,32 +9,37 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 public class NomadRealmsDatabase {
 
-	private boolean connected;
-
-	private PGSimpleDataSource dbSource;
+	private Connection connection;
 
 	public void connect() {
-		if (connected) {
+		if (connection != null) {
 			throw new IllegalStateException("Database already connected.");
 		} else {
-			dbSource = new PGSimpleDataSource();
+			PGSimpleDataSource dbSource = new PGSimpleDataSource();
 			dbSource.setUrl("jdbc:postgresql://free-tier11.gcp-us-east1.cockroachlabs.cloud:26257/defaultdb" +
 					"?options=--cluster%3Dnomad-realms-cluster-1145&sslmode=verify-full");
 			dbSource.setUser("virtualcardboard");
 			dbSource.setPassword("kzRCW7sKEpVV2d0FYulBCA");
-			connected = true;
+
+			try {
+				connection = dbSource.getConnection();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
+	}
+
+	private ResultSet getOne(PreparedStatement statement) throws SQLException {
+		ResultSet re = statement.executeQuery();
+		re.next();
+		return re;
 	}
 
 	public String getUsername(long playerId) {
 		String sql = "SELECT username FROM players WHERE id=?";
-		try (Connection connection = dbSource.getConnection()) {
-			try (PreparedStatement statement = connection.prepareStatement(sql)) {
-				statement.setLong(1, playerId);
-				ResultSet re = statement.executeQuery();
-				re.next();
-				return re.getString(1);
-			}
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setLong(1, playerId);
+			return this.getOne(statement).getString(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
