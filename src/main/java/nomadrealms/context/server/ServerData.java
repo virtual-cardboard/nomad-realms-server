@@ -15,8 +15,8 @@ public class ServerData extends GameData {
 
 	private final DebugTools tools;
 
-	private Map<Long, NetworkCluster> clusters = new HashMap<>();
-	private List<NomadMini> minis = new ArrayList<>();
+	private final Map<Long, NetworkCluster> clusters = new HashMap<>();
+	private final List<NomadMini> minis = new ArrayList<>();
 
 	public NomadMini selectedMini;
 
@@ -50,7 +50,7 @@ public class ServerData extends GameData {
 	}
 
 	public void addCluster(NetworkCluster cluster) {
-		clusters.put(cluster.worldInfo().id, cluster);
+		clusters.put(cluster.worldInfo().id(), cluster);
 	}
 
 }

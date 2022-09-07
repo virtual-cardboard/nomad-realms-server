@@ -26,6 +26,7 @@ public class NomadRealmsDatabase {
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
+
 		}
 	}
 

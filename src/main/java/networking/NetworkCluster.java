@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.Player;
 import model.PlayerSession;
-import nomadrealms.model.WorldInfo;
+import model.world.WorldInfo;
 
 public class NetworkCluster {
 
